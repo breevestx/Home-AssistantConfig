@@ -1,0 +1,31 @@
+# media_player:living_room_cast
+
+homeassistant:
+  customize:
+    switch.white_noise:
+      emulated_hue: true
+      friendly_name: 'White Noise'
+      icon: mdi:snowflake
+    media_player.living_room_cast:
+      friendly_name: Living Room Cast
+
+sensor:
+  - platform: template
+    sensors:
+      white_noise:
+        value_template: "{% if is_state('media_player.kodi_bedroom_pi', 'playing') %}on{% else %}Off{% endif %}"
+
+
+switch:
+###### Switch for White Noise
+  - platform: template
+    switches:
+      white_noise:
+        value_template: '{{ states.sensor.white_noise.state }}'
+        turn_on:
+          service: script.turn_on
+          entity_id: script.white_noise
+        turn_off:
+          service: media_player.media_Stop
+          entity_id: media_player.living_room_cast
+

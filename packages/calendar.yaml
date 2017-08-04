@@ -1,0 +1,108 @@
+# homeassistant: 
+#   customize:
+#     light.bruce_lamp:
+#       emulated_hue: false
+#     light.lene_lamp:
+#       emulated_hue: false
+#     input_boolean.vacation_mode:
+#       icon: midi:airplane_takeoff
+#       emulated_hue_name: "Vacation Mode"
+#       emulated_hue: true
+
+google:
+  client_id: !secret google_cal_client_id
+  client_secret: !secret google_cal_client_key
+
+# input_boolean:
+#   vacation_mode:  
+#     initial: off
+
+# automation:
+#   - alias: 'Away mode On'
+#     trigger:
+#       - platform: state
+#         entity_id: input_boolean.vacation_mode
+#         from: 'off'
+#         to: 'on'
+#     action:
+#       - service: notify.slack__home
+#         data_template:
+#           message: >
+#             {%- set responses = [
+#             'Have a good time, I got things covered while your away.',
+#             'What, you left again, why do I never get to go?',
+#             'YES SIR, on duty, protect and serve !!!'] -%}
+#             Bruce> {{ responses | random }}
+
+#   - alias: 'Away mode Off'
+#     trigger:
+#       - platform: state
+#         entity_id: input_boolean.vacation_mode
+#         from: 'on'
+#         to: 'off'
+#     action:
+#       - service: notify.slack__home
+#         data_template:
+#           message: >
+#             {%- set responses = [
+#             'Did you have fun, I covered everything while your away.',
+#             'Well it is about time you came back around',
+#             'AFFIRMATIVE SIR, standing downs!!!'] -%}
+#             Bruce> {{ responses | random }}
+
+
+# #################################################################
+# ## Lights on 45 minutes before sunset
+# #################################################################
+
+#   - alias: 'Vacation mode lights On'
+#     condition:
+#       - condition: state
+#         entity_id: input_boolean.vacation_mode
+#         state: 'on'
+#     trigger:
+#       - platform: sun
+#         event: sunset
+#         offset: '-00:45:00'
+#     action:
+#       - service: homeassistant.turn_on
+#         entity_id: group.Bedroom_lamps
+# #    - service: logbook.log
+# #      data_template:
+# #        name: "Bedroom lamps On: "
+# #        message: Turned lamps on via Automation
+#       - service: notify.slack__home
+#         data_template:
+#           message: >
+#             {%- set responses = [
+#             'It just tickles me pink to remind you that I turned the bedroom lights on',
+#             'Well isn\'t it just a breath of fresh air to know I can take care of turning lights on while your away?',
+#             'Got you covered, vacation lights are on'] -%}
+#             Bruce> {{ responses | random }}
+# #################################################################
+# ## Lights off 2 hours after sunset
+# #################################################################
+#   - alias: 'Vacation mode lights Off'
+#     condition:
+#       - condition: state
+#         entity_id: input_boolean.vacation_mode
+#         state: 'on'
+#     trigger:
+#       - platform: sun
+#         event: sunset
+#         offset: '+02:00:00'      
+#     action:
+#       - service: homeassistant.turn_off
+#         entity_id: group.Bedroom_lamps
+# #      - service: logbook.log
+# #        data_template:
+# #          name: "Bedroom lamps Off: "
+# #          message: Turned lamps off via Automation
+#       - service: notify.slack__home
+#         data_template:
+#           message: >
+#             {%- set responses = [
+#             'It just tickles me pink to remind you that I turned the lights off for you.',
+#             'Well isn\'t it just a breath of fresh air to know I can take care of turning lights off while your away?',
+#             'Got you covered, vacation lights are off.'] -%}
+#             Bruce> {{ responses | random }}

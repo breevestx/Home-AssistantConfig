@@ -1,0 +1,6 @@
+name: slack__home
+platform: slack
+api_key: !secret slack_home_key
+default_channel: '#general'
+username: Guardian
+icon: ":guardsman:"

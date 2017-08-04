@@ -1,0 +1,58 @@
+#sensor:
+#  - platform: template
+#    sensors:
+#      freezer:
+#        friendly_name: 'Freezer'
+#        value_template: "{{ 'Online' if is_state('device_tracker.freezer', 'home') else 'Offline' }}"
+
+input_boolean:
+  dash_input:
+    name: Dash Button
+    initial: on
+    icon: mdi:light
+
+scene:
+  - name: Bedroomnight
+    entities:
+      light.bruce_lamp: on
+      light.lene_lamp: on
+  - name: Bedroomgoodnight
+    entities:
+      light.bruce_lamp: 
+        state: off
+        transition: 10
+      light.lene_lamp: 
+        state: off
+        transition: 10    
+
+automation:
+- alias: 'Lamps Off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.dash_input
+      state: 'on'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.dash_input.last_changed)) > 30 }}'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.dash_input
+      to: 'off'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.Bedroomgoodnight
+
+- alias: 'Lamps On'
+  condition:
+    - condition: state
+      entity_id: input_boolean.dash_input
+      state: 'on'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.dash_input.last_changed)) > 30 }}'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.dash_input
+      to: 'on'
+  action:
+   - service: scene.turn_on
+     entity_id: scene.Bedroomnight
+

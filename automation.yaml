@@ -1,0 +1,108 @@
+#################################################################
+## Input controlled
+#################################################################
+- alias: Restart HASS
+  trigger:
+    platform: state
+    entity_id: input_boolean.restart_hass
+    from: 'off'
+    to: 'on'
+  action:
+    service: homeassistant.restart
+
+#################################################################
+## Presence
+#################################################################
+- alias: 'Freezer Off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.freezer
+      state: 'on'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.freezer
+      to: 'not_home'
+      for:
+        minutes: 2
+    - platform: state
+      entity_id: device_tracker.freezer
+      to: 'not_home'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.freezer
+    - service: logbook.log
+      data_template:
+        name: "Freezer Off: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is offline so the freezer might be off.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is offline so the freezer might be off.
+          {%- endfor -%}
+
+- alias: 'Freezer On'
+  condition:
+    - condition: state
+      entity_id: input_boolean.freezer
+      state: 'off'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.freezer
+      to: 'home'
+      for:
+        minutes: 2
+    - platform: state
+      entity_id: device_tracker.freezer
+      to: 'home'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.freezer
+    - service: logbook.log
+      data_template:
+        name: "Freezer On: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is online so the freezer should be on.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is online so the freezer should be on.
+          {%- endfor -%}
+#################################################################
+## Updates
+#################################################################
+#- alias: 'Update Available Notifications'
+#  trigger:
+#  -platform: state
+#   entity_id: updater.updater
+#  action:
+#   -service: notify.notify
+#    data_template:
+#      message: 'Update for Home Assistant is available.'
+
+
+#  Send an alert if any tracked phone has a low battery.
+
+- alias: Phone battery
+  trigger:
+   - platform: numeric_state
+     entity_id:
+     - device_tracker.brucesiphone2_ios
+     - device_tracker.ilenesiphone
+     value_template: '{{ state.attributes.battery }}'
+     below: 30
+  action:
+  - service: notify.slack
+    data_template:
+      message: >
+        {{ trigger.to_state.attributes.friendly_name }}'s phone battery is low: {{ trigger.to_state.attributes.battery }}%

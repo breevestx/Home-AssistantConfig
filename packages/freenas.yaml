@@ -1,0 +1,77 @@
+homeassistant:
+  customize:
+    device_tracker.a0481cb8ca38:
+      icon: mdi:harddiskc
+
+sensor:
+  - platform: template
+    sensors:
+      freenas:
+        friendly_name: 'freenas'
+        value_template: "{{ 'Online' if is_state('device_tracker.a0481cb8ca38', 'home') else 'Offline' }}"
+
+input_boolean:
+  freenas:
+    name: freenas
+    initial: on
+
+automation:
+- alias: 'freenas Off'
+  condition:
+    # - condition: state
+    #   entity_id: input_boolean.freenas
+    #   state: 'on'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.freenas.last_changed)) > 300 }}'
+  trigger:
+    - platform: state
+      entity_id: sensor.freenas
+      to: 'Offline'
+      for:
+        minutes: 2
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.freenas
+    - service: logbook.log
+      data_template:
+        name: "freenas Off: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is offline so the freenas might be off.
+          {%- endfor -%}
+    - service: notify.slack_dev
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is offline so the freenas might be off.
+          {%- endfor -%}
+
+- alias: 'freenas On'
+  condition:
+    # - condition: state
+    #   entity_id: input_boolean.freenas
+    #   state: 'off'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.freenas.last_changed)) > 300 }}'
+  trigger:
+    - platform: state
+      entity_id: sensor.freenas
+      to: 'Online'
+      for:
+        minutes: 2
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.freenas
+    - service: logbook.log
+      data_template:
+        name: "freenas On: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is online so the freenas should be on.
+          {%- endfor -%}
+    - service: notify.slack_dev
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is online so the freenas should be on.
+          {%- endfor -%}

@@ -1,0 +1,96 @@
+homeassistant: 
+  customize:
+    # light.bruce_lamp:
+    #   emulated_hue: false
+    # light.lene_lamp:
+    #   emulated_hue: false
+    input_boolean.switch_mode:
+      icon: midi:airplane_takeoff
+      # emulated_hue_name: "Vacation Mode"
+      # emulated_hue: true
+
+# frontend:
+#   themes:
+#     day:
+#       primary-color: green
+#     night:
+#       primary-color: grey
+
+input_boolean:
+  switch_mode:  
+    initial: off
+
+
+
+automation:
+  - alias: 'Set theme at startup'
+    initial_state: 'on'
+    trigger:
+     - platform: homeassistant
+       event: start
+    action:
+      service: frontend.set_theme
+      data:
+        name: day
+  - alias: 'frontend mode night'
+    trigger:
+      - platform: state
+        entity_id: input_boolean.switch_mode
+        from: 'off'
+        to: 'on'
+    action:
+      - service: frontend.set_theme
+        data:
+          name: night
+  - alias: 'frontend mode day'
+    trigger:
+      - platform: state
+        entity_id: input_boolean.switch_mode
+        from: 'on'
+        to: 'off'
+    action:
+      - service: frontend.set_theme
+        data:
+          name: day
+
+
+
+# #################################################################
+# ## Lights on 45 minutes before sunset
+# #################################################################
+
+  - alias: 'Frontend Night On'
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: '-00:45:00'
+    action:
+      - service: frontend.set_theme
+        data:
+          name: night
+#    - service: logbook.log
+#      data_template:
+#        name: "Bedroom lamps On: "
+#        message: Turned lamps on via Automation
+      - service: notify.slack__dev
+        data_template:
+          message: Frontend switched to night
+#################################################################
+## Lights off 2 hours after sunset
+#################################################################
+  - alias: 'Frontend Night Off'
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: '+00:45:00'      
+    action:
+      - service: frontend.set_theme
+        data:
+          name: day
+#      - service: logbook.log
+#        data_template:
+#          name: "Bedroom lamps Off: "
+#          message: Turned lamps off via Automation
+      - service: notify.slack__dev
+        data_template:
+          message: Frontend switched to day

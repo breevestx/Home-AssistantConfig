@@ -1,0 +1,211 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 32.95189047701
+  longitude: -97.29812309154988
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 118
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+
+# Show links to resources in log and frontend
+#introduction:
+# logger:
+#   default: info
+#   logs:
+#     homeassistant.components.device_tracker: critical
+#     homeassistant.components.ios: critical
+
+# Enables the frontend
+frontend:
+  themes:
+    day:
+      primary-color: green
+      # primary-text-color: black
+      # secondary-text-color: black
+      # paper-card-background-color: white
+    night:
+      primary-color: grey
+      # primary-text-color: white
+      # secondary-text-color: white
+      # paper-card-background-color: grey
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  base_url: nexacommtx.asuscomm.com:8123
+
+# Checks for available updates
+updater:
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+recorder:
+  purge_days: 14
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+#sensor:
+#  platform: yr
+
+# Text to speech
+tts:
+  platform: google
+
+ios:
+  push:
+    categories:
+      - name: Alarm
+        identifier: 'ALARM'
+        actions:
+          - identifier: 'SOUND_ALARM'
+            title: 'Sound Alarm'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: yes
+            behavior: 'default'
+          - identifier: 'SILENCE_ALARM'
+            title: 'Silence Alarm'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: no
+            behavior: 'textInput'
+            textInputButtonTitle: 'Silencio!'
+            textInputPlaceholder: 'Placeholder'
+      - name: Trash
+        identifier: 'TRASH'
+        actions:
+          - identifier: 'Already_Done'
+            title: 'Already set out'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: no
+            behavior: 'default'
+          - identifier: 'SILENCE_REMINDER'
+            title: 'Snooze'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: yes
+            behavior: 'textInput'
+            textInputButtonTitle: 'Snnoze for?'
+            textInputPlaceholder: 'Placeholder'
+
+emulated_hue:
+  type: alexa
+  listen_port: 8300
+  expose_by_default: false
+
+
+device_tracker:
+# - platform: icloud
+#    username: bruce@reeves-kids.com
+#    password: !secret iCloud
+#    account_name: iCloud
+  - platform: nmap_tracker
+    hosts: 192.168.100.1/24
+    track_new_devices: no
+    interval_seconds: 30
+    consider_home: 60
+  - platform: asuswrt
+    host: 192.168.100.1
+    username: admin
+    password: x86n2u
+    track_new_devices: no
+    interval_seconds: 12
+    consider_home: 180
+#  - platform: ping
+#    hosts:
+#      freezer: 192.168.100.13
+  - platform: locative
+
+media_player:
+  - platform: kodi
+    host: 192.168.100.10
+    name: Kodi_LV
+  - platform: cast
+
+#notify: !include_dir_named notifiers
+notify: !include notify.yaml
+# notify:
+#   - name: slack__home
+#     platform: slack
+#     api_key: !secret slack_home_key
+#     default_channel: '#ha'
+#     username: Guardian
+#     icon: ":guardsman:"
+
+
+input_boolean:
+#  freezer:
+#    name: Freezer
+#    initial: on
+#    icon: mdi:freezer
+  restart_hass:
+    initial: off
+#  test_notify:  
+#    initial: off    
+    
+#################################################################
+## Sensors
+#################################################################
+sensor:
+  # - platform: fitbit
+  #   monitored_resources:
+  #     - "activities/distance"
+  #     - "activities/steps"
+  #     - "sleep/startTime"
+  #     - "sleep/timeInBed"
+  #     - "devices/battery"
+  - platform: crimereports
+    exclude: ['Community Policing']
+    name: Neighborhood Incidents
+    radius: 300
+
+zone:
+  name: Home
+  latitude: 32.95189047701
+  longitude: -97.29812309154988
+  radius: 50
+
+zone 2:  
+  name: Church
+  latitude: 32.838292
+  longitude: -97.250554
+  radius: 300  
+
+zone 3:
+  name: school_cc 
+  latitude: 32.869763
+  longitude: -97.261736
+  radius: 200  
+#  beacon:
+#    uuid: 7223e44fac664412b854fe50d72977ff
+#    major: 60042
+#    minor: 43814
+
+automation: !include automation.yaml
+group: !include groups.yaml
+
+

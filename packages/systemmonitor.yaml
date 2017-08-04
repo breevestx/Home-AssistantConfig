@@ -1,0 +1,292 @@
+homeassistant:
+  customize:
+    sensor.external_ip:
+      friendly_name: External IP
+      icon: mdi:earth
+    sensor.ha_uptime:
+      friendly_name: Home Assistant uptime
+      icon: mdi:timer
+    sensor.since_last_boot_templated:
+      friendly_name: Server uptime
+      icon: mdi:timer
+    sensor.cpu_temperature:
+      friendly_name: CPU Temperature
+      icon: mdi:thermometer
+    sensor.ha_version:
+      friendly_name: Home Assistant Version
+    sensor.cpu_use:
+      friendly_name: CPU
+      icon: mdi:desktop-tower
+    sensor.disk_use_percent:
+      friendly_name: Disk
+      icon: mdi:harddisk
+    sensor.cpu_ram:
+      friendly_name: RAM
+      icon: mdi:chip
+    device_tracker.1056ca61d9e1:
+      icon: mdi:router-wireless
+
+
+# input_boolean:
+#   trash:  
+#     initial: off
+#   weekly_trash_reminder:
+#     initial: on
+
+group:
+  System:
+    control: hidden
+    entities:
+      - sensor.fastdotcom
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.since_last_boot_templated
+      - sensor.cpu_use
+      - sensor.ram_use
+      - sensor.disk_use_percent
+      - sensor.ha_uptime
+      - sensor.ha_version
+      - weblink.release_log
+      - sensor.external_ip
+
+weblink:
+  entities:
+    - name: release_log
+      url: https://github.com/home-assistant/home-assistant/releases
+
+
+sensor:
+  - platform: fastdotcom
+    minute:
+      - 0
+      - 30
+  - platform: speedtest
+    minute: 30
+    hour:
+      - 0
+      - 6
+      - 12
+      - 18
+    monitored_conditions:
+      - download
+      - upload
+  - platform: cpuspeed
+    name: CPU
+  - platform: systemmonitor
+    resources:
+      - type: memory_free
+      - type: memory_use_percent
+      - type: processor_use
+      - type: since_last_boot
+      - type: disk_use_percent
+        arg: /
+      # - type: process
+      #   arg: mosquitto
+      # - type: process
+      #   arg: homebridge
+  - platform: template
+    sensors:
+      since_last_boot_templated:
+        friendly_name: Uptime
+        value_template: >-
+          {%- set slb = states.sensor.since_last_boot.state.split(' ') -%}
+          {%- set count = slb | length -%}
+          {%- set hms = slb[count - 1] -%}
+          {%- set hms_trimmed = hms.split('.')[0] -%}
+          {%- set hms_split = hms_trimmed.split(':') -%}
+          {%- set hours = hms_split[0] | int -%}
+          {%- set minutes = hms_split[1] | int -%}
+          {%- set seconds = hms_split[2] | int -%}
+          {%- if count == 3 -%}
+            {{ slb[0] ~ ' ' ~ slb[1] ~ ' ' }}
+          {%- endif -%}
+          {%- if hours > 0 -%}
+            {%- if hours == 1 -%}
+              1 hour
+            {%- else -%}
+              {{ hours }} hours
+            {%- endif -%}
+          {%- endif -%}
+          {%- if minutes > 0 -%}
+            {%- if hours > 0 -%}
+              {{ ', ' }}
+            {%- endif -%}
+            {%- if minutes == 1 -%}
+              1 minute
+            {%- else -%}
+              {{ minutes }} minutes
+            {%- endif -%}
+          {%- endif -%}
+          {%- if seconds > 0 -%}
+            {%- if hours > 0 or minutes > 0 -%}
+              {{ ', ' }}
+            {%- endif -%}
+            {%- if seconds == 1 -%}
+              1 second
+            {%- else -%}
+              {{ seconds }} seconds
+            {%- endif -%}
+          {%- endif -%}
+  - platform: rest
+    scan_interval: 86400
+    resource: http://ip.jsontest.com
+    name: External IP
+    value_template: '{{ value_json.ip }}'
+
+###### VERSIONS
+  - platform: command_line
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+    name: Current Version
+
+  - platform: command_line
+    name: Installed Version
+    command: /srv/homeassistant/bin/hass --version
+
+###### CUSTOM HA/Version
+  - platform: template
+    sensors:
+      ha_version:
+        value_template: "{%- if states.sensor.current_version.state == states.sensor.installed_version.state-%}{{states.sensor.installed_version.state}} {% else %}{{states.sensor.current_version.state}} Available{% endif%}"
+        icon_template: >-
+          {% if states.sensor.current_version.state == states.sensor.installed_version.state %}
+            mdi:checkbox-marked
+          {% else %}
+            mdi:checkbox-blank-outline
+          {% endif %}
+
+###### UPTIMES
+  - platform: command_line
+    name: 'HA Uptime'
+    command: echo "$(($(date +%s) - $(date -d "$(head -n1 /home/homeassistant/.homeassistant/home-assistant.log | cut -d' ' -f-2)" +%s)))"
+    scan_interval: 720
+    value_template: >-
+      {% set uptime = value | int %}
+      {% set seconds = uptime % 60 %}
+      {% set minutes = ((uptime % 3600) / 60) | int %}
+      {% set hours = ((uptime % 86400) / 3600) | int %}
+      {% set days = (uptime / 86400) | int %}
+      {%- if days > 0 -%}
+        {%- if days == 1 -%}
+          1 day
+        {%- else -%}
+          {{ days }} days
+        {%- endif -%}
+        {{ ', ' }}
+      {%- endif -%}
+      {{ '%02d' % hours }}:{{ '%02d' % minutes }}
+
+
+
+
+  #############################################################################################################
+  ###  This part of the automation is hidden due to the IP address exposed  ##
+  # - platform: template
+    # sensors:
+      # ipchange:
+        # entity_id: sensor.external_ip
+        # value_template: "{%- if is_state('sensor.external_ip', 'xxx.xxx.xxx.xxx') -%} False {%- elif is_state('sensor.external_ip', 'unknown' ) -%} False {%- else -%} True {%- endif %}"
+  #############################################################################################################
+
+# automation:
+#    - alias: 'Trash needs to go out'
+#      trigger:
+#        - platform: state
+#          entity_id: input_boolean.trash
+#          from: 'off'
+#          to: 'on'
+#      action:
+#        - service: notify.slack__home
+#          data_template:
+#            message: >
+#              {%- set responses = [
+#              'Please check the trash soon.',
+#              'What, you can\'t smell this mess?',
+#              'YES SIR, prepare to launch trash can!!!'] -%}
+#              {{ responses | random }}
+
+#    - alias: 'Trash taken out'
+#      trigger:
+#        - platform: state
+#          entity_id: input_boolean.trash
+#          from: 'on'
+#          to: 'off'
+#      action:
+#        - service: notify.slack__home
+#          data_template:
+#            message: >
+#              {%- set responses = [
+#              'Trash emptied and bag replaced.',
+#              'Ahh, fresh air again, the trash is gone',
+#              'AFFIRMATIVE SIR, trash cans away!!!'] -%}
+#              {{ responses | random }}
+
+
+# #################################################################
+# ## Trash cans to curb reminder
+# #################################################################
+
+#    - alias: 'Weekly trash check'
+#      condition:
+#        - condition: time
+#          after: '17:00:00'
+#          before: '22:00:00'
+#          weekday: sun
+#        - condition: state
+#          entity_id: input_boolean.weekly_trash_reminder
+#          state: 'on'
+#      trigger:
+#        - platform: sun
+#          event: sunset
+#          offset: '-00:45:00'
+#      action:
+#        - service: notify.slack__dev
+#          data_template:
+#            message: >
+#              {%- set responses = [
+#              'Don\'t forget to set out the trash cans.',
+#              'Did you forget, the trash truck comes tomorrow?',
+#              'Got you covered, vacation lights are on'] -%}
+#              {{ responses | random }}
+#        - service: notify.ios_brucesiphone2_ios
+#          data:
+#            message: "Trash can reminder"
+#            data:
+#              push:
+#                badge: 5
+#                sound: 
+#                category: "TRASH" # Needs to match the top level identifier you used in the ios configuration
+#              action_data: # Anything passed in action_data will get echoed back to Home Assistant.
+#                entity_id: input_boolean.weekly_trash_reminder
+#                 #my_custom_data: foo_bar
+
+# # #################################################################
+# # ## Morning check if not cleared
+# # #################################################################
+#    - alias: 'Reset Weekly check'
+#      condition:
+#        - condition: state
+#          entity_id: input_boolean.weekly_trash_reminder
+#          state: 'on'
+#      trigger:
+#        - platform: sun
+#          event: sunset
+#          offset: '+02:00:00'      
+#      action:
+#        - service: notify.slack__dev
+#          data_template:
+#            message: >
+#              {%- set responses = [
+#              'Don\'t forget to setup the trash cans tonight.',
+#              'Trash day is tomorrow, don\'t forget.',
+#              'Did you set out the trash cans?'] -%}
+#              {{ responses | random }}
+#    - alias: 'Trash cans set out'
+#      trigger:
+#        - platform: event
+#          event_type: ios.notification_action_fired
+#          event_data:
+#            actionName: Already_Done
+#      action:
+#        - service: homeassistant.turn_off
+#          entity_id: input_boolean.weekly_trash_reminder
+

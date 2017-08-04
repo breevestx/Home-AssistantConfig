@@ -1,0 +1,65 @@
+# Example configuration.yaml entry
+sensor:
+  - platform: example
+  # - platform: miflora
+  #   mac: 'xx:xx:xx:xx:xx:xx'
+  #   name: Flower 1
+  #   force_update: false
+  #   median: 3
+  #   monitored_conditions:
+  #     - moisture
+  #     - light
+  #     - temperature
+  #     - conductivity
+  #     - battery
+input_boolean:
+   trash_test:  
+     initial: off
+#   weekly_trash_reminder:
+#     initial: on
+
+group:
+  dev:
+    icon: mdi:developer-board
+    view: true
+    entities:
+    - sensor.example
+    - input_boolean.trash_test
+    - input_boolean.switch_mode
+
+automation:
+   - alias: 'Test Weekly trash check'
+     trigger:
+       - platform: state
+         entity_id: input_boolean.trash_test
+         from: 'off'
+         to: 'on'
+     condition:
+       # - condition: time
+       #   weekday: 
+       #     - sun
+       - condition: state
+         entity_id: input_boolean.weekly_trash_reminder
+         state: 'on'
+     action:
+       # - service: notify.slack__dev
+       #   data_template:
+       #     message: >
+       #       {%- set responses = [
+       #       'Don\'t forget to set out the trash cans.',
+       #       'Did you forget, the trash truck comes tomorrow?',
+       #       'Got you covered, vacation lights are on'] -%}
+       #       {{ responses | random }}
+       - service: notify.ios_brucesiphone2_ios
+         data_template:
+           title: "Trash can reminder DEV"
+           message: >
+             {%- set responses = [
+             'Don\'t forget to set out the trash cans.',
+             'Did you forget, the trash truck comes tomorrow?',
+             'Got you covered, vacation lights are on'] -%}
+             {{ responses | random }}
+           data:
+             push:
+               badge: 0
+               category: "TRASH" 

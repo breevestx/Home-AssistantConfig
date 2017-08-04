@@ -1,0 +1,89 @@
+input_select:
+  conference:
+    name: Conference
+    options:
+     - False
+     - Phone
+     - Video
+    initial: False
+    icon: mdi:camera
+
+group:
+  Office:
+    - input_select.conference
+
+automation:
+- id: conf_no
+  alias: 'Conference Off'
+  trigger:
+    - platform: state
+      entity_id: input_select.conference
+      to: 'False'
+ # condition:
+ #   - condition: state
+ #     entity_id: input_select.conference
+ #     state: 'False'
+ #   - condition: template
+ #     value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Conference"
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+          {%- endfor -%}
+
+- id: conf_phone
+  alias: 'Conference On Phone'
+  trigger:
+    - platform: state
+      entity_id: input_select.conference
+      to: 'Phone'
+#  condition:
+#    - condition: template
+#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'    
+  action:
+    - service: logbook.log
+      data_template:
+        name: "conference"
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            Bruce is on a {{states.input_select.conference.state}} Conference call.
+          {%- endfor -%}
+
+- id: conf_video
+  alias: 'Conference On Video'
+  trigger:
+    - platform: state
+      entity_id: input_select.conference
+      to: 'Video'
+#  condition:
+#    - condition: template
+#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'    
+  action:
+    - service: logbook.log
+      data_template:
+        name: "conference"
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            Bruce is on a {{states.input_select.conference.state}} Conference call.
+          {%- endfor -%}

@@ -1,0 +1,107 @@
+homeassistant: 
+  customize:
+    input_boolean.teatimer:
+      icon: midi:coffee
+      emulated_hue_name: "Tea Time"
+      emulated_hue: true
+
+input_boolean:
+  teatimer:  
+    initial: off
+
+automation:
+  - alias: 'Tea Timer Start'
+    trigger:
+      - platform: state
+        entity_id: input_boolean.teatimer
+        from: 'off'
+        to: 'on'
+    action:
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            {%- set responses = [
+            'Timer Started',
+            'Timer Started',
+            'Timer Started'] -%}
+            {{ responses | random }}
+
+  - alias: 'Tea Timer Ended'
+    trigger:
+      - platform: state
+        entity_id: input_boolean.teatimer
+        to: 'on'
+        for:
+          minutes: 3
+    # condition:
+    #   - condition: state
+    #     entity_id: input_boolean.teatimer
+    #     state: 'False'
+    #   - condition: template
+    #     value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.teatimer.last_changed)) > 180 }}'
+    action:
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            {%- set responses = [
+            'Tea is finished',
+            'Tea is finishedd',
+            'Tea is finished'] -%}
+            {{ responses | random }}
+
+
+# #################################################################
+# ## Lights on 45 minutes before sunset
+# #################################################################
+
+#   - alias: 'Vacation mode lights On'
+#     condition:
+#       - condition: state
+#         entity_id: input_boolean.teatimer
+#         state: 'on'
+#     trigger:
+#       - platform: sun
+#         event: sunset
+#         offset: '-00:45:00'
+#     action:
+#       - service: homeassistant.turn_on
+#         entity_id: group.Bedroom_lamps
+# #    - service: logbook.log
+# #      data_template:
+# #        name: "Bedroom lamps On: "
+# #        message: Turned lamps on via Automation
+#       - service: notify.slack__home
+#         data_template:
+#           message: >
+#             {%- set responses = [
+#             'It just tickles me pink to remind you that I turned the bedroom lights on',
+#             'Well isn\'t it just a breath of fresh air to know I can take care of turning lights on while your away?',
+#             'Got you covered, vacation lights are on'] -%}
+#             Bruce> {{ responses | random }}
+# #################################################################
+# ## Lights off 2 hours after sunset
+# #################################################################
+#   - alias: 'Vacation mode lights Off'
+#     condition:
+#       - condition: state
+#         entity_id: input_boolean.teatimer
+#         state: 'on'
+#     trigger:
+#       - platform: sun
+#         event: sunset
+#         offset: '+02:00:00'      
+#     action:
+#       - service: homeassistant.turn_off
+#         entity_id: group.Bedroom_lamps
+# #      - service: logbook.log
+# #        data_template:
+# #          name: "Bedroom lamps Off: "
+# #          message: Turned lamps off via Automation
+#       - service: notify.slack__home
+#         data_template:
+#           message: >
+#             {%- set responses = [
+#             'It just tickles me pink to remind you that I turned the lights off for you.',
+#             'Well isn\'t it just a breath of fresh air to know I can take care of turning lights off while your away?',
+#             'Got you covered, vacation lights are off.'] -%}
+#             Bruce> {{ responses | random }}

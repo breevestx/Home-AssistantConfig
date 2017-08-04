@@ -1,0 +1,83 @@
+homeassistant:
+  customize:
+    device_tracker.openelec:
+      icon: mdi:movie-roll
+
+sensor:
+  - platform: template
+    sensors:
+      freenas:
+        friendly_name: 'LV MediaCenter'
+        value_template: "{{ 'Online' if is_state('device_tracker.openelec', 'home') else 'Offline' }}"
+
+input_boolean:
+  kodi:
+    name: LV mediacenter
+    initial: on
+
+automation:
+- alias: 'kodi Off'
+  condition:
+    - condition: state
+      entity_id: input_boolean.kodi
+      state: 'on'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.kodi.last_changed)) > 300 }}'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.openelec
+      to: 'Offline'
+      for:
+        minutes: 2
+    - platform: state
+      entity_id: device_tracker.openelec
+      to: 'Offline'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.kodi
+    - service: logbook.log
+      data_template:
+        name: "kodi Off: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is offline so the kodi might be off.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is offline so the kodi might be off.
+          {%- endfor -%}
+
+- alias: 'kodi On'
+  condition:
+    - condition: state
+      entity_id: input_boolean.kodi
+      state: 'off'
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.kodi.last_changed)) > 300 }}'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.openelec
+      to: 'Online'
+      for:
+        minutes: 2
+    - platform: state
+      entity_id: device_tracker.openelec
+      to: 'Online'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.kodi
+    - service: logbook.log
+      data_template:
+        name: "kodi On: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is online so the kodi should be on.
+          {%- endfor -%}
+    - service: notify.notify
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is online so the kodi should be on.
+          {%- endfor -%}

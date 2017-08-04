@@ -1,0 +1,115 @@
+# homeassistant:
+#   customize:
+#     sensor.Lene_to_home:
+#       icon: mdi:car
+#     sensor.Bruce_to_home:
+#       icon: mdi:car
+#     sensor.From_home_to_Church:
+#       icon: mdi:car
+#     proximity.home:
+#       friendly_name: Anyone's proximity
+#     proximity.lene_home:
+#       friendly_name: Her proximity
+#     proximity.bruce_home:
+#       friendly_name: His proximity
+
+
+# input_boolean:
+#   alert_delays:  
+#     initial: on  
+
+# group:
+#   Transit:
+#   - input_boolean.alert_delays
+#   - sensor.Lene_to_home
+#   - sensor.Bruce_to_home
+#   - sensor.From_Home_to_Church
+#   - sensor.to_CC
+#   - proximity.lene_home
+#   - proximity.bruce_home
+#   - proximity.home
+#   Maps:
+#   - camera.bruce_map
+#   - camera.lene_map
+
+# camera:
+#   - platform: generic
+#     name: Bruce Map
+#     still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.brucesiphone2_ios.attributes.latitude }},{{ states.device_tracker.brucesiphone2_ios.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:Bruce%7C{{ states.device_tracker.brucesiphone2_ios.attributes.latitude }},{{ states.device_tracker.brucesiphone2_ios.attributes.longitude }}
+#     limit_refetch_to_url_change: true 
+#   - platform: generic
+#     name: Lene Map
+#     still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.leneiphone_ios.attributes.latitude }},{{ states.device_tracker.leneiphone_ios.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:Bruce%7C{{ states.device_tracker.leneiphone_ios.attributes.latitude }},{{ states.device_tracker.leneiphone_ios.attributes.longitude }}
+#     limit_refetch_to_url_change: true 
+
+
+# proximity:
+#   lene_home:
+#     devices:
+#       - device_tracker.leneiphone_ios
+#     tolerance: 50
+#     unit_of_measurement: !secret proximity_unit_of_measurement
+#   bruce_home:
+#     devices:
+#       - device_tracker.brucesiphone2_ios
+#     tolerance: 50
+#     unit_of_measurement: !secret proximity_unit_of_measurement
+#   home:
+#     devices:
+#       - device_tracker.brucesiphone2_ios
+#       - device_tracker.leneiphone_ios
+#     tolerance: 50
+#     unit_of_measurement: !secret proximity_unit_of_measurement
+
+# sensor:
+#   - platform: statistics
+#     name: Her Distance
+#     entity_id: proximity.lene_home
+
+#   - platform: statistics
+#     name: His Distance
+#     entity_id: proximity.bruce_home
+
+#   - platform: google_travel_time
+#     name: Lene To Home
+#     api_key: !secret google_api_key
+#     origin: device_tracker.leneiphone_ios
+#     destination: zone.home
+
+#   - platform: google_travel_time
+#     name: Bruce To Home
+#     api_key: !secret google_api_key
+#     origin: device_tracker.brucesiphone2_ios
+#     destination: zone.home
+
+#   - platform: google_travel_time
+#     name: From Home to Church
+#     api_key: !secret google_api_key
+#     origin: zone.home
+#     destination: zone.church
+#     options:
+#       mode: driving
+
+#   - platform: google_travel_time
+#     name: To CC
+#     api_key: !secret google_api_key
+#     origin: zone.home
+#     destination: zone.school_cc
+#     options:
+#       mode: driving
+
+
+automation:
+  - alias: Phone battery
+    trigger:
+      platform: numeric_state
+      entity_id:
+      - device_tracker.brucesiphone2_ios
+      - device_tracker.leneiphone_ios
+      value_template: '{{ state.attributes.battery }}'
+      below: 30
+    action:
+      service: notify.slack__dev
+      data_template:
+        message: >
+          {{ trigger.to_state.attributes.friendly_name }}'s phone battery is low: {{ trigger.to_state.attributes.battery }}%

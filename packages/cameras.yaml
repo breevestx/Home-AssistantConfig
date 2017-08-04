@@ -1,0 +1,52 @@
+android_ip_webcam:
+    host: 192.168.100.190
+    port: 8080
+    name: ipwebcam
+    sensors:
+    - battery_level
+    - light
+    - motion
+
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+binary_sensor:
+  - platform: ffmpeg_motion
+    input: http://192.168.100.190:8080/video
+
+group:
+  cameras:
+    icon: mdi:video
+    view: true
+    entities:
+    - camera.ipwebcam
+    - binary_sensor.ffmpeg_motion
+
+automation:
+  - alias: Turn Off Dining Room Light - Motion
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.ffmpeg_motion
+        from: 'off'
+        to: 'on'
+    # condition:
+    #    - condition: state
+    #      entity_id: input_boolean.weekly_trash_reminder
+    #      state: 'on'
+    action:
+      - service: notify.slack__dev
+        data_template:
+          message: Motion detected
+       # - service: notify.ios_brucesiphone2_ios
+       #   data_template:
+       #     title: "Trash can reminder"
+       #     message: >
+       #       {%- set responses = [
+       #       'Don\'t forget to set out the trash cans.',
+       #       'Did you forget, the trash truck comes tomorrow?',
+       #       'Got you covered, vacation lights are on'] -%}
+       #       {{ responses | random }}
+       #     data:
+       #       push:
+       #         badge: 0
+       #         category: "TRASH" 

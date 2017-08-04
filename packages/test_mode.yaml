@@ -1,0 +1,32 @@
+input_boolean:
+  test_notify:  
+    initial: off  
+
+automation:
+  alias: Out of Office
+  trigger:
+    - platform: state
+      entity_id: input_boolean.test_notify
+      from: 'off'
+      to: 'on'
+  action:
+    - service: notify.slack__home
+      data_template:
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} is On.
+          {%- endfor -%}
+    - service: logbook.log
+      data_template:
+        message: >-
+            {%- for state in states if state.entity_id == trigger.entity_id -%}
+              {{ state.attributes.friendly_name }} is Away.
+            {%- endfor -%}
+    - service: tts.google
+      entity_id: media_player.living_room_cast
+      data_template:
+        message: >
+          <speak>
+          {Notifications is turned on}
+          </speak>
+        cache: true

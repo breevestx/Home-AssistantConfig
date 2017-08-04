@@ -1,0 +1,95 @@
+homeassistant:
+  customize:
+    sensor.dark_sky_hourly_summary:
+      name: 'Hourly'
+    sensor.dark_sky_daily_summary:
+      name: 'Daily'
+    sensor.pws_alerts:
+      icon: mdi:alert-outline 
+      friendly_name: Alerts 
+group:
+  weather_view:
+    name: Weather Data
+    view: true
+    icon: mdi:weather-lightning
+    entities:
+    - group.Weather_Data
+    - group.Weather_Home
+
+  Weather Data:
+    - sensor.dark_sky_temperature
+    - sensor.dark_sky_precip_probability
+    - sensor.dark_sky_precip_intensity
+    - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_nearest_storm_bearing
+
+  Weather Home:
+    - sensor.dark_sky_hourly_summary
+    - sensor.dark_sky_daily_summary
+    - camera.lawton_doppler_weather
+
+  Weather Alert:
+    - sensor.pws_alerts
+
+camera:
+  - platform: generic
+    name: Lawton Doppler Weather
+    still_image_url: 'https://icons.wxug.com/data/weather-maps/radar/united-states/lawton-oklahoma-region-current-radar-animation.gif'
+
+
+sensor:
+  - platform: wunderground
+    api_key: !secret wunderground_api
+    monitored_conditions:
+      - alerts
+  - platform: darksky
+    api_key: !secret darksky_key
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+      - nearest_storm_bearing
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - temperature_max
+      - temperature_min
+      - apparent_temperature_max
+      - apparent_temperature_min
+      - precip_intensity_max
+
+# automation:
+#   - alias: Announce alerts
+#     trigger:
+#       platform: state
+#       entity_id: sensor.pws_alerts
+#       from: '0'
+#       to: '1'
+#     condition:
+#       - condition: sun
+#         state: 'above_horizon'
+#     action:
+#       # - service: script.turn_on
+#       #   entity_id: script.play_tts
+#       #   data_template:
+#       #     variables:
+#       #       message: "A package was just delivered."
+#       - service: notify.slack__dev
+#         data_template:
+#           message: >-
+#             {%- for state in states if state.entity_id == trigger.entity_id -%}
+#               {{ state.attributes.friendly_name }} is online so the freezer should be on.
+#             {%- endfor -%}
