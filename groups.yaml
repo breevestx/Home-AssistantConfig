@@ -5,6 +5,7 @@ default_view:
   - group.Household
   - group.Office
   - group.Devices
+  - group.scenes
 
 
 automation:
@@ -41,6 +42,22 @@ location:
   - group.deliveries
   - group.transit
   - group.maps
+
+misc_view:
+  name: Misc
+  view: yes
+  icon: mdi:power
+  entities:
+    - group.sensor_battery_levels
+    - group.utilities
+    - group.backup
+    - group.device_status
+    - group.server_status
+    - group.processes
+    - group.restarts
+    - group.ads_blocked
+    - group.pi_zero
+    - group.hassctl
 
 
 Household:

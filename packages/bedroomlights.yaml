@@ -1,9 +1,37 @@
-#sensor:
-#  - platform: template
-#    sensors:
-#      freezer:
-#        friendly_name: 'Freezer'
-#        value_template: "{{ 'Online' if is_state('device_tracker.freezer', 'home') else 'Offline' }}"
+homeassistant:
+  customize:
+    script.aquarium_scene:
+      friendly_name: 'Aquarium'
+      emulated_hue: true
+      icon: mdi:fish
+    script.sexy_time:
+      friendly_name: 'Sexy Time'
+      emulated_hue: true
+      icon: mdi:heart
+    script.river_scene:
+      friendly_name: 'River'
+      emulated_hue: true
+      icon: mdi:hook
+    script.beach_scene:
+      friendly_name: 'Beach'
+      emulated_hue: true
+      icon: mdi:tower-beach
+    script.jungle_scene:
+      friendly_name: 'Jungle'
+      emulated_hue: true
+      icon: mdi:paw
+    script.fireplace_scene:
+      friendly_name: 'Fire Place'
+      emulated_hue: true
+      icon: mdi:fire
+    scene.bedroom_on:
+      friendly_name: 'Space'
+      emulated_hue: true
+      icon: mdi:earth
+    scene.bedroom_goodnight:
+      friendly_name: 'Fire Place'
+      emulated_hue: true
+      icon: mdi:fire
 
 input_boolean:
   dash_input:
@@ -11,12 +39,20 @@ input_boolean:
     initial: on
     icon: mdi:light
 
+group:
+  scenes:
+    control: hidden
+    name: Live Scenes
+    entities:
+      - scene.Bedroom_on
+      - scene.Bedroom_goodnight
+
 scene:
-  - name: Bedroomnight
+  - name: Bedroom_on
     entities:
       light.bruce_lamp: on
       light.lene_lamp: on
-  - name: Bedroomgoodnight
+  - name: Bedroom_goodnight
     entities:
       light.bruce_lamp: 
         state: off

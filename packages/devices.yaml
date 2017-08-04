@@ -113,3 +113,32 @@ automation:
       data_template:
         message: >
           {{ trigger.to_state.attributes.friendly_name }}'s phone battery is low: {{ trigger.to_state.attributes.battery }}%
+
+#################################################################
+## Lights on 45 minutes before sunset
+#################################################################
+
+  - alias: 'Away lights On'
+    condition:
+      - condition: state
+        entity_id: device_tracker.brucesiphone2_ios
+        state: 'not_home'
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: '-00:45:00'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: group.Bedroom_lamps
+      # - service: logbook.log
+      #   data_template:
+      #     name: "Bedroom lamps On: "
+      #      message: Turned lamps on via Automation
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            {%- set responses = [
+            'It just tickles me pink to remind you that I turned the lights off for you.',
+            'Well isn\'t it just a breath of fresh air to know I can take care of turning lights off while your away?',
+            'Got you covered, vacation lights are off.'] -%}
+            Bruce> {{ responses | random }}
