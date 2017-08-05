@@ -25,11 +25,11 @@ homeassistant:
       emulated_hue: true
       icon: mdi:fire
     scene.bedroom_on:
-      friendly_name: 'Space'
+      friendly_name: 'Lights On'
       emulated_hue: true
       icon: mdi:earth
     scene.bedroom_goodnight:
-      friendly_name: 'Fire Place'
+      friendly_name: 'Lights Off'
       emulated_hue: true
       icon: mdi:fire
 

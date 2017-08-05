@@ -61,6 +61,7 @@ misc_view:
 
 
 Household:
+- group.bedroom_lamps
 - light.lene_lamp
 - light.bruce_lamp
 - input_boolean.trash
