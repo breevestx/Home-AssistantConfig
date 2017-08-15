@@ -10,7 +10,7 @@ homeassistant:
   unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: !secret time_zone
-  customize: !include customize.yaml
+  customize: !include_dir_merge_named customizations
   packages: !include_dir_named packages
 
 # Show links to resources in log and frontend
@@ -22,18 +22,9 @@ homeassistant:
 #     homeassistant.components.ios: critical
 
 # Enables the frontend
-frontend:
-  themes:
-    day:
-      primary-color: green
-      # primary-text-color: black
-      # secondary-text-color: black
-      # paper-card-background-color: white
-    night:
-      primary-color: grey
-      # primary-text-color: white
-      # secondary-text-color: white
-      # paper-card-background-color: grey
+frontend: 
+  themes: !include themes.yaml
+
 
 # Enables configuration UI
 config:
@@ -71,8 +62,11 @@ sun:
 #  platform: yr
 
 # # Text to speech
-# tts:
-#   platform: google
+tts:
+  platform: google
+  cache: true
+  cache_dir: /tmp/tts
+  time_memory: 300
 
 ios:
   push:
@@ -108,9 +102,9 @@ ios:
             activationMode: 'background'
             authenticationRequired: yes
             destructive: yes
-            behavior: 'textInput'
-            textInputButtonTitle: 'Snnoze for?'
-            textInputPlaceholder: 'Placeholder'
+            behavior: 'default'
+            # textInputButtonTitle: 'Snnoze for?'
+            # textInputPlaceholder: 'Placeholder'
 
 emulated_hue:
   type: alexa
@@ -123,11 +117,11 @@ device_tracker:
 #    username: bruce@reeves-kids.com
 #    password: !secret iCloud
 #    account_name: iCloud
-  - platform: nmap_tracker
-    hosts: !secret nmap_hosts
-    track_new_devices: no
-    interval_seconds: 30
-    consider_home: 60
+  # - platform: nmap_tracker
+  #   hosts: !secret nmap_hosts
+  #   track_new_devices: no
+  #   interval_seconds: 30
+  #   consider_home: 60
   - platform: asuswrt
     host: !secret asus_host
     username: !secret asus_username
@@ -136,13 +130,17 @@ device_tracker:
     interval_seconds: 12
     consider_home: 180
 
-  - platform: locative
+  # - platform: locative
 
 media_player:
   - platform: kodi
     host: !secret kodi_host
     name: Kodi_LV
-  - platform: cast
+    port: 80
+  - platform: kodi
+    host: !secret kodi_host_MB
+    name: Kodi_MB
+  # - platform: cast
 
 #notify: !include_dir_named notifiers
 notify: !include notify.yaml
@@ -163,6 +161,12 @@ sensor:
     exclude: ['Community Policing']
     name: Neighborhood Incidents
     radius: 300
+
+mqtt:
+  broker: !secret mqtt_server
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_password
 
 zone:
   name: Home

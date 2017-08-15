@@ -3,9 +3,18 @@ default_view:
   icon: mdi:home
   entities:
   - group.Household
-  - group.Office
   - group.Devices
+  - group.Office
   - group.scenes
+
+location:
+  name: Location
+  view: true
+  icon: mdi:truck-delivery
+  entities:
+  - group.deliveries
+  - group.transit
+  - group.maps
 
 
 automation:
@@ -16,32 +25,6 @@ automation:
   - group.automation_override
   - group.automation_on_demand
   - group.location_controls
-
-sensors:
-  name: Sensors
-  view: true
-  icon: mdi:gauge
-  entities:
-   - group.household
-  # - group.device_location
-  # - group.device_location_testing
-  # - group.weather
-  # - group.indoor_temperature
-  # - group.occupancy
-  # - group.doors
-  # - group.speedtest
-   - group.system
-  # - group.battery_levels
-
-
-location:
-  name: Location
-  view: true
-  icon: mdi:truck-delivery
-  entities:
-  - group.deliveries
-  - group.transit
-  - group.maps
 
 misc_view:
   name: Misc
@@ -59,62 +42,77 @@ misc_view:
     - group.pi_zero
     - group.hassctl
 
+sensors:
+  name: Sensors
+  view: true
+  icon: mdi:gauge
+  entities:
+   - group.household
+   - group.device_location
+   - group.device_location_testing
+  # - group.weather
+  # - group.indoor_temperature
+   - group.occupancy
+  # - group.doors
+  # - group.speedtest
+   - group.system
+   - group.battery_levels
+   
+############################
+# General/Global Groups            
+############################
+
 
 Household:
-- group.bedroom_lamps
-- light.lene_lamp
-- light.bruce_lamp
-- input_boolean.trash
-- input_boolean.weekly_trash_reminder
-- media_player.living_Room
-- media_player.living_room_2
-
-Bedroom lamps:
-- light.lene_lamp
-- light.bruce_lamp
-
-Automation Override:
-- input_boolean.freezer
-- input_boolean.disable_lock_unlock_doors
-- input_boolean.disable_auto_garage
-- input_boolean.plex_lights_disable
-- input_boolean.rainy_day_disable
-- input_boolean.occupancy_lights_off_disable
-- input_boolean.door_open_lights_on
-- input_boolean.occupancy_air_purifier_on_off_disable
-- input_boolean.lights_morning_disable
-- input_boolean.office_lights_sunset
-- input_boolean.exterior_on_sunset
-- input_boolean.exterior_off_night
-- input_boolean.vacation_mode
-- input_boolean.trash
-- input_boolean.weekly_trash_reminder
-- input_boolean.teatimer
-
-Location Controls:
-- input_boolean.bruceaway
-- input_boolean.bruceaway_driving
-- input_boolean.leneaway
-- input_boolean.leneaway_driving
-- input_boolean.brucehome
-- input_boolean.lenehome
-
-
-Automation On Demand:
-- input_boolean.dash_input
-- input_boolean.unlock_doors
-- input_boolean.bedtime
-- input_boolean.vacation_mode
-- input_select.remote
-- input_boolean.restart_hass
-- input_boolean.test_notify
+  control: hidden
+  name: Household Status 
+  entities:
+    - group.bedroom_lamps
+    - light.lene_lamp
+    - light.bruce_lamp
+    - media_player.kodi_lv
+    - media_player.kodi_mb
 
 Devices:
-- device_tracker.openelec
-- device_tracker.freezer
-- sensor.freenas
-- device_tracker.brucesiphone2_ios
-- device_tracker.leneiphone_ios
-- device_tracker.breevs_ipad
+  control: hidden
+  name: Devices 
+  entities:
+    - sensor.openelec
+    - sensor.freezer
+    - sensor.freenas
+    - device_tracker.brucesiphone2_ios
+    - device_tracker.leneiphone_ios
+    - device_tracker.breevs_ipad
+    - device_tracker.recovery
+
+Automation Override:
+  control: hidden
+  name: Automation Override 
+  entities:
+    - input_boolean.freezer
+    - input_boolean.disable_lock_unlock_doors
+    - input_boolean.disable_auto_garage
+    - input_boolean.plex_lights_disable
+    - input_boolean.rainy_day_disable
+    - input_boolean.occupancy_lights_off_disable
+    - input_boolean.door_open_lights_on
+    - input_boolean.occupancy_air_purifier_on_off_disable
+    - input_boolean.lights_morning_disable
+    - input_boolean.office_lights_sunset
+    - input_boolean.exterior_on_sunset
+    - input_boolean.exterior_off_night
+    - input_boolean.vacation_mode
+    - input_boolean.trash
+    - input_boolean.weekly_trash_reminder
+    - input_boolean.teatimer
+    - input_boolean.dash_input
+    - input_boolean.unlock_doors
+    - input_boolean.bedtime
+    - input_boolean.vacation_mode
+    - input_select.remote
+    - input_boolean.restart_hass
+    - input_boolean.test_notify
+
+
 
 

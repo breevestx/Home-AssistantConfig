@@ -37,6 +37,7 @@ Piece by Piece it seems
 - hassaska - https://www.youtube.com/watch?v=zZuwQ9spPkQ
 
 ## Shopping list
-- Sonoff unit for freezer
-- Pi Zero for Bluetooth LE Project
+- Sonoff unit for freezer - BRUH guide to Sonoff https://www.youtube.com/watch?v=-JxPWA-qxAk
+- Pi Zero for Bluetooth LE Project with inkbird thermometer for the smoker
 - ibeacon - http://cnsky9.en.alibaba.com/product/60436149280-0/16_bluetooth_4_0_nordic_beacons_temperature_humidity_sensor_beacon_tag_motion_sensor.html?spm=a2700.8304367.prewdfa4cf.85.6150a83bvUWcpD
+- https://www.youtube.com/watch?v=oBkahrDfUFE https://www.happybubbles.tech/shop/

@@ -1,9 +1,5 @@
 homeassistant: 
   customize:
-    light.bruce_lamp:
-      emulated_hue: false
-    light.lene_lamp:
-      emulated_hue: false
     input_boolean.vacation_mode:
       icon: midi:airplane_takeoff
       emulated_hue_name: "Vacation Mode"

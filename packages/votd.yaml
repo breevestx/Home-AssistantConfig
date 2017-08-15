@@ -1,0 +1,10 @@
+##########################
+## Verse of the day Scrape
+##########################
+
+
+sensor:
+  - platform: scrape
+    resource: https://www.biblegateway.com/
+    select: "votd-box"
+    name: votd

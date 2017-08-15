@@ -2,11 +2,14 @@ homeassistant:
   customize:
     device_tracker.openelec:
       icon: mdi:movie-roll
+    sensor.openelec:
+      icon: mdi:movie-roll
+
 
 sensor:
   - platform: template
     sensors:
-      freenas:
+      openelec:
         friendly_name: 'LV MediaCenter'
         value_template: "{{ 'Online' if is_state('device_tracker.openelec', 'home') else 'Offline' }}"
 

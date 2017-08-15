@@ -1,4 +1,54 @@
-# Example configuration.yaml entry
+################################################################
+## Packages / live scenes
+################################################################
+homeassistant:
+  customize:
+    script.aquarium_scene:
+      friendly_name: 'Aquarium'
+      emulated_hue: true
+      icon: mdi:fish
+    script.sexy_time:
+      friendly_name: 'Sexy Time'
+      emulated_hue: true
+      icon: mdi:heart
+    script.river_scene:
+      friendly_name: 'River'
+      emulated_hue: true
+      icon: mdi:hook
+    script.beach_scene:
+      friendly_name: 'Beach'
+      emulated_hue: true
+      icon: mdi:tower-beach
+    script.jungle_scene:
+      friendly_name: 'Jungle'
+      emulated_hue: true
+      icon: mdi:paw
+    script.fireplace_scene:
+      friendly_name: 'Fire Place'
+      emulated_hue: true
+      icon: mdi:fire
+    script.space_scene:
+      friendly_name: 'Space'
+      emulated_hue: true
+      icon: mdi:earth
+
+
+
+script:
+  space_scene:
+    sequence:
+      - service_template: >-
+          script.kodi_play_file{{ '_bootup' if is_state('sensor.mb_mediacenter', 'Offline') }}
+        data:
+          file: "plugin://plugin.video.youtube/?action=play_video&videoid=NM2wtte1JRE"
+      # - service: light.hue_activate_scene
+      #   data:
+      #     group_name: "Living Room"
+      #     scene_name: "space"
+
+
+
+
 sensor:
   - platform: example
   # - platform: miflora
@@ -12,11 +62,19 @@ sensor:
   #     - temperature
   #     - conductivity
   #     - battery
+
+
 input_boolean:
-   trash_test:  
-     initial: off
+  trash_test:  
+    initial: off
 #   weekly_trash_reminder:
 #     initial: on
+  test_tts:
+    initial: off
+  test_notify:  
+    initial: off  
+  test_hidegroup:  
+    initial: off 
 
 group:
   dev:
@@ -25,7 +83,26 @@ group:
     entities:
     - sensor.example
     - input_boolean.trash_test
+    - input_boolean.test_tts
     - input_boolean.switch_mode
+    - input_boolean.test_hidegroup
+    - group.live_scenes
+    - group.radio
+    - group.alarm_clock
+###### STATE CARD
+
+  live_scenes:
+    control: hidden
+    name: Live Scenes
+    entities:
+      # - script.aquarium_scene
+      # - script.river_scene
+      # - script.beach_scene
+      # - script.sexy_time
+      # - script.jungle_scene
+      - script.good_morning_tts
+      - script.space_scene
+
 
 automation:
    - alias: 'Test Weekly trash check'

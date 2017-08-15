@@ -51,7 +51,7 @@ automation:
     action:
       - service: frontend.set_theme
         data:
-          name: day
+          name: teal
 
 
 

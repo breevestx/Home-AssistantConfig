@@ -1,0 +1,764 @@
+################################################################
+## Packages / Kodi Control
+################################################################
+homeassistant:
+  customize:
+    media_player.Kodi_MB:
+      friendly_name: Bedroom Room KODI
+
+    media_player.Kodi_LV:
+      friendly_name: Living Room KODI
+
+    packages.kodi_control: &customize
+      emulated_hue: false
+      package: 'kodi_control'
+
+    script.baby_cam:
+      <<: *customize
+      friendly_name: Baby Monitor
+      icon: mdi:baby-buggy
+
+    script.steam:
+      <<: *customize
+      friendly_name: Steam Launcher
+      icon: mdi:steam
+
+    script.fireplace:
+      <<: *customize
+      friendly_name: Fireplace
+      icon: mdi:playlist-play
+
+    script.auto_all_tv:
+      <<: *customize
+      friendly_name: All TV
+      icon: mdi:playlist-play
+
+    script.auto_pawpatrol:
+      <<: *customize
+      friendly_name: Paw Partol
+      icon: mdi:playlist-play
+
+    script.auto_moana:
+      <<: *customize
+      friendly_name: Moana
+      icon: mdi:playlist-play
+
+    script.kodi_play:
+      <<: *customize
+      friendly_name: Play
+      icon: mdi:play
+
+    script.kodi_pause:
+      <<: *customize
+      friendly_name: Pause
+      icon: mdi:pause
+
+    script.kodi_playpause:
+      <<: *customize
+      friendly_name: Play / Pause
+      icon: mdi:play-pause
+
+    script.kodi_stop:
+      <<: *customize
+      friendly_name: Stop
+      icon: mdi:stop
+
+    script.kodi_next:
+      <<: *customize
+      friendly_name: Next
+      icon: mdi:skip-next
+
+    script.kodi_previous:
+      <<: *customize
+      friendly_name: Previous
+      icon: mdi:skip-previous
+
+    script.kodi_nav_back:
+      <<: *customize
+      friendly_name: Back
+      icon: mdi:backspace
+
+    script.kodi_nav_up:
+      <<: *customize
+      friendly_name: Up
+      icon: mdi:arrow-up-bold-circle
+
+    script.kodi_nav_down:
+      <<: *customize
+      friendly_name: Down
+      icon: mdi:arrow-down-bold-circle
+
+    script.kodi_nav_left:
+      <<: *customize
+      friendly_name: Left
+      icon: mdi:arrow-left-bold-circle
+
+    script.kodi_nav_right:
+      <<: *customize
+      friendly_name: Right
+      icon: mdi:arrow-right-bold-circle
+
+    script.kodi_nav_select:
+      <<: *customize
+      friendly_name: Select
+      icon: mdi:circle
+
+    script.kodi_update_video_library:
+      <<: *customize
+      friendly_name: Update Video Library
+      icon: mdi:update
+
+    script.kodi_clean_video_library:
+      <<: *customize
+      friendly_name: Clean Video Library
+      icon: mdi:nuke
+
+    script.kodi_update_audio_library:
+      <<: *customize
+      friendly_name: Update Audio Library
+      icon: mdi:update
+
+    script.kodi_clean_audio_library:
+      <<: *customize
+      friendly_name: Clean Audio Library
+      icon: mdi:music
+
+###### STATE CARD
+group:
+  Kodi:
+    name: Kodi MB
+    view: true
+    icon: mdi:play-pause
+    entities:
+     - group.kodi_control
+     - group.playlists
+     - group.kodi_utilities
+
+
+  kodi_utilities:
+    control: hidden
+    name: Kodi Utilities
+    entities:
+      - script.kodi_update_video_library
+      - script.kodi_clean_video_library
+      - script.kodi_update_audio_library
+      - script.kodi_clean_audio_library
+      - script.baby_cam
+      - script.steam
+
+  kodi_control:
+    control: hidden
+    name: Kodi Control
+    entities:
+      - script.kodi_play
+      - script.kodi_playpause
+      - script.kodi_stop
+      - script.kodi_nav_back
+      - script.kodi_next
+      - script.kodi_previous
+      - script.kodi_nav_up
+      - script.kodi_nav_down
+      - script.kodi_nav_left
+      - script.kodi_nav_right
+      - script.kodi_nav_select
+
+  playlists:
+    control: hidden
+    name: Playlists
+    entities:
+      - script.auto_all_tv
+      - script.fireplace
+      - script.auto_pawpatrol
+      - script.auto_moana
+      - script.kodi_youtbe
+
+script:
+  ################################################
+  ## Living Room -CARTOONS
+  ################################################
+  fireplace:
+    sequence:
+      # - service_template: >-
+      #     script.kodi_play_file{{ '_bootup' if is_state('sensor.mb_mediacenter', 'Offline') }}
+      #   data:
+      #     file: "/storage/videos/Fire-1.mp4"
+      - service: media_player.play_media
+        entity_id: media_player.kodi_mb
+        data:
+          media_content_id: "/storage/videos/Fire-1.mp4"
+          media_content_type: VIDEO
+
+
+  ################################################
+  ## Living Room - All TV
+  ################################################
+  auto_all_tv:
+    sequence:
+      - service_template: >-
+          script.kodi_play_file{{ '_bootup' if is_state('sensor.mb_mediacenter', 'off') }}
+        data:
+          file: "c:/Users/Living Room/AppData/Roaming/Kodi/userdata/playlists/video/all.xsp"
+
+  ################################################
+  ## Living Room - Paw Patrol
+  ################################################
+  auto_pawpatrol:
+    sequence:
+      - service_template: >-
+          script.kodi_play_file{{ '_bootup' if is_state('sensor.mb_mediacenter', 'off') }}
+        data:
+          file: "c:/Users/Living Room/AppData/Roaming/Kodi/userdata/playlists/video/pawpatrol.xsp"
+
+  ################################################
+  ## Living Room -Moana
+  ################################################
+  auto_moana:
+    sequence:
+      - service_template: >-
+          script.kodi_play_file{{ '_bootup' if is_state('sensor.mb_mediacenter', 'off') }}
+        data:
+          file: "c:/Users/Living Room/AppData/Roaming/Kodi/userdata/playlists/video/moanag.xsp"
+
+  ################################################
+  ## Kodi Commands
+  ################################################
+  kodi_defaults:
+    sequence:
+      - service: shell_command.curl
+        data: &defaults
+          url: !secret kodi_MB_json
+          method: "post"
+          headers:
+            content-type: "application/json"
+
+  kodi_play_file:
+    sequence:
+      - service: shell_command.curl
+        # We need full config here since we're using data_template
+        data_template:
+          url: !secret kodi_MB_json
+          method: "post"
+          headers:
+            content-type: "application/json"
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.Open"
+            params:
+              item:
+                file: "{{ file }}"
+
+  kodi_play_file_bootup:
+    sequence:
+      # - service: switch.turn_on
+      #   entity_id: sensor.mb_mediacenter
+      - delay: '00:01:30'
+      - service: script.kodi_play_file
+        data_template:
+          file: "{{ file }}"
+
+###### ADDONS
+  baby_cam:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            method: "Addons.ExecuteAddon"
+            params:
+              wait: false
+              addonid: "script.securitycam"
+
+  steam:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            method: "Addons.ExecuteAddon"
+            params:
+              wait: false
+              addonid: "script.steam.launcher"
+
+###### MANAGE Library
+  kodi_update_video_library:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            method: "VideoLibrary.Scan"
+
+  kodi_clean_video_library:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            method: "VideoLibrary.Clean"
+
+  kodi_update_audio_library:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            method: "AudioLibrary.Scan"
+
+  kodi_clean_audio_library:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            method: "AudioLibrary.Clean"
+
+  kodi_playpause:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.PlayPause"
+            params:
+              playerid: 1
+
+  kodi_play:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.PlayPause"
+            params:
+              playerid: 1
+              play: true
+
+  kodi_pause:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.PlayPause"
+            params:
+              playerid: 1
+              play: false
+
+  kodi_stop:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.Stop"
+            params:
+              playerid: 1
+
+  kodi_next:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.GoTo"
+            params:
+              playerid: 1
+              to: "next"
+
+  kodi_previous:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.GoTo"
+            params:
+              playerid: 1
+              to: "previous"
+
+  kodi_speed_1x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: 1
+
+  kodi_speed_2x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: 2
+
+  kodi_speed_4x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: 4
+
+  kodi_speed_8x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: 8
+
+  kodi_speed_16x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: 16
+
+  kodi_speed_32x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: 32
+
+  kodi_speed_n2x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: -2
+
+  kodi_speed_n4x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: -4
+
+  kodi_speed_n8x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: -8
+
+  kodi_speed_n16x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: -16
+
+  kodi_speed_n32x:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetSpeed"
+            params:
+              playerid: 1
+              speed: -32
+
+  kodi_seek_forward:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.Seek"
+            params:
+              playerid: 1
+              value: "smallforward"
+
+  kodi_seek_backward:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.Seek"
+            params:
+              playerid: 1
+              value: "smallbackward"
+
+  kodi_repeat_one:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetRepeat"
+            params:
+              playerid: 1
+              repeat: "one"
+
+  kodi_repeat_all:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetRepeat"
+            params:
+              playerid: 1
+              repeat: "all"
+
+  kodi_repeat_off:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetRepeat"
+            params:
+              playerid: 1
+              repeat: "off"
+
+  kodi_shuffle_on:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetShuffle"
+            params:
+              playerid: 1
+              shuffle: true
+
+  kodi_shuffle_off:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Player.SetShuffle"
+            params:
+              playerid: 1
+              shuffle: false
+
+  kodi_nav_back:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Back"
+
+  kodi_nav_select:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Select"
+
+  kodi_nav_left:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Left"
+
+  kodi_nav_right:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Right"
+
+  kodi_nav_up:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Up"
+
+  kodi_nav_down:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Down"
+
+  kodi_nav_home:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Home"
+
+  kodi_nav_info:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.Info"
+
+  kodi_nav_show_osd:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.ShowOSD"
+
+  kodi_nav_context_menu:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.ContextMenu"
+
+  kodi_nav_show_codec:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.ShowCodec"
+
+  kodi_nav_page_down:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.ExecuteAction"
+            params:
+              action: "pagedown"
+
+  kodi_nav_page_up:
+    sequence:
+      - service: shell_command.curl
+        data:
+          <<: *defaults
+          payload:
+            jsonrpc: "2.0"
+            id: 1
+            method: "Input.ExecuteAction"
+            params:
+              action: "pageup"

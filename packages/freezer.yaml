@@ -1,19 +1,19 @@
 homeassistant:
   customize:
-    device_tracker.freezer:
+    device_tracker.raspberrypi:
       icon: mdi:fridge
 
-device_tracker:
-  - platform: ping
-    hosts:
-      freezer: 192.168.100.13
+# device_tracker:
+#   - platform: ping
+#     hosts:
+#       freezer: 192.168.100.13
 
 sensor:
   - platform: template
     sensors:
       freezer:
         friendly_name: 'Freezer'
-        value_template: "{{ 'Online' if is_state('device_tracker.freezer', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberrypi', 'home') else 'Offline' }}"
 
 input_boolean:
   freezer:
@@ -30,12 +30,12 @@ automation:
       value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
   trigger:
     - platform: state
-      entity_id: device_tracker.freezer
+      entity_id: device_tracker.raspberrypi
       to: 'Offline'
       for:
         minutes: 2
     - platform: state
-      entity_id: device_tracker.freezer
+      entity_id: device_tracker.raspberrypi
       to: 'Offline'
   action:
     - service: homeassistant.turn_off
@@ -63,12 +63,12 @@ automation:
       value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
   trigger:
     - platform: state
-      entity_id: device_tracker.freezer
+      entity_id: device_tracker.raspberrypi
       to: 'Online'
       for:
         minutes: 2
     - platform: state
-      entity_id: device_tracker.freezer
+      entity_id: device_tracker.raspberrypi
       to: 'Online'
   action:
     - service: homeassistant.turn_on

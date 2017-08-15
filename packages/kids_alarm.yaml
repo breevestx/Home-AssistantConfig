@@ -1,0 +1,155 @@
+##########  ############################################################
+##  Morning wakeup for the kids
+## 
+##
+##
+######################################################################
+group:
+  Alarm Clock:
+    # hidecontrol: yes
+    entities:
+      - input_slider.slider_hours
+      - input_slider.slider_minutes
+      - input_boolean.alarmweekday
+      - automation.alarm_clock
+      - script.kids_tts_warn
+      - script.kids_tts_wake
+
+input_slider:
+  slider_hours:
+    name: Hours
+    initial: 7
+    min: 0
+    max: 23
+    step: 1
+
+  slider_minutes:
+    name: Minutes
+    initial: 0
+    min: 0
+    max: 59
+    step: 1
+
+input_boolean:
+  alarmweekday:
+    name: Weekdays Only
+    initial: off
+    icon: mdi:alarm
+
+
+##################################
+## MQTT Alarm States
+##################################
+
+sensor:
+  - platform: mqtt
+    state_topic: "/home/inbed/kahlan"
+    name: "Kahlan in Bed"
+    value_template: "{{ value }}"
+  - platform: mqtt
+    state_topic: "/home/inbed/braelyn"
+    name: "Braelyn in Bed"
+    value_template: "{{ value }}"
+  - platform: mqtt
+    state_topic: "/home/inbed/kent"
+    name: "Kent in Bed"
+    value_template: "{{ value }}"
+  - platform: mqtt
+    state_topic: "/home/inbed/bennett"
+    name: "Bennett in Bed"
+    value_template: "{{ value }}"
+
+###############################################################################
+#  Automation - Saves Switch State to MQTT
+###############################################################################
+automation:
+  - alias: Save Kid States to MQTT
+    initial_state: true
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id: switch.switch_one, switch.switch_two, switch.switch_three, switch.switch_four, switch.switch_five
+    action:
+      service: mqtt.publish
+      data_template:
+        topic: "/home/inbed/{{ trigger.entity_id.split('.')[1] }}"
+        retain: true
+        qos: 1
+        payload: '{{ trigger.to_state.state }}'
+
+  - alias: "TTS Notification - Kids"
+    # initial_state: False
+    trigger:
+      - platform: state
+        entity_id: input_boolean.test_tts
+        from: 'off'
+        to: 'on'
+    action:
+      - service: script.kids_tts_warn
+
+
+  - alias: 'Alarm Clock'
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00
+    condition:
+      - condition: template
+        value_template: >
+          {% if states.sensor.time.state.split(':')[0] |int == states.input_slider.slider_hours.state |int %}
+            true
+          {% else %}
+            false
+          {% endif %}
+      - condition: template
+        value_template: >
+          {% if states.sensor.time.state.split(':')[1]  |int == states.input_slider.slider_minutes.state |int %}
+            true
+          {% else %}
+            false
+          {% endif %}
+    action:
+      - service: script.kids_tts_wake
+
+
+###########################################################
+# Scripts
+###########################################################
+
+script:
+    kids_tts_warn:
+      sequence:
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.volumio_tts
+            volume_level: '0.7'      
+        - service: tts.google_say
+          data_template:
+            entity_id: media_player.volumio_tts
+            message: >
+              It is about time to get up, you have 10 more minutes to sleep
+        # - service: notify.slack__dev
+        #   data_template:
+        #     message: >
+        #       It is about time to get up, you have 10 more minutes to see
+    kids_tts_wake:
+      sequence:
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.volumio_tts
+            volume_level: '0.7'
+        - service: media_player.play_media
+          data_template:
+            entity_id: media_player.volumio_tts
+            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/two-tone-chime.mp3"
+            media_content_type: audio/mp3     
+        # - service: tts.google_say
+        #   data_template:
+        #     entity_id: media_player.volumio_tts
+        #     message: >
+        #       It is about time to get up, you have 10 more minutes to sleep
+        # - service: notify.slack__dev
+        #   data_template:
+        #     message: >
+        #       It is about time to get up, you have 10 more minutes to see
+

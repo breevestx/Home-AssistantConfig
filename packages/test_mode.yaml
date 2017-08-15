@@ -1,6 +1,3 @@
-input_boolean:
-  test_notify:  
-    initial: off  
 
 automation:
   alias: Out of Office

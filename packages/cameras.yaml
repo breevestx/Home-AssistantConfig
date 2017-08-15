@@ -1,5 +1,5 @@
 android_ip_webcam:
-    host: 192.168.100.190
+    host: 192.168.100.191
     port: 8080
     name: ipwebcam
     sensors:
@@ -12,7 +12,7 @@ ffmpeg:
 
 binary_sensor:
   - platform: ffmpeg_motion
-    input: http://192.168.100.190:8080/video
+    input: http://192.168.100.191:8080/video
 
 group:
   cameras:

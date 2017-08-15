@@ -1,0 +1,32 @@
+
+
+sensor:
+  # - platform: command_line
+  #   name: Occasion
+  #   command: "python3 occasion.py"
+  - platform: template
+    sensors:
+      test_hidegroup_state:
+        value_template: "{{ 'True' if is_state('input_boolean.test_hidegroup', 'on') else 'False' }}"
+
+
+script:
+  group_visibility:
+    sequence:
+      - service: group.set_visibility
+        data_template:
+          entity_id: '{{ entity_id }}'
+          visible: '{{ is_state(cond, visible_state) }}'
+
+
+automation:
+  - alias: Evening Active Scenes
+    trigger:
+       - platform: time
+         at: '17:00:00'
+    action:
+      service: script.group_visibility
+      data:
+        entity_id: group.bedroom_scenes
+        cond: input_boolean.test_hidegroup
+        visible_state: 'on'

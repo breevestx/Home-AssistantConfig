@@ -1,0 +1,30 @@
+##############################
+##  Media players Consolodated
+##############################
+
+media_player:
+
+### Volumio TTS
+
+  - platform: mpd
+    host: !secret volumio_url
+    port: !secret volumio_mpd_port
+    name: Volumio TTS
+
+### Volumio
+
+  - platform: volumio
+    host: !secret volumio_url
+    port: !secret volumio_port
+    name: Volumio
+
+### Kodi units
+
+  - platform: kodi
+    host: !secret kodi_host_MB
+    name: Kodi_MB
+
+  - platform: kodi
+    host: !secret kodi_host
+    name: Kodi_LV
+    port: 80

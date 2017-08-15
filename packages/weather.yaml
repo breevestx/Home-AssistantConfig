@@ -7,6 +7,7 @@ homeassistant:
     sensor.pws_alerts:
       icon: mdi:alert-outline 
       friendly_name: Alerts 
+
 group:
   weather_view:
     name: Weather Data
@@ -28,9 +29,6 @@ group:
     - sensor.dark_sky_daily_summary
     - camera.lawton_doppler_weather
 
-  Weather Alert:
-    - sensor.pws_alerts
-
 camera:
   - platform: generic
     name: Lawton Doppler Weather
@@ -42,6 +40,7 @@ sensor:
     api_key: !secret wunderground_api
     monitored_conditions:
       - alerts
+      - UV
   - platform: darksky
     api_key: !secret darksky_key
     monitored_conditions:
@@ -70,6 +69,39 @@ sensor:
       - apparent_temperature_max
       - apparent_temperature_min
       - precip_intensity_max
+  - platform: template
+    sensors:
+      weather_report:
+        value_template: >
+          The weather is {{states('sensor.dark_sky_minutely_summary')[:-1]|lower}} and {{states('sensor.dark_sky_apparent_temperature') | round}} degrees. Today's high is {{states('sensor.dark_sky_daily_high_temperature')| round}} with a low of {{states('sensor.dark_sky_daily_low_temperature') | round}}.
+          {%- if states.sensor.pws_uv.state|int == 0 -%}
+          {%- else -%}
+          {{' '}}The current UV index is {{states('sensor.pws_uv')}} with a burn time of {{states('sensor.uv_burn_time')}} minutes.
+          {%- endif -%}
+      weather_inside_vs_outside:
+        value_template: >
+          {% if 73 >  (states.sensor.dark_sky_apparent_temperature.state | float) %}
+          true
+          {% else %}
+          false
+          {% endif %}
+
+#{% if (states.sensor.average_house_temp.state | float) >  (states.sensor.dark_sky_apparent_temperature.state | float) %}
+#######  UV
+# http://beautyinthebackcountry.com/2013/04/09/uv-index-and-spf-explained/
+      uv_burn_time:
+        unit_of_measurement: Minutes
+### SUB IN CORRECT VALUE FOR YOUR SKIN#################################################################################################################################
+### Celtic"all babies and children" = 67Min // caucasian = 100Min // Central Europe = 200Min // south american = 200Min // Middle Eastern = 400Min // African = 500Min
+        value_template: >
+          {% if is_state('sensor.pws_uv', '0.0') %}
+            0
+          {% elif is_state('sensor.pws_uv', '-1') %}
+            0
+          {% else %}
+            {{ (100 / states.sensor.pws_uv.state | float) | round }}
+          {% endif %}
+
 
 # automation:
 #   - alias: Announce alerts

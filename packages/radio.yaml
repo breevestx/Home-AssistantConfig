@@ -1,0 +1,83 @@
+################################################################
+## Packages / Radio
+################################################################
+homeassistant:
+  customize:
+    script.radio:
+      friendly_name: Start Radio
+      icon: mdi:radio
+      
+###### STATE CARD
+group:
+  Radio:
+    name: Radio
+    entities:
+      - input_select.radio_station_location
+      - input_select.radio_station
+      - input_slider.volume_radio
+      - script.radio
+      - media_player.volumio_tts
+
+###### SELECT LOCATION AND STATION
+script:
+  radio:
+    sequence:
+      - service: media_player.play_media
+        data_template:
+          entity_id: >
+            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio_tts
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio_tts
+            {% endif %}
+          media_content_id: >
+            {% if is_state('input_select.radio_station', 'Dancehall Link') %} http://stream.radio.co/s30d82be5e/listen
+            {% elif is_state('input_select.radio_station', 'Energy 98') %} http://174.127.85.10:8800
+            {% elif is_state('input_select.radio_station', 'Hit Remixes') %} http://149.56.23.7:20252/stream
+            {% elif is_state('input_select.radio_station', 'Play Radio') %} http://176.9.31.78:8222
+            {% elif is_state('input_select.radio_station', '90s Hits') %} http://rfcmedia.streamguys1.com/90hits.mp3
+            {% endif %}
+          media_content_type: 'audio/mp3'
+
+###### VOLUME SLIDER CONTROL (LOCATION BASED)
+automation:
+  - alias: 'Set Radio Volume'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: input_slider.volume_radio
+    action:
+      - service: media_player.volume_set
+        data_template:
+          entity_id: >
+            {% if is_state("input_select.radio_station_location", "Office") %} media_player.volumio_tts
+            {% elif is_state("input_select.radio_station_location", "All Zones") %} media_player.volumio_tts
+            {% endif %}
+          volume_level: '{{  states.input_slider.volume_radio.state  }}'
+
+input_slider:
+  volume_radio:
+    name: Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
+
+###### SELECTORS
+input_select:
+  radio_station:
+    name: Radio Station
+    options:
+      - "-"
+      - Dancehall Link
+      - Energy 98
+      - Hit Remixes
+      - Play Radio
+      - 90s Hits
+    initial: "-"
+    icon: mdi:radio
+  radio_station_location:
+    name: Radio Location
+    options:
+      - Office
+      - All Zones
+    initial: "All Zones"
+    icon: mdi:radio
