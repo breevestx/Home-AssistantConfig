@@ -36,6 +36,27 @@ input_boolean:
     initial: off
     icon: mdi:alarm
 
+###### SELECTORS
+input_select:
+  radio_station:
+    name: Radio Station
+    options:
+      - "-"
+      - Dancehall Link
+      - Energy 98
+      - Hit Remixes
+      - Play Radio
+      - 90s Hits
+    initial: "-"
+    icon: mdi:radio
+  radio_station_location:
+    name: Radio Location
+    options:
+      - Office
+      - All Zones
+    initial: "All Zones"
+    icon: mdi:radio
+
 
 ##################################
 ## MQTT Alarm States
@@ -141,15 +162,24 @@ script:
         - service: media_player.play_media
           data_template:
             entity_id: media_player.volumio_tts
-            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/two-tone-chime.mp3"
+            #media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/two-tone-chime.mp3"
+            #media_content_id: >
+            {% if is_state('input_select.radio_station', 'Dancehall Link') %} http://stream.radio.co/s30d82be5e/listen
+            {% elif is_state('input_select.radio_station', 'Energy 98') %} http://174.127.85.10:8800
+            {% elif is_state('input_select.radio_station', 'Hit Remixes') %} http://149.56.23.7:20252/stream
+            {% elif is_state('input_select.radio_station', 'Play Radio') %} http://176.9.31.78:8222
+            {% elif is_state('input_select.radio_station', '90s Hits') %} http://rfcmedia.streamguys1.com/90hits.mp3
+            {% endif %}
+            media_content_id: "/data/INTERNAL/Alarm-Tone.mp3"
             media_content_type: audio/mp3     
-        # - service: tts.google_say
-        #   data_template:
-        #     entity_id: media_player.volumio_tts
-        #     message: >
-        #       It is about time to get up, you have 10 more minutes to sleep
-        # - service: notify.slack__dev
-        #   data_template:
-        #     message: >
-        #       It is about time to get up, you have 10 more minutes to see
+        - service: tts.google_say
+          data_template:
+            entity_id: media_player.volumio_tts
+            message: >
+              {% set time = states('sensor.time_date') %}
+              It is time to get up!! <break time='0.5s'/> Today is {{time}} <break time='0.5s'/> It is time to get up
+        - service: notify.slack__dev
+          data_template:
+            message: >
+              kids alarm is going off
 
