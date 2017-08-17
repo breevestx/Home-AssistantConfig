@@ -73,8 +73,8 @@ sensor:
       - type: since_last_boot
       - type: disk_use_percent
         arg: /
-      # - type: process
-      #   arg: mosquitto
+      - type: process
+        arg: mosquitto
       # - type: process
       #   arg: homebridge
   - platform: template
@@ -125,6 +125,25 @@ sensor:
     resource: http://ip.jsontest.com
     name: External IP
     value_template: '{{ value_json.ip }}'
+
+  - platform: glances
+    host: !secret glances_IP
+    resources:
+      - 'disk_use_percent'
+      - 'disk_use'
+      - 'disk_free'
+      - 'memory_use_percent'
+      - 'memory_use'
+      - 'memory_free'
+      - 'swap_use_percent'
+      - 'swap_use'
+      - 'swap_free'
+      - 'processor_load'
+      - 'process_running'
+      - 'process_total'
+      - 'process_thread'
+      - 'process_sleeping'
+      - 'cpu_temp'
 
 ###### VERSIONS
   - platform: command_line

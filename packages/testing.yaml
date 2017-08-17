@@ -87,10 +87,10 @@ group:
     - input_boolean.switch_mode
     - input_boolean.test_hidegroup
     - group.live_scenes
-    - group.radio
-    - group.alarm_clock
-###### STATE CARD
-
+    - sensor.date_weekday
+    - sensor.date_month
+    - sensor.date_day
+ 
   live_scenes:
     control: hidden
     name: Live Scenes

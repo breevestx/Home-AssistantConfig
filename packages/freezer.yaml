@@ -1,7 +1,11 @@
 homeassistant:
   customize:
-    device_tracker.raspberrypi:
+    sensor.freezer:
       icon: mdi:fridge
+    sensor.freezer-mqtt:
+      icon: mdi:fridge
+    device_tracker.raspberrypi:
+      icon: mdi:thermometer
 
 # device_tracker:
 #   - platform: ping
@@ -14,75 +18,99 @@ sensor:
       freezer:
         friendly_name: 'Freezer'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberrypi', 'home') else 'Offline' }}"
+  - platform: mqtt
+    state_topic: "/home/freezer"
+    name: "freezer-mqtt"
+    value_template: "{{ value }}"
+  - platform: mqtt
+    state_topic: "/home/freezer"
+    name: Foyer Humidity
+    unit_of_measurement: '%'
+    value_template: '{{value_json.humidity | round(1)}}'
+  - platform: mqtt
+    state_topic: "/home/freezer"
+    name: Foyer Temperature
+    unit_of_measurement: 'F'
+    value_template: '{{value_json.temperature | round(1)}}'
+  - platform: mqtt
+    state_topic: "/home/freezer"
+    name: Foyer Lux
+    unit_of_measurement: 'LUX'
+    value_template: '{{value_json.ldr}}'
+  - platform: mqtt
+    state_topic: "/home/freezer"
+    name: Foyer Real Feel
+    unit_of_measurement: 'F'
+    value_template: '{{value_json.heatIndex | round(1)}}'
 
 input_boolean:
   freezer:
     name: Freezer
     initial: on
 
-automation:
-- alias: 'Freezer Off'
-  condition:
-    - condition: state
-      entity_id: input_boolean.freezer
-      state: 'on'
-    - condition: template
-      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
-  trigger:
-    - platform: state
-      entity_id: device_tracker.raspberrypi
-      to: 'Offline'
-      for:
-        minutes: 2
-    - platform: state
-      entity_id: device_tracker.raspberrypi
-      to: 'Offline'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.freezer
-    - service: logbook.log
-      data_template:
-        name: "Freezer Off: "
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} is offline so the freezer might be off.
-          {%- endfor -%}
-    - service: notify.notify
-      data_template:
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} is offline so the freezer might be off.
-          {%- endfor -%}
+# automation:
+# - alias: 'Freezer Off'
+#   condition:
+#     - condition: state
+#       entity_id: input_boolean.freezer
+#       state: 'on'
+#     - condition: template
+#       value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
+#   trigger:
+#     - platform: state
+#       entity_id: device_tracker.raspberrypi
+#       to: 'Offline'
+#       for:
+#         minutes: 2
+#     - platform: state
+#       entity_id: device_tracker.raspberrypi
+#       to: 'Offline'
+#   action:
+#     - service: homeassistant.turn_off
+#       entity_id: input_boolean.freezer
+#     - service: logbook.log
+#       data_template:
+#         name: "Freezer Off: "
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} is offline so the freezer might be off.
+#           {%- endfor -%}
+#     - service: notify.notify
+#       data_template:
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} is offline so the freezer might be off.
+#           {%- endfor -%}
 
-- alias: 'Freezer On'
-  condition:
-    - condition: state
-      entity_id: input_boolean.freezer
-      state: 'off'
-    - condition: template
-      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
-  trigger:
-    - platform: state
-      entity_id: device_tracker.raspberrypi
-      to: 'Online'
-      for:
-        minutes: 2
-    - platform: state
-      entity_id: device_tracker.raspberrypi
-      to: 'Online'
-  action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.freezer
-    - service: logbook.log
-      data_template:
-        name: "Freezer On: "
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} is online so the freezer should be on.
-          {%- endfor -%}
-    - service: notify.notify
-      data_template:
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} is online so the freezer should be on.
-          {%- endfor -%}
+# - alias: 'Freezer On'
+#   condition:
+#     - condition: state
+#       entity_id: input_boolean.freezer
+#       state: 'off'
+#     - condition: template
+#       value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
+#   trigger:
+#     - platform: state
+#       entity_id: device_tracker.raspberrypi
+#       to: 'Online'
+#       for:
+#         minutes: 2
+#     - platform: state
+#       entity_id: device_tracker.raspberrypi
+#       to: 'Online'
+#   action:
+#     - service: homeassistant.turn_on
+#       entity_id: input_boolean.freezer
+#     - service: logbook.log
+#       data_template:
+#         name: "Freezer On: "
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} is online so the freezer should be on.
+#           {%- endfor -%}
+#     - service: notify.notify
+#       data_template:
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} is online so the freezer should be on.
+#           {%- endfor -%}

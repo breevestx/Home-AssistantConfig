@@ -11,7 +11,7 @@ media_player:
     port: !secret volumio_mpd_port
     name: Volumio TTS
 
-### Volumio
+### Volumio Kids rooms
 
   - platform: volumio
     host: !secret volumio_url
@@ -28,3 +28,5 @@ media_player:
     host: !secret kodi_host
     name: Kodi_LV
     port: 80
+
+  - platform: cast

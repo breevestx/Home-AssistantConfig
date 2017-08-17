@@ -34,6 +34,10 @@ http:
   api_password: !secret http_password
   # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret base_url
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
 
 # Checks for available updates
 updater:
@@ -113,15 +117,6 @@ emulated_hue:
 
 
 device_tracker:
-# - platform: icloud
-#    username: bruce@reeves-kids.com
-#    password: !secret iCloud
-#    account_name: iCloud
-  # - platform: nmap_tracker
-  #   hosts: !secret nmap_hosts
-  #   track_new_devices: no
-  #   interval_seconds: 30
-  #   consider_home: 60
   - platform: asuswrt
     host: !secret asus_host
     username: !secret asus_username
@@ -129,18 +124,6 @@ device_tracker:
     track_new_devices: no
     interval_seconds: 12
     consider_home: 180
-
-  # - platform: locative
-
-media_player:
-  - platform: kodi
-    host: !secret kodi_host
-    name: Kodi_LV
-    port: 80
-  - platform: kodi
-    host: !secret kodi_host_MB
-    name: Kodi_MB
-  # - platform: cast
 
 #notify: !include_dir_named notifiers
 notify: !include notify.yaml

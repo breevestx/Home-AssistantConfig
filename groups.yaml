@@ -80,9 +80,9 @@ Devices:
     - sensor.openelec
     - sensor.freezer
     - sensor.freenas
-    - device_tracker.brucesiphone2_ios
-    - device_tracker.leneiphone_ios
-    - device_tracker.breevs_ipad
+    - sensor.bruce
+    - sensor.lene
+    - sensor.kahlan
     - device_tracker.recovery
 
 Automation Override:

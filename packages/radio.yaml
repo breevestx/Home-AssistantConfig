@@ -18,6 +18,15 @@ group:
       - script.radio
       - media_player.volumio_tts
 
+  Radio_view:
+    name: Volumio
+    view: yes
+    icon: mdi:radio
+    entities:
+      - group.radio
+      - group.alarm_clock
+
+
 ###### SELECT LOCATION AND STATION
 script:
   radio:

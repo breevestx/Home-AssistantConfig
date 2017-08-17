@@ -1,1 +1,16 @@
-
+	group.location:
+	  order: 2
+	group.weather:
+	  order: 3
+	group.alarm:
+	  order: 4
+	group.radio_view:
+	  order: 5
+    group.sensors:
+      order: 96
+	group.misc_view:
+	  order: 97
+	group.automation:
+	  order: 98
+	group.dev:
+	  order: 99

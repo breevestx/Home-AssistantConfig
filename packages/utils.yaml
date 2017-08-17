@@ -28,7 +28,6 @@ group:
     control: hidden
     entities:
       #- script.refresh_devices
-      - group.system
       - script.restart_ha
       - script.update_ha
       - script.clear_log

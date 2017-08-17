@@ -6,5 +6,5 @@
 sensor:
   - platform: scrape
     resource: https://www.biblegateway.com/
-    select: "votd-box"
+    select: ".votd-box"
     name: votd

@@ -106,6 +106,8 @@ automation:
       entity_id:
       - device_tracker.brucesiphone2_ios
       - device_tracker.leneiphone_ios
+      - device_tracker.kahlans_iphone_ios
+      - device_tracker.breevsipad
       value_template: '{{ state.attributes.battery }}'
       below: 30
     action:
@@ -138,7 +140,7 @@ automation:
         data_template:
           message: >
             {%- set responses = [
-            'It just tickles me pink to remind you that I turned the lights off for you.',
-            'Well isn\'t it just a breath of fresh air to know I can take care of turning lights off while your away?',
-            'Got you covered, vacation lights are off.'] -%}
+            'It just tickles me pink to remind you that I turned the lights on for you.',
+            'Well isn\'t it just a breath of fresh air to know I can take care of turning lights on while your away?',
+            'Got you covered, lamps are are on.'] -%}
             Bruce> {{ responses | random }}

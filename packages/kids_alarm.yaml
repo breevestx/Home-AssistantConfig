@@ -4,16 +4,60 @@
 ##
 ##
 ######################################################################
+homeassistant:
+  customize:
+    switch.kahlan_bed:
+      icon: mdi:hotel 
+      emulated_hue: true
+      emulated_hue_name: "Kahlan Alarm"
+      friendly_name: Kahlan Alarm
+
+    switch.braelyn_bed:
+      icon: mdi:hotel 
+      emulated_hue: true
+      emulated_hue_name: "Braelyn Alarm"
+      friendly_name: Braelyn Alarm
+
+    switch.kent_bed:
+      icon: mdi:hotel 
+      emulated_hue: true
+      emulated_hue_name: "Kent Alarm"
+      friendly_name: Kent Alarm
+  
+    switch.bennett_bed:
+      icon: mdi:hotel 
+      emulated_hue: true
+      emulated_hue_name: "Bennett Alarm"
+      friendly_name: Bennett Alarm      
+
 group:
   Alarm Clock:
-    # hidecontrol: yes
+    name: Alarm Clock
+    view: true
+    icon: mdi:clock
+    entities:
+      - group.controls
+      - group.kids
+
+  Controls:
+    control: hidden
     entities:
       - input_slider.slider_hours
       - input_slider.slider_minutes
+      # - input_select.alarm_tone
       - input_boolean.alarmweekday
-      - automation.alarm_clock
+      - input_boolean.alarmstate
       - script.kids_tts_warn
       - script.kids_tts_wake
+
+  kids:
+    control: hidden
+    entities:  
+      - switch.kahlan_bed
+      - switch.braelyn_bed
+      - switch.kent_bed
+      - switch.bennett_bed
+      - automation.kids_in_bed
 
 input_slider:
   slider_hours:
@@ -36,102 +80,172 @@ input_boolean:
     initial: off
     icon: mdi:alarm
 
-###### SELECTORS
-input_select:
-  radio_station:
-    name: Radio Station
-    options:
-      - "-"
-      - Dancehall Link
-      - Energy 98
-      - Hit Remixes
-      - Play Radio
-      - 90s Hits
-    initial: "-"
-    icon: mdi:radio
-  radio_station_location:
-    name: Radio Location
-    options:
-      - Office
-      - All Zones
-    initial: "All Zones"
-    icon: mdi:radio
+  alarmstate:
+    name: Alarm State
+    initial: on
+    icon: mdi:alarm
+
+  alarm_has_gone_off:
+    name: Alarm Has Gone off
+    initial: off
+    icon: mdi:alarm
+
+# ###### SELECTORS
+# input_select:
+#   alarm_tone:
+#     name: Alarm Tone
+#     options:
+#       - "-"
+#       - Alarm 13sec
+#       - Alarm Local
+#       - Hit Remixes
+#       - Play Radio
+#       - 90s Hits
+#     initial: Alarm 13sec
+#     icon: mdi:radio
 
 
 ##################################
 ## MQTT Alarm States
 ##################################
 
-sensor:
+switch:
   - platform: mqtt
     state_topic: "/home/inbed/kahlan"
-    name: "Kahlan in Bed"
-    value_template: "{{ value }}"
+    command_topic: "/home/inbed/kahlan"
+    name: "kahlan_bed"
+    retain: yes
+    payload_on: "yes"
+    payload_off: "no"
   - platform: mqtt
     state_topic: "/home/inbed/braelyn"
-    name: "Braelyn in Bed"
-    value_template: "{{ value }}"
+    command_topic: "/home/inbed/braelyn"
+    name: "braelyn_bed"
+    retain: yes
+    payload_on: "yes"
+    payload_off: "no"
   - platform: mqtt
     state_topic: "/home/inbed/kent"
-    name: "Kent in Bed"
-    value_template: "{{ value }}"
+    command_topic: "/home/inbed/kent"
+    name: "kent_bed"
+    retain: yes
+    payload_on: "yes"
+    payload_off: "no"
   - platform: mqtt
     state_topic: "/home/inbed/bennett"
-    name: "Bennett in Bed"
-    value_template: "{{ value }}"
+    command_topic: "/home/inbed/bennett"
+    name: "bennett_bed"
+    retain: yes
+    payload_on: "yes"
+    payload_off: "no"
 
 ###############################################################################
 #  Automation - Saves Switch State to MQTT
 ###############################################################################
 automation:
-  - alias: Save Kid States to MQTT
-    initial_state: true
-    hide_entity: true
+  - alias: Kids in Bed
     trigger:
-      platform: state
-      entity_id: switch.switch_one, switch.switch_two, switch.switch_three, switch.switch_four, switch.switch_five
+      - platform: time
+        at: '20:46:00'
+    # condition:
+    #   - condition: state
+    #     entity_id: group.kids
+    #     state: 'no'
     action:
-      service: mqtt.publish
-      data_template:
-        topic: "/home/inbed/{{ trigger.entity_id.split('.')[1] }}"
-        retain: true
-        qos: 1
-        payload: '{{ trigger.to_state.state }}'
-
-  - alias: "TTS Notification - Kids"
-    # initial_state: False
-    trigger:
-      - platform: state
-        entity_id: input_boolean.test_tts
-        from: 'off'
-        to: 'on'
-    action:
-      - service: script.kids_tts_warn
-
+      service: switch.turn_on
+      entity_id: 
+        - switch.kahlan_bed
+        - switch.braelyn_bed
+        - switch.kent_bed
+        - switch.bennett_bed
 
   - alias: 'Alarm Clock'
     trigger:
       platform: time
-      minutes: '/1'
-      seconds: 00
+      # hours: '{% states.input_slider.slider_hours.state |int %}'
+      # minutes: '{% states.input_slider.slider_minutes.state |int %}'
+      # seconds: 00
+      # platform: time
+      at: '06:41:00'      
     condition:
-      - condition: template
-        value_template: >
-          {% if states.sensor.time.state.split(':')[0] |int == states.input_slider.slider_hours.state |int %}
-            true
-          {% else %}
-            false
-          {% endif %}
-      - condition: template
-        value_template: >
-          {% if states.sensor.time.state.split(':')[1]  |int == states.input_slider.slider_minutes.state |int %}
-            true
-          {% else %}
-            false
-          {% endif %}
+      # - condition: template
+      #   value_template: >
+      #     {% if states.sensor.time.state.split(':')[0] |int == states.input_slider.slider_hours.state |int %}
+      #       true
+      #     {% else %}
+      #       false
+      #     {% endif %}
+      # - condition: template
+      #   value_template: >
+      #     {% if states.sensor.time.state.split(':')[1]  |int == states.input_slider.slider_minutes.state |int %}
+      #       true
+      #     {% else %}
+      #       false
+      #     {% endif %}
+      - condition: state
+        entity_id: input_boolean.alarmstate
+        state: 'on'
     action:
-      - service: script.kids_tts_wake
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            Starting Alarm clock
+      - service: script.kids_tts_warn
 
+  - alias: 'Check for Repeat'
+    trigger:
+      platform: time
+      minutes: '/1'
+    condition: 
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.alarm_has_gone_off
+          state: 'on'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: switch.kahlan_bed
+              state: 'on'
+            - condition: state
+              entity_id: switch.kent_bed
+              state: 'on'
+            - condition: state
+              entity_id: switch.braelyn_bed
+              state: 'on'
+            - condition: state
+              entity_id: switch.bennett_bed
+              state: 'on'
+    action:
+      - service: script.kids_tts_wake_repeat
+
+  - alias: 'Reset Alarm'
+    trigger:
+      platform: time
+      minutes: '/1'
+    condition: 
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.alarm_has_gone_off
+          state: 'on'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: switch.kahlan_bed
+              state: 'off'
+            - condition: state
+              entity_id: switch.kent_bed
+              state: 'off'
+            - condition: state
+              entity_id: switch.braelyn_bed
+              state: 'off'
+            - condition: state
+              entity_id: switch.bennett_bed
+              state: 'off'
+    action:
+        - service: homeassistant.turn_offn
+          entity_id: input_boolean.alarm_has_gone_off
 
 ###########################################################
 # Scripts
@@ -140,6 +254,9 @@ automation:
 script:
     kids_tts_warn:
       sequence:
+        - condition: state
+          entity_id: input_boolean.alarmstate
+          state: 'on'
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
@@ -148,12 +265,61 @@ script:
           data_template:
             entity_id: media_player.volumio_tts
             message: >
-              It is about time to get up, you have 10 more minutes to sleep
-        # - service: notify.slack__dev
-        #   data_template:
-        #     message: >
-        #       It is about time to get up, you have 10 more minutes to see
+              It is about time to get up, you have 9 more minutes to sleep
+        - service: notify.slack__dev
+          data_template:
+            message: >
+              Kids Snooze Executed
+        - delay: '00:9:00'
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.volumio_tts
+            volume_level: '0.4'
+        - service: script.kids_tts_wake
+
     kids_tts_wake:
+      sequence:
+        - wait_template: >-
+           {{ not is_state('media_player.volumio_tts', 'playing') }}
+          timeout: 00:01:30
+        - condition: template
+          value_template: >
+            {% if is_state('media_player.volumio_tts', 'playing') %}
+            false
+            {% else %}
+            true
+            {% endif %}
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.volumio_tts
+            volume_level: '0.7'
+        - service: media_player.play_media
+          data_template:
+            entity_id: 
+              - media_player.volumio_tts
+            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Unusual-music-loop-120-bpm.mp3"
+            media_content_type: audio/mp4
+        - delay: '00:00:16'   
+        - service: tts.google_say
+          data_template:
+            entity_id: media_player.volumio_tts
+            message: >
+              {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
+              It is time to get up!! {{time}} It is time to get up
+        - delay: '00:00:10'
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.volumio_tts
+            volume_level: '0.4'
+        - service: notify.slack__dev
+          data_template:
+            message: >
+              kids alarm is going off
+        - service: homeassistant.turn_on
+          entity_id: input_boolean.alarm_has_gone_off
+
+
+    kids_tts_wake_repeat:
       sequence:
         - service: media_player.volume_set
           data_template:
@@ -161,25 +327,23 @@ script:
             volume_level: '0.7'
         - service: media_player.play_media
           data_template:
-            entity_id: media_player.volumio_tts
-            #media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/two-tone-chime.mp3"
-            #media_content_id: >
-            {% if is_state('input_select.radio_station', 'Dancehall Link') %} http://stream.radio.co/s30d82be5e/listen
-            {% elif is_state('input_select.radio_station', 'Energy 98') %} http://174.127.85.10:8800
-            {% elif is_state('input_select.radio_station', 'Hit Remixes') %} http://149.56.23.7:20252/stream
-            {% elif is_state('input_select.radio_station', 'Play Radio') %} http://176.9.31.78:8222
-            {% elif is_state('input_select.radio_station', '90s Hits') %} http://rfcmedia.streamguys1.com/90hits.mp3
-            {% endif %}
-            media_content_id: "/data/INTERNAL/Alarm-Tone.mp3"
-            media_content_type: audio/mp3     
+            entity_id: 
+              - media_player.volumio_tts
+            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Alarm-tone.mp3"
+            media_content_type: audio/mp4
+        - delay: '00:00:15'   
         - service: tts.google_say
           data_template:
             entity_id: media_player.volumio_tts
             message: >
-              {% set time = states('sensor.time_date') %}
-              It is time to get up!! <break time='0.5s'/> Today is {{time}} <break time='0.5s'/> It is time to get up
+              {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
+              It is time to get up!! {{time}} It is time to get up
+        - delay: '00:00:10'
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.volumio_tts
+            volume_level: '0.4'
         - service: notify.slack__dev
           data_template:
             message: >
               kids alarm is going off
-
