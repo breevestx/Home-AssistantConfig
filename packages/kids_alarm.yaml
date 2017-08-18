@@ -30,6 +30,22 @@ homeassistant:
       emulated_hue_name: "Bennett Alarm"
       friendly_name: Bennett Alarm      
 
+    input_boolean.alarm_active:
+      icon: mdi:clock 
+      # emulated_hue: true
+      # emulated_hue_name: "Bennett Alarm"
+      friendly_name: Alarm Clock Activated  
+
+    input_boolean.weekdays:
+      icon: mdi:calendar 
+      # emulated_hue: true
+      # emulated_hue_name: "Bennett Alarm"
+      friendly_name: Weekdays only  
+
+
+
+
+
 group:
   Alarm Clock:
     name: Alarm Clock
@@ -38,6 +54,7 @@ group:
     entities:
       - group.controls
       - group.kids
+      - group.automations
 
   Controls:
     control: hidden
@@ -46,18 +63,25 @@ group:
       - input_slider.slider_minutes
       # - input_select.alarm_tone
       - input_boolean.alarmweekday
-      - input_boolean.alarmstate
-      - script.kids_tts_warn
-      - script.kids_tts_wake
-
-  kids:
+      - input_boolean.alarm_active
+  Kids:
     control: hidden
     entities:  
       - switch.kahlan_bed
       - switch.braelyn_bed
       - switch.kent_bed
       - switch.bennett_bed
+
+  Automations:
+    control: hidden
+    entities:  
       - automation.kids_in_bed
+      - automation.test_alarm_clock
+      - automation.check_for_repeat
+      - automation.reset_alarm
+      - script.kids_tts_warn
+      - script.kids_tts_wake
+
 
 input_slider:
   slider_hours:
@@ -80,7 +104,7 @@ input_boolean:
     initial: off
     icon: mdi:alarm
 
-  alarmstate:
+  alarm_active:
     name: Alarm State
     initial: on
     icon: mdi:alarm
@@ -140,9 +164,11 @@ switch:
     payload_off: "no"
 
 ###############################################################################
-#  Automation - Saves Switch State to MQTT
+#  Automation 
 ###############################################################################
 automation:
+
+## Set all the kids to in bed nightly 
   - alias: Kids in Bed
     trigger:
       - platform: time
@@ -159,43 +185,91 @@ automation:
         - switch.kent_bed
         - switch.bennett_bed
 
+  - alias: 'Snooze'
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00      
+    condition:
+      condition: and
+      conditions:
+        - condition: template ### Check if 9 minutes prior to the slider causes a negative. If so adjust the hour back one and use the formula to determine how many minutes back into the previous hour
+          value_template: >
+            {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
+              {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_slider.slider_hours.state |int - 1 |int %}
+                true
+              {% else %}
+                false
+              {% endif %}
+            {% else %}
+              {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_slider.slider_hours.state |int %}
+                true
+              {% else %}
+                false
+              {% endif %}
+            {% endif %}    
+        - condition: template 
+          value_template: >
+            {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
+              {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int - 9 + 60 %}
+                true
+              {% else %}
+                false
+              {% endif %}
+            {% else %}
+              {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int - 9 %}
+                true
+              {% else %}
+                false
+              {% endif %}
+            {% endif %}    
+        - condition: state
+          entity_id: input_boolean.alarm_active
+          state: 'on'
+    action:
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            Starting Snooze
+      - service: script.kids_tts_warn
+
   - alias: 'Alarm Clock'
     trigger:
       platform: time
-      # hours: '{% states.input_slider.slider_hours.state |int %}'
-      # minutes: '{% states.input_slider.slider_minutes.state |int %}'
-      # seconds: 00
-      # platform: time
-      at: '06:41:00'      
+      minutes: '/1'
+      seconds: 00      
     condition:
-      # - condition: template
-      #   value_template: >
-      #     {% if states.sensor.time.state.split(':')[0] |int == states.input_slider.slider_hours.state |int %}
-      #       true
-      #     {% else %}
-      #       false
-      #     {% endif %}
-      # - condition: template
-      #   value_template: >
-      #     {% if states.sensor.time.state.split(':')[1]  |int == states.input_slider.slider_minutes.state |int %}
-      #       true
-      #     {% else %}
-      #       false
-      #     {% endif %}
-      - condition: state
-        entity_id: input_boolean.alarmstate
-        state: 'on'
+      condition: and
+      conditions:
+        - condition: template
+          value_template: >
+            {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_slider.slider_hours.state |int %}
+              true
+            {% else %}
+              false
+            {% endif %}
+        - condition: template
+          value_template: >
+            {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int %}
+              true
+            {% else %}
+              false
+            {% endif %}
+        - condition: state
+          entity_id: input_boolean.alarm_active
+          state: 'on'
     action:
       - service: notify.slack__dev
         data_template:
           message: >
             Starting Alarm clock
-      - service: script.kids_tts_warn
+      - service: script.kids_tts_wake
 
   - alias: 'Check for Repeat'
     trigger:
       platform: time
       minutes: '/1'
+      seconds: 00
     condition: 
       condition: and
       conditions:
@@ -223,6 +297,7 @@ automation:
     trigger:
       platform: time
       minutes: '/1'
+      seconds: '/30'
     condition: 
       condition: and
       conditions:
@@ -244,8 +319,28 @@ automation:
               entity_id: switch.bennett_bed
               state: 'off'
     action:
-        - service: homeassistant.turn_offn
+        - service: homeassistant.turn_off
           entity_id: input_boolean.alarm_has_gone_off
+
+
+## Test the alarm
+
+  - alias: 'Test Alarm Clock'
+    trigger:
+      platform: state
+      entity_id: input_boolean.alarmweekday
+      from: 'off'
+      to: 'on'    
+    condition:
+      condition: state
+      entity_id: input_boolean.alarm_active
+      state: 'on'
+    action:
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            Starting Alarm clock
+      - service: script.kids_tts_wake
 
 ###########################################################
 # Scripts
@@ -255,7 +350,7 @@ script:
     kids_tts_warn:
       sequence:
         - condition: state
-          entity_id: input_boolean.alarmstate
+          entity_id: input_boolean.alarm_active
           state: 'on'
         - service: media_player.volume_set
           data_template:
@@ -270,7 +365,6 @@ script:
           data_template:
             message: >
               Kids Snooze Executed
-        - delay: '00:9:00'
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
@@ -292,7 +386,7 @@ script:
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
-            volume_level: '0.7'
+            volume_level: '1'
         - service: media_player.play_media
           data_template:
             entity_id: 
@@ -306,7 +400,6 @@ script:
             message: >
               {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
               It is time to get up!! {{time}} It is time to get up
-        - delay: '00:00:10'
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
@@ -314,7 +407,7 @@ script:
         - service: notify.slack__dev
           data_template:
             message: >
-              kids alarm is going off
+              kids alarm started
         - service: homeassistant.turn_on
           entity_id: input_boolean.alarm_has_gone_off
 
@@ -338,7 +431,6 @@ script:
             message: >
               {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
               It is time to get up!! {{time}} It is time to get up
-        - delay: '00:00:10'
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
@@ -346,4 +438,4 @@ script:
         - service: notify.slack__dev
           data_template:
             message: >
-              kids alarm is going off
+              kids alarm repeated
