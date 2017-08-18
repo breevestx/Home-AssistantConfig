@@ -34,14 +34,17 @@ homeassistant:
       icon: mdi:clock 
       # emulated_hue: true
       # emulated_hue_name: "Bennett Alarm"
-      friendly_name: Alarm Clock Activated  
+      friendly_name: Alarm Clock Enabled  
 
-    input_boolean.weekdays:
+    input_boolean.alarm_weekday:
       icon: mdi:calendar 
       # emulated_hue: true
       # emulated_hue_name: "Bennett Alarm"
       friendly_name: Weekdays only  
 
+    input_boolean.alarm_has_gone_off:
+      icon: mdi:calendar
+      friendly_name: Alarm is repeating
 
 
 
@@ -62,8 +65,9 @@ group:
       - input_slider.slider_hours
       - input_slider.slider_minutes
       # - input_select.alarm_tone
-      - input_boolean.alarmweekday
+      - input_boolean.alarm_weekday
       - input_boolean.alarm_active
+      - input_boolean.alarm_has_gone_off
   Kids:
     control: hidden
     entities:  
@@ -86,20 +90,20 @@ group:
 input_slider:
   slider_hours:
     name: Hours
-    initial: 7
+    initial: 6
     min: 0
     max: 23
     step: 1
 
   slider_minutes:
     name: Minutes
-    initial: 0
+    initial: 50
     min: 0
     max: 59
     step: 1
 
 input_boolean:
-  alarmweekday:
+  alarm_weekday:
     name: Weekdays Only
     initial: off
     icon: mdi:alarm
@@ -328,7 +332,7 @@ automation:
   - alias: 'Test Alarm Clock'
     trigger:
       platform: state
-      entity_id: input_boolean.alarmweekday
+      entity_id: input_boolean.alarm_weekday
       from: 'off'
       to: 'on'    
     condition:
@@ -373,16 +377,16 @@ script:
 
     kids_tts_wake:
       sequence:
-        - wait_template: >-
-           {{ not is_state('media_player.volumio_tts', 'playing') }}
-          timeout: 00:01:30
-        - condition: template
-          value_template: >
-            {% if is_state('media_player.volumio_tts', 'playing') %}
-            false
-            {% else %}
-            true
-            {% endif %}
+        # - wait_template: >-
+        #    {{ not is_state('media_player.volumio_tts', 'playing') }}
+        #   timeout: 00:01:30
+        # - condition: template
+        #   value_template: >
+        #     {% if is_state('media_player.volumio_tts', 'playing') %}
+        #     false
+        #     {% else %}
+        #     true
+        #     {% endif %}
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
