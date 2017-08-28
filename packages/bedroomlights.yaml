@@ -1,4 +1,4 @@
-homeassistant: 
+homeassistant:
   customize:
     light.bruce_lamp:
       emulated_hue: false
@@ -6,7 +6,7 @@ homeassistant:
     light.lene_lamp:
       emulated_hue: false
       icon: mdi:light
-    scene.bedroom_on:
+    scene.bedroom_mornining:
       friendly_name: 'Morning lamps'
       emulated_hue: true
       icon: mdi:themer-light-dark
@@ -19,7 +19,7 @@ homeassistant:
 
 
 input_boolean:
-  dash_input:
+  bedroom_dash:
     name: Dash Button
     initial: on
     icon: mdi:light
@@ -29,7 +29,7 @@ input_slider:
     name: Brightness
     initial: 100
     min: 0
-    max: 100
+    max: 254
     step: 1
 
 sensor:
@@ -37,17 +37,20 @@ sensor:
     sensors:
       kodi_mb:
         friendly_name: 'MB MediaCenter'
-        value_template: "{{ 'Online' if is_state('device_tracker.recovery', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.libreelec', 'home') else 'Offline' }}"
 
 group:
   scenes:
     control: hidden
     name: Bedroom Lights
     entities:
-      - scene.Bedroom_on
+      - scene.bedroom_morning
       - script.good_morning
       - scene.Bedroom_goodnight
       - input_slider.bedroom_lamps_brightness
+      - sensor.kodi_mb
+      - mediaplayer.kodi_mb
+
   Bedroom lamps:
     control: hidden
     name: Bedroom Lamps
@@ -58,49 +61,49 @@ group:
       - mediaplayer.kodi_mb
 
 scene:
-  - name: Bedroom_on
+  - name: bedroom_morning
     entities:
-      light.bruce_lamp: on
-      light.lene_lamp: on
-  - name: Bedroom_goodnight
+      light.bruce_lamp:
+        state: on
+        transition: 10
+        brightness: 250
+      light.lene_lamp:
+        state: on
+        transition: 10
+        brightness: 250
+  - name: bedroom_goodnight
     entities:
-      light.bruce_lamp: 
+      light.bruce_lamp:
         state: off
-        transition: 10
-      light.lene_lamp: 
+        transition: 5
+      light.lene_lamp:
         state: off
-        transition: 10
+        transition: 5
 
 automation:
   - alias: 'Lamps Off'
     condition:
       - condition: state
-        entity_id: input_boolean.dash_input
+        entity_id: group.bedroom_lamps
         state: 'on'
-      - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.dash_input.last_changed)) > 30 }}'
     trigger:
       - platform: state
-        entity_id: input_boolean.dash_input
-        to: 'off'
+        entity_id: input_boolean.bedroom_dash
     action:
       - service: scene.turn_on
-        entity_id: scene.Bedroomgoodnight
+        entity_id: scene.bedroom_goodnight
 
   - alias: 'Lamps On'
     condition:
       - condition: state
-        entity_id: input_boolean.dash_input
-        state: 'on'
-      - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.dash_input.last_changed)) > 30 }}'
+        entity_id: group.bedroom_lamps
+        state: 'off'
     trigger:
       - platform: state
-        entity_id: input_boolean.dash_input
-        to: 'on'
+        entity_id: input_boolean.bedroom_dash
     action:
      - service: scene.turn_on
-       entity_id: scene.Bedroomnight
+       entity_id: scene.bedroom_morning
 
 
   - alias: Bedroom Lamps - Adjust Brightness
@@ -109,9 +112,8 @@ automation:
       entity_id: input_slider.bedroom_lamps_brightness
     action:
       - service: light.turn_on
-# Note the use of 'data_template:' below rather than the normal 'data:' if you weren't using an input variable
         data_template:
-          entity_id: 
+          entity_id:
             - light.bruce_lamp
             - light.lene_lamp
           brightness: '{{ trigger.to_state.state | int }}'

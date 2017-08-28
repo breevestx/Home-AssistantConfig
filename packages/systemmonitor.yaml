@@ -42,6 +42,12 @@ group:
       - weblink.release_log
       - sensor.external_ip
 
+  Processes:
+    control: hidden
+    entities:
+      - sensor.process_dasher
+      - sensor.process_mosquitto
+
 weblink:
   entities:
     - name: release_log
@@ -75,8 +81,8 @@ sensor:
         arg: /
       - type: process
         arg: mosquitto
-      # - type: process
-      #   arg: homebridge
+      - type: process
+        arg: dasher
   - platform: template
     sensors:
       since_last_boot_templated:
@@ -186,5 +192,3 @@ sensor:
         {{ ', ' }}
       {%- endif -%}
       {{ '%02d' % hours }}:{{ '%02d' % minutes }}
-
-

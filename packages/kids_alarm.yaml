@@ -1,46 +1,46 @@
 ##########  ############################################################
 ##  Morning wakeup for the kids
-## 
+##
 ##
 ##
 ######################################################################
 homeassistant:
   customize:
     switch.kahlan_bed:
-      icon: mdi:hotel 
+      icon: mdi:hotel
       emulated_hue: true
       emulated_hue_name: "Kahlan Alarm"
       friendly_name: Kahlan Alarm
 
     switch.braelyn_bed:
-      icon: mdi:hotel 
+      icon: mdi:hotel
       emulated_hue: true
       emulated_hue_name: "Braelyn Alarm"
       friendly_name: Braelyn Alarm
 
     switch.kent_bed:
-      icon: mdi:hotel 
+      icon: mdi:hotel
       emulated_hue: true
       emulated_hue_name: "Kent Alarm"
       friendly_name: Kent Alarm
-  
+
     switch.bennett_bed:
-      icon: mdi:hotel 
+      icon: mdi:hotel
       emulated_hue: true
       emulated_hue_name: "Bennett Alarm"
-      friendly_name: Bennett Alarm      
+      friendly_name: Bennett Alarm
 
     input_boolean.alarm_active:
-      icon: mdi:clock 
+      icon: mdi:clock
       # emulated_hue: true
       # emulated_hue_name: "Bennett Alarm"
-      friendly_name: Alarm Clock Enabled  
+      friendly_name: Alarm Clock Enabled
 
     input_boolean.alarm_weekday:
-      icon: mdi:calendar 
+      icon: mdi:calendar
       # emulated_hue: true
       # emulated_hue_name: "Bennett Alarm"
-      friendly_name: Weekdays only  
+      friendly_name: Weekdays only
 
     input_boolean.alarm_has_gone_off:
       icon: mdi:calendar
@@ -50,15 +50,6 @@ homeassistant:
 
 
 group:
-  Alarm Clock:
-    name: Alarm Clock
-    view: true
-    icon: mdi:clock
-    entities:
-      - group.controls
-      - group.kids
-      - group.automations
-
   Controls:
     control: hidden
     entities:
@@ -70,7 +61,8 @@ group:
       - input_boolean.alarm_has_gone_off
   Kids:
     control: hidden
-    entities:  
+    entities:
+      - sensor.alarm_status
       - switch.kahlan_bed
       - switch.braelyn_bed
       - switch.kent_bed
@@ -78,7 +70,7 @@ group:
 
   Automations:
     control: hidden
-    entities:  
+    entities:
       - automation.kids_in_bed
       - automation.test_alarm_clock
       - automation.check_for_repeat
@@ -132,6 +124,24 @@ input_boolean:
 #     initial: Alarm 13sec
 #     icon: mdi:radio
 
+sensor:
+  - platform: template
+    sensors:
+      alarm_status:
+        friendly_name: 'Alarm Status'
+        value_template: >
+          The Alarm is currently set to go off at {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int }}
+          {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
+            so the snooze will start at {{ states("input_slider.slider_hours")|int - 1|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
+          {% else %}
+            so the snooze will start at {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
+          {% endif %}
+          Currently
+          {% for state in states.switch -%}
+            {%- if loop.first %}The {% elif loop.last %} and the {% else %}, the {% endif -%}
+            {{ state.name }} is {{state.state}} {{- state.attributes.unit_of_measurement}}
+          {%- endfor -%}.
+
 
 ##################################
 ## MQTT Alarm States
@@ -168,11 +178,11 @@ switch:
     payload_off: "no"
 
 ###############################################################################
-#  Automation 
+#  Automation
 ###############################################################################
 automation:
 
-## Set all the kids to in bed nightly 
+## Set all the kids to in bed nightly
   - alias: Kids in Bed
     trigger:
       - platform: time
@@ -183,7 +193,7 @@ automation:
     #     state: 'no'
     action:
       service: switch.turn_on
-      entity_id: 
+      entity_id:
         - switch.kahlan_bed
         - switch.braelyn_bed
         - switch.kent_bed
@@ -193,7 +203,7 @@ automation:
     trigger:
       platform: time
       minutes: '/1'
-      seconds: 00      
+      seconds: 00
     condition:
       condition: and
       conditions:
@@ -211,8 +221,8 @@ automation:
               {% else %}
                 false
               {% endif %}
-            {% endif %}    
-        - condition: template 
+            {% endif %}
+        - condition: template
           value_template: >
             {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
               {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int - 9 + 60 %}
@@ -226,22 +236,26 @@ automation:
               {% else %}
                 false
               {% endif %}
-            {% endif %}    
+            {% endif %}
         - condition: state
           entity_id: input_boolean.alarm_active
           state: 'on'
     action:
+      # - service: logbook.log
+      #   data_template:
+      #     name: "Snooz Activated: "
+      #     message: >-
+      #       {{ state.sensor.alarm_status }}
       - service: notify.slack__dev
         data_template:
-          message: >
-            Starting Snooze
+          message: Starting Snooze
       - service: script.kids_tts_warn
 
   - alias: 'Alarm Clock'
     trigger:
       platform: time
       minutes: '/1'
-      seconds: 00      
+      seconds: 00
     condition:
       condition: and
       conditions:
@@ -265,8 +279,7 @@ automation:
     action:
       - service: notify.slack__dev
         data_template:
-          message: >
-            Starting Alarm clock
+          message: Starting Alarm clock
       - service: script.kids_tts_wake
 
   - alias: 'Check for Repeat'
@@ -274,26 +287,15 @@ automation:
       platform: time
       minutes: '/1'
       seconds: 00
-    condition: 
+    condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_boolean.alarm_has_gone_off
           state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: switch.kahlan_bed
-              state: 'on'
-            - condition: state
-              entity_id: switch.kent_bed
-              state: 'on'
-            - condition: state
-              entity_id: switch.braelyn_bed
-              state: 'on'
-            - condition: state
-              entity_id: switch.bennett_bed
-              state: 'on'
+        - condition: state
+          entity_id: group.kids
+          state: 'on'
     action:
       - service: script.kids_tts_wake_repeat
 
@@ -302,26 +304,15 @@ automation:
       platform: time
       minutes: '/1'
       seconds: '/30'
-    condition: 
+    condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_boolean.alarm_has_gone_off
           state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: switch.kahlan_bed
-              state: 'off'
-            - condition: state
-              entity_id: switch.kent_bed
-              state: 'off'
-            - condition: state
-              entity_id: switch.braelyn_bed
-              state: 'off'
-            - condition: state
-              entity_id: switch.bennett_bed
-              state: 'off'
+        - condition: state
+          entity_id: group.kids
+          state: 'off'
     action:
         - service: homeassistant.turn_off
           entity_id: input_boolean.alarm_has_gone_off
@@ -334,7 +325,7 @@ automation:
       platform: state
       entity_id: input_boolean.alarm_weekday
       from: 'off'
-      to: 'on'    
+      to: 'on'
     condition:
       condition: state
       entity_id: input_boolean.alarm_active
@@ -353,13 +344,13 @@ automation:
 script:
     kids_tts_warn:
       sequence:
-        - condition: state
-          entity_id: input_boolean.alarm_active
-          state: 'on'
+        # - condition: state
+        #   entity_id: input_boolean.alarm_active
+        #   state: 'on'
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
-            volume_level: '0.7'      
+            volume_level: '0.7'
         - service: tts.google_say
           data_template:
             entity_id: media_player.volumio_tts
@@ -367,37 +358,41 @@ script:
               It is about time to get up, you have 9 more minutes to sleep
         - service: notify.slack__dev
           data_template:
-            message: >
-              Kids Snooze Executed
+            message: Kids Snooze Executed
+        # - service: logbook.log
+        #   data_template:
+        #     name: "Snooze Executed: "
+        #     message: >-
+        #       {{ state.sensor.alarm_status }}
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
-            volume_level: '0.4'
-        - service: script.kids_tts_wake
+            volume_level: '1'
+
 
     kids_tts_wake:
       sequence:
-        # - wait_template: >-
-        #    {{ not is_state('media_player.volumio_tts', 'playing') }}
-        #   timeout: 00:01:30
-        # - condition: template
-        #   value_template: >
-        #     {% if is_state('media_player.volumio_tts', 'playing') %}
-        #     false
-        #     {% else %}
-        #     true
-        #     {% endif %}
+        - wait_template: >-
+           {{ not is_state('media_player.volumio_tts', 'playing') }}
+          timeout: 00:01:30
+        - condition: template
+          value_template: >
+            {% if is_state('media_player.volumio_tts', 'playing') %}
+            false
+            {% else %}
+            true
+            {% endif %}
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
             volume_level: '1'
         - service: media_player.play_media
           data_template:
-            entity_id: 
+            entity_id:
               - media_player.volumio_tts
             media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Unusual-music-loop-120-bpm.mp3"
             media_content_type: audio/mp4
-        - delay: '00:00:16'   
+        - delay: '00:00:16'
         - service: tts.google_say
           data_template:
             entity_id: media_player.volumio_tts
@@ -407,11 +402,12 @@ script:
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
-            volume_level: '0.4'
-        - service: notify.slack__dev
-          data_template:
-            message: >
-              kids alarm started
+            volume_level: '1'
+        # - service: logbook.log
+        #   data_template:
+        #     name: "Alarm Executed: "
+        #     message: >-
+        #       {{ state.sensor.alarm_status }}
         - service: homeassistant.turn_on
           entity_id: input_boolean.alarm_has_gone_off
 
@@ -421,25 +417,26 @@ script:
         - service: media_player.volume_set
           data_template:
             entity_id: media_player.volumio_tts
-            volume_level: '0.7'
+            volume_level: '1'
         - service: media_player.play_media
           data_template:
-            entity_id: 
+            entity_id:
               - media_player.volumio_tts
             media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Alarm-tone.mp3"
             media_content_type: audio/mp4
-        - delay: '00:00:15'   
+        - delay: '00:00:15'
         - service: tts.google_say
           data_template:
             entity_id: media_player.volumio_tts
             message: >
               {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
               It is time to get up!! {{time}} It is time to get up
-        - service: media_player.volume_set
-          data_template:
-            entity_id: media_player.volumio_tts
-            volume_level: '0.4'
-        - service: notify.slack__dev
-          data_template:
-            message: >
-              kids alarm repeated
+        # - service: media_player.volume_set
+        #   data_template:
+        #     entity_id: media_player.volumio_tts
+        #     volume_level: '0.4'
+        # - service: logbook.log
+        #   data_template:
+        #     name: "Alarm Executed: "
+        #     message: >-
+        #       {{ state.sensor.alarm_status }}

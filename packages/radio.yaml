@@ -6,7 +6,7 @@ homeassistant:
     script.radio:
       friendly_name: Start Radio
       icon: mdi:radio
-      
+
 ###### STATE CARD
 group:
   Radio:
@@ -16,15 +16,14 @@ group:
       - input_select.radio_station
       - input_slider.volume_radio
       - script.radio
-      - media_player.volumio_tts
+      - script.stop
 
-  Radio_view:
-    name: Volumio
-    view: yes
-    icon: mdi:radio
+  players:
+    name: media players
     entities:
-      - group.radio
-      - group.alarm_clock
+      - media_player.volumio_tts
+      - media_player.kodi_MB
+      - media_player.kodi_LV
 
 
 ###### SELECT LOCATION AND STATION
@@ -34,17 +33,28 @@ script:
       - service: media_player.play_media
         data_template:
           entity_id: >
-            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio_tts
-            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio_tts
+            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.volumio_tts
+            {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
             {% endif %}
           media_content_id: >
-            {% if is_state('input_select.radio_station', 'Dancehall Link') %} http://stream.radio.co/s30d82be5e/listen
-            {% elif is_state('input_select.radio_station', 'Energy 98') %} http://174.127.85.10:8800
-            {% elif is_state('input_select.radio_station', 'Hit Remixes') %} http://149.56.23.7:20252/stream
-            {% elif is_state('input_select.radio_station', 'Play Radio') %} http://176.9.31.78:8222
+            {% if is_state('input_select.radio_station', 'Jazz Groove') %} http://199.180.75.116:80/stream
+            {% elif is_state('input_select.radio_station', 'Audiophile Jazz') %} http://174.127.85.10:8800
+            {% elif is_state('input_select.radio_station', 'Classic Rock') %} http://198.27.70.26:10042/stream
+            {% elif is_state('input_select.radio_station', 'Awesome 80s') %} http://104.200.142.184:80/1719_128
             {% elif is_state('input_select.radio_station', '90s Hits') %} http://rfcmedia.streamguys1.com/90hits.mp3
             {% endif %}
           media_content_type: 'audio/mp3'
+
+  stop:
+    sequence:
+      - service: media_player.media_stop
+        data_template:
+          entity_id: >
+            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.volumio_tts
+            {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
+            {% endif %}
 
 ###### VOLUME SLIDER CONTROL (LOCATION BASED)
 automation:
@@ -57,8 +67,9 @@ automation:
       - service: media_player.volume_set
         data_template:
           entity_id: >
-            {% if is_state("input_select.radio_station_location", "Office") %} media_player.volumio_tts
-            {% elif is_state("input_select.radio_station_location", "All Zones") %} media_player.volumio_tts
+            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.volumio_tts
+            {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
             {% endif %}
           volume_level: '{{  states.input_slider.volume_radio.state  }}'
 
@@ -76,17 +87,19 @@ input_select:
     name: Radio Station
     options:
       - "-"
-      - Dancehall Link
-      - Energy 98
-      - Hit Remixes
-      - Play Radio
+      - Jazz Groove
+      - Audiophile Jazz
+      - Classic Rock
+      - Awesome 80s
       - 90s Hits
     initial: "-"
     icon: mdi:radio
   radio_station_location:
     name: Radio Location
     options:
-      - Office
+      - Kids
+      - Master bedroom
       - All Zones
     initial: "All Zones"
     icon: mdi:radio
+

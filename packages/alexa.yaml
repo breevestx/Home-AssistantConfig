@@ -1,0 +1,33 @@
+intent_script:
+  ActivateSceneIntent:
+    action:
+      service: scene.turn_on
+      data_template:
+        entity_id: scene.{{ Scene | replace(" ", "_") }}
+    speech:
+      type: plain
+      text: OK
+      # text: !include includes/alexa_confirm.yaml
+  LocateIntent:
+    speech:
+      type: plain
+      text: >
+          {%- for state in states.device_tracker -%}
+            {%- if state.name.lower() == User.lower() -%}
+              {{ state.name }} is at {{ state.state }}
+            {%- elif loop.last -%}
+              I am sorry, I do not know where {{ User }} is.
+            {%- endif -%}
+          {%- else -%}
+            Sorry, I don't have any trackers registered.
+          {%- endfor -%}
+  WhereAreWeIntent:
+    speech:
+      text: >
+        {%- if is_state('device_tracker.brucesiphone2_ios_iphone_ios', 'home') and
+                is_state('device_tracker.leneiphone_ios', 'home') -%}
+          You are both home, you silly
+        {%- else -%}
+          Leene is at {{ states("device_tracker.leneiphone_ios") }} and should be home in {{ states("sensor.Lene_to_home") }}
+          Bruce is at {{ states("device_tracker.brucesiphone2_ios") }} and should be home in {{ states("sensor.Bruce_to_home") }}
+        {% endif %}

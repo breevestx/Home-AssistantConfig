@@ -14,6 +14,7 @@ Piece by Piece it seems
 - Amazon Dash buttons
 - Phillips Hue bulbs in 1 room
 - 2 Echo dots
+- Sonoff TH16 with DS1820 probe
 
 ## Completed Projects
 - Basics like weather and system state
@@ -22,20 +23,20 @@ Piece by Piece it seems
 - slack working
 - delivery tracking
 - ssl setup
-
-
+- Sonoff unit for freezer - BRUH guide to Sonoff https://www.youtube.com/watch?v=-JxPWA-qxAk
+- Morning alarm clock for the kids to wake up, managed via alexa
 
 ## Future Projects:
-- Sonoff unit for freezer - BRUH guide to Sonoff https://www.youtube.com/watch?v=-JxPWA-qxAk
+
 - Asterisk integration for state of office phones
-- Integrate grill themometer for smokeing meat.
+- Integrate grill thermometer for smoking meat.
 - iBeacons around the house
 - convert old home alarm system to sensor nodes
 - Garage controller and vehicle sensor
 - Various ESP8266 nodes collecting sensor data and controlling various automations
 - Amazon Kindle Fire 7 tablet running [ha-floorplan](https://github.com/pkozul/ha-floorplan)
 - Open Sprinker Pi [OpenSprinkler](opensprinkler.org)
-- hassaska - https://www.youtube.com/watch?v=zZuwQ9spPkQ
+
 
 ## Shopping list
 - Pi Zero for Bluetooth LE Project with inkbird thermometer for the smoker

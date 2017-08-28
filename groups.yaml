@@ -2,10 +2,28 @@ default_view:
   view: true
   icon: mdi:home
   entities:
+  - group.scenes
   - group.Household
   - group.Devices
   - group.Office
-  - group.scenes
+
+
+Alarm Clock:
+  name: Alarm Clock
+  view: true
+  icon: mdi:clock
+  entities:
+    - group.controls
+    - group.kids
+    - group.automations
+
+Radio_view:
+  name: Volumio
+  view: yes
+  icon: mdi:radio
+  entities:
+    - group.radio
+    - group.alarm_clock
 
 location:
   name: Location
@@ -15,6 +33,17 @@ location:
   - group.deliveries
   - group.transit
   - group.maps
+
+misc_view:
+  name: Misc
+  view: yes
+  icon: mdi:power
+  entities:
+    - group.system
+    - group.utilities
+    - group.backup
+    - group.processes
+    - group.hassctl
 
 
 automation:
@@ -26,56 +55,42 @@ automation:
   - group.automation_on_demand
   - group.location_controls
 
-misc_view:
-  name: Misc
-  view: yes
-  icon: mdi:power
-  entities:
-    - group.sensor_battery_levels
-    - group.utilities
-    - group.backup
-    - group.device_status
-    - group.server_status
-    - group.processes
-    - group.restarts
-    - group.ads_blocked
-    - group.pi_zero
-    - group.hassctl
+# sensors:
+#   name: Sensors
+#   view: true
+#   icon: mdi:gauge
+#   entities:
+#    - group.household
+#    - group.device_location
+#    - group.device_location_testing
+#   # - group.weather
+#   # - group.indoor_temperature
+#    - group.occupancy
+#   # - group.doors
+#   # - group.speedtest
+#    - group.battery_levels
 
-sensors:
-  name: Sensors
-  view: true
-  icon: mdi:gauge
-  entities:
-   - group.household
-   - group.device_location
-   - group.device_location_testing
-  # - group.weather
-  # - group.indoor_temperature
-   - group.occupancy
-  # - group.doors
-  # - group.speedtest
-   - group.system
-   - group.battery_levels
-   
 ############################
-# General/Global Groups            
+# General/Global Groups
 ############################
 
 
 Household:
   control: hidden
-  name: Household Status 
+  name: Household Status
   entities:
-    - group.bedroom_lamps
+    # - group.bedroom_lamps
     - light.lene_lamp
     - light.bruce_lamp
     - media_player.kodi_lv
-    - media_player.kodi_mb
+    # - media_player.kodi_mb
+    - sensor.freezer
+    - sensor.freezer_ds1
+    - input_boolean.alarm_active
 
 Devices:
   control: hidden
-  name: Devices 
+  name: Devices
   entities:
     - sensor.openelec
     - sensor.freezer
@@ -87,7 +102,7 @@ Devices:
 
 Automation Override:
   control: hidden
-  name: Automation Override 
+  name: Automation Override
   entities:
     - input_boolean.freezer
     - input_boolean.disable_lock_unlock_doors
@@ -112,7 +127,4 @@ Automation Override:
     - input_select.remote
     - input_boolean.restart_hass
     - input_boolean.test_notify
-
-
-
-
+    - input_boolean.bedroom_dash

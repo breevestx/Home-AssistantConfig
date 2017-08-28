@@ -1,0 +1,127 @@
+##########  ############################################################
+##  Morning wakeup for the kids
+##
+##
+##
+######################################################################
+homeassistant:
+  customize:
+    # switch.kahlan_bed:
+    #   icon: mdi:hotel
+    #   emulated_hue: true
+    #   emulated_hue_name: "Kahlan Alarm"
+    #   friendly_name: Kahlan Alarm
+
+    input_boolean.alarm_has_gone_off:
+      icon: mdi:calendar
+      friendly_name: Alarm is repeating
+
+group:
+  Pageing:
+    name: Page
+    view: true
+    icon: mdi:bullhorn
+    entities:
+      - group.page_controls
+
+  Page Controls:
+    control: hidden
+    entities:
+      - input_select.pager_enable
+      - input_select.page_message
+      - input_slider.volume_page
+      - script.page
+
+
+input_boolean:
+  pager_enable:
+    name: Pageing Enabled
+    initial: on
+    icon: mdi:bullhorn
+
+###### SELECTORS
+input_select:
+  page_message:
+    name: Page to send out
+    options:
+      - "-"
+      - "Kahlan to Mommy"
+      - "Kahlan to Daddy"
+      - "Breakfast"
+      - "Lunch"
+      - "Dinner"
+      - "Quack Quack"
+    initial: "-"
+    icon: mdi:bullhorn
+
+input_slider:
+  volume_page:
+    name: Page Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
+    initial: 0.8
+
+###############################################################################
+#  Automation
+###############################################################################
+
+###### VOLUME SLIDER CONTROL (LOCATION BASED)
+automation:
+  - alias: 'Set Page Volume'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: input_slider.volume_page
+    action:
+      - service: media_player.volume_set
+        data_template:
+          entity_id: >
+            {% if is_state("input_select.radio_station_location", "Office") %} media_player.volumio_tts
+            {% elif is_state("input_select.radio_station_location", "All Zones") %} media_player.volumio_tts
+            {% endif %}
+          volume_level: '{{  states.input_slider.volume_page.state  }}'
+
+
+###########################################################
+# Scripts
+###########################################################
+
+script:
+  page:
+    sequence:
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.volumio_tts
+          volume_level: '{{  states.input_slider.volume_page.state  }}'
+      - service: media_player.play_media
+        data_template:
+          entity_id: >
+            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio
+            {% endif %}
+          media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3"
+            # {% if is_state('input_select.page_message', 'Kahlan to Mommy') %} https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3
+            # {% elif is_state('input_select.page_message', 'Kahlan to Daddy') %} "mnt/NAS/freenas/Cuckoo-clock-sound.mp3"
+            # {% elif is_state('input_select.page_message', 'Breakfast') %} /mnt/usb/Cuckoo-clock-sound.mp3
+            # {% elif is_state('input_select.page_message', 'Lunch') %} /usb/Cuckoo-clock-sound.mp3
+            # {% elif is_state('input_select.page_message', 'Diner') %} https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3
+            # {% elif is_state('input_select.page_message', 'Quack Quack') %} https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3
+            # {% endif %}
+          media_content_type: 'audio/mp3'
+      - delay: '00:00:06'
+      - service: tts.google_say
+        data_template:
+          entity_id: >
+            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio_tts
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio_tts
+            {% endif %}
+          message: >
+            {% if is_state('input_select.page_message', 'Kahlan to Mommy') %} 'Kahlan come see Mommy'
+            {% elif is_state('input_select.page_message', 'Kahlan to Daddy') %} 'Kahlan come see Daddy'
+            {% elif is_state('input_select.page_message', 'Breakfast') %} 'Breakfast Time'
+            {% elif is_state('input_select.page_message', 'Lunch') %} 'Lunch Time'
+            {% elif is_state('input_select.page_message', 'Dinner') %} 'Dinner Time'
+            {% elif is_state('input_select.page_message', 'Quack Quack') %} 'Quack Quack Quack'
+            {% endif %}

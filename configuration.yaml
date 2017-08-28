@@ -22,7 +22,7 @@ homeassistant:
 #     homeassistant.components.ios: critical
 
 # Enables the frontend
-frontend: 
+frontend:
   themes: !include themes.yaml
 
 
@@ -47,7 +47,7 @@ updater:
 discovery:
 
 # # Allows you to issue voice commands from the frontend in enabled browsers
-# conversation:
+conversation:
 
 recorder:
   purge_days: 14
@@ -71,6 +71,8 @@ tts:
   cache: true
   cache_dir: /tmp/tts
   time_memory: 300
+
+alexa:
 
 ios:
   push:
@@ -155,19 +157,19 @@ zone:
   name: Home
   latitude: !secret zhome_latitude
   longitude: !secret zhome_longitude
-  radius: !secret zhome_radius  
+  radius: !secret zhome_radius
 
-zone 2:  
+zone 2:
   name: Church
   latitude: !secret zchurch_latitude
   longitude: !secret zchurch_longitude
-  radius: !secret zchurch_radius  
+  radius: !secret zchurch_radius
 
 zone 3:
-  name: school_cc 
+  name: school_cc
   latitude: !secret zcc_latitude
   longitude: !secret zcc_longitude
-  radius: !secret zcc_radius  
+  radius: !secret zcc_radius
 #  beacon:
 #    uuid: 7223e44fac664412b854fe50d72977ff
 #    major: 60042
@@ -175,5 +177,4 @@ zone 3:
 
 automation: !include automation.yaml
 group: !include groups.yaml
-
-
+script: !include_dir_merge_named script

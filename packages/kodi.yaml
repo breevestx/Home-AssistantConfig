@@ -183,7 +183,7 @@ script:
       #   data:
       #     file: "/storage/videos/Fire-1.mp4"
       - service: media_player.play_media
-        entity_id: media_player.kodi_mb
+        entity_id: media_player.kodi_lv
         data:
           media_content_id: "/storage/videos/Fire-1.mp4"
           media_content_type: VIDEO

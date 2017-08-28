@@ -11,7 +11,7 @@ homeassistant:
 
 binary_sensor:
   - platform: workday
-    country: US 
+    country: US
 
 sensor:
 ####DATE TIME
@@ -61,19 +61,19 @@ script:
     sequence:
       - service: tts.google_say
         data_template:
-          entity_id: 
+          entity_id:
             - media_player.kodi_mb
             - media_player.volumio_tts
           message: >
               {% set weather = states('sensor.weather_report') %}
               {% set travel_time = 'Travel time this morning is ' + states('sensor.To_cc') + ' minutes and you must leave by ' + ((as_timestamp(now().date() ~ " 08:30:00") - (states.sensor.To_cc.state|int * 60))|timestamp_local).split(" ")[1][1:-3] + ' to arrive on time.'%}
-              Good Morning, {{weather}} <break time='0.5s'/>
+              Good Morning, {{weather}} 
               {%- if states.sensor.date_weekday.state == Sunday-%}
               The garbage is to go out this evening.
               {%-endif-%}
               {% set travel_time = 'Travel time this morning is ' + states('sensor.To_cc') + ' minutes and you must leave by ' + ((as_timestamp(now().date() ~ " 08:30:00") - (states.sensor.To_cc.state|int * 60))|timestamp_local).split(" ")[1][1:-3] + ' to arrive on time.'%}
               {%- if states.sensor.date_weekday.state == Tuesday-%}
-              {{travel_time}} <break time='0.5s'/>
+              {{travel_time}}
               {%-endif-%}
               {{ [
               "Not the day only, but all things have their morning. Refresh your self and have a good day.",
@@ -212,7 +212,7 @@ script:
       #         "Opportunities will knock on your door every morning. But if you keep sleeping they will simply pass you by.",
       #         "Each morning we are born again, what we do today is what matters most."
       #         ]|random }}
-              
+
 
 
   morning_bedroom_lights:

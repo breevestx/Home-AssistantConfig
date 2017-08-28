@@ -5,8 +5,8 @@ homeassistant:
     sensor.dark_sky_daily_summary:
       name: 'Daily'
     sensor.pws_alerts:
-      icon: mdi:alert-outline 
-      friendly_name: Alerts 
+      icon: mdi:alert-outline
+      friendly_name: Alerts
 
 group:
   weather_view:
@@ -94,7 +94,7 @@ sensor:
 ### SUB IN CORRECT VALUE FOR YOUR SKIN#################################################################################################################################
 ### Celtic"all babies and children" = 67Min // caucasian = 100Min // Central Europe = 200Min // south american = 200Min // Middle Eastern = 400Min // African = 500Min
         value_template: >
-          {% if is_state('sensor.pws_uv', '0.0') %}
+          {% if is_state('sensor.pws_uv', '0') %}
             0
           {% elif is_state('sensor.pws_uv', '-1') %}
             0

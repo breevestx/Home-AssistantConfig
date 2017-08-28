@@ -25,7 +25,7 @@ media_player:
     name: Kodi_MB
 
   - platform: kodi
-    host: !secret kodi_host
+    host: !secret kodi_host_LV
     name: Kodi_LV
     port: 80
 
