@@ -1,0 +1,5 @@
+name: piano
+latitude: !secret zpiano_latitude
+longitude: !secret zpiano_longitude
+radius: !secret zpiano_radius
+icon: mdi:piano

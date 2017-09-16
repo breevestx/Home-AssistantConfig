@@ -23,5 +23,15 @@
        }
       ]
     }
+    {
+      "intent": "PageIntent",
+      "slots":
+      [
+       {
+        "name" : "Person",
+        "type" : "AMAZON.US_FIRST_NAME"
+       }
+      ]
+    }
   ]
 }

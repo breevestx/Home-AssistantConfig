@@ -1,18 +1,27 @@
-android_ip_webcam:
-    host: 192.168.100.191
-    port: 8080
-    name: ipwebcam
-    sensors:
-    - battery_level
-    - light
-    - motion
+# android_ip_webcam:
+#     host: 192.168.100.191
+#     port: 8080
+#     name: ipwebcam
+#     sensors:
+#       - audio_connections
+#       - battery_level
+#       - battery_temp
+#       - battery_voltage
+#       - light
+#       - motion
+#       - pressure
+
+camera:
+  - platform: mjpeg
+    name: Office camera
+    mjpeg_url: http://192.168.100.28:8100/Mjpeg/0?authToken=b799a8ea-cfa2-4098-9046-fbb55ac506f1
 
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
 
-binary_sensor:
-  - platform: ffmpeg_motion
-    input: http://192.168.100.191:8080/video
+# binary_sensor:
+#   - platform: ffmpeg_motion
+#     input: http://192.168.100.191:8080/video
 
 group:
   cameras:
@@ -20,33 +29,41 @@ group:
     view: true
     entities:
     - camera.ipwebcam
+    - camera.office_camera
     - binary_sensor.ffmpeg_motion
+    - sensor.ipwebcam_audio_connections
+    - sensor.ipwebcam_battery_level
+    - sensor.ipwebcam_battery_temp
+    - sensor.ipwebcam_battery_voltage
+    - sensor.ipwebcam_light
+    - sensor.ipwebcam_motion
+    - sensor.ipwebcam_pressure
 
-automation:
-  - alias: Turn Off Dining Room Light - Motion
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.ffmpeg_motion
-        from: 'off'
-        to: 'on'
-    # condition:
-    #    - condition: state
-    #      entity_id: input_boolean.weekly_trash_reminder
-    #      state: 'on'
-    action:
-      - service: notify.slack__dev
-        data_template:
-          message: Motion detected
-       # - service: notify.ios_brucesiphone2_ios
-       #   data_template:
-       #     title: "Trash can reminder"
-       #     message: >
-       #       {%- set responses = [
-       #       'Don\'t forget to set out the trash cans.',
-       #       'Did you forget, the trash truck comes tomorrow?',
-       #       'Got you covered, vacation lights are on'] -%}
-       #       {{ responses | random }}
-       #     data:
-       #       push:
-       #         badge: 0
-       #         category: "TRASH" 
+# automation:
+#   - alias: Turn Off Dining Room Light - Motion
+#     trigger:
+#       - platform: state
+#         entity_id: binary_sensor.ffmpeg_motion
+#         from: 'off'
+#         to: 'on'
+#     condition:
+#        - condition: state
+#          entity_id: device_tracker.brucesiphone2_ios
+#          state: 'not_home'
+#     action:
+#       - service: notify.slack__dev
+#         data_template:
+#           message: Motion detected
+#        # - service: notify.ios_brucesiphone2_ios
+#        #   data_template:
+#        #     title: "Trash can reminder"
+#        #     message: >
+#        #       {%- set responses = [
+#        #       'Don\'t forget to set out the trash cans.',
+#        #       'Did you forget, the trash truck comes tomorrow?',
+#        #       'Got you covered, vacation lights are on'] -%}
+#        #       {{ responses | random }}
+#        #     data:
+#        #       push:
+#        #         badge: 0
+#        #         category: "TRASH"

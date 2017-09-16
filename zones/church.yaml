@@ -1,0 +1,5 @@
+name: Church
+latitude: !secret zchurch_latitude
+longitude: !secret zchurch_longitude
+radius: !secret zchurch_radius
+icon: mdi:church

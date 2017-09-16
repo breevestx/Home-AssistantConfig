@@ -1,0 +1,7 @@
+panel_iframe:
+  shell:
+    title: 'Shell'
+    url: 'http://192.168.100.19:4200'
+  glances:
+    title: 'GLances'
+    url: 'http://192.168.100.19:61208/'

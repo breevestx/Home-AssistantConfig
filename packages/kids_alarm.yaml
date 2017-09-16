@@ -68,7 +68,7 @@ group:
       - switch.kent_bed
       - switch.bennett_bed
 
-  Automations:
+  Alarm Automations:
     control: hidden
     entities:
       - automation.kids_in_bed
@@ -77,6 +77,9 @@ group:
       - automation.reset_alarm
       - script.kids_tts_warn
       - script.kids_tts_wake
+      - script.se_kids_tts_wake_repeat
+      - script.se_kids_tts_wake
+      - script.se_kids_tts_warn
 
 
 input_slider:
@@ -89,7 +92,7 @@ input_slider:
 
   slider_minutes:
     name: Minutes
-    initial: 50
+    initial: 30
     min: 0
     max: 59
     step: 1
@@ -130,17 +133,13 @@ sensor:
       alarm_status:
         friendly_name: 'Alarm Status'
         value_template: >
-          The Alarm is currently set to go off at {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int }}
+          Set for {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int }}
           {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
-            so the snooze will start at {{ states("input_slider.slider_hours")|int - 1|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
+          Snooze at {{ states("input_slider.slider_hours")|int - 1|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
           {% else %}
-            so the snooze will start at {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
+          Snooze at {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
           {% endif %}
-          Currently
-          {% for state in states.switch -%}
-            {%- if loop.first %}The {% elif loop.last %} and the {% else %}, the {% endif -%}
-            {{ state.name }} is {{state.state}} {{- state.attributes.unit_of_measurement}}
-          {%- endfor -%}.
+
 
 
 ##################################
@@ -241,11 +240,6 @@ automation:
           entity_id: input_boolean.alarm_active
           state: 'on'
     action:
-      # - service: logbook.log
-      #   data_template:
-      #     name: "Snooz Activated: "
-      #     message: >-
-      #       {{ state.sensor.alarm_status }}
       - service: notify.slack__dev
         data_template:
           message: Starting Snooze
@@ -344,70 +338,47 @@ automation:
 script:
     kids_tts_warn:
       sequence:
-        # - condition: state
-        #   entity_id: input_boolean.alarm_active
-        #   state: 'on'
+        - condition: state
+          entity_id: input_boolean.alarm_active
+          state: 'on'
         - service: media_player.volume_set
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             volume_level: '0.7'
         - service: tts.google_say
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             message: >
               It is about time to get up, you have 9 more minutes to sleep
-        - service: notify.slack__dev
-          data_template:
-            message: Kids Snooze Executed
-        # - service: logbook.log
-        #   data_template:
-        #     name: "Snooze Executed: "
-        #     message: >-
-        #       {{ state.sensor.alarm_status }}
         - service: media_player.volume_set
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             volume_level: '1'
 
 
     kids_tts_wake:
       sequence:
-        - wait_template: >-
-           {{ not is_state('media_player.volumio_tts', 'playing') }}
-          timeout: 00:01:30
-        - condition: template
-          value_template: >
-            {% if is_state('media_player.volumio_tts', 'playing') %}
-            false
-            {% else %}
-            true
-            {% endif %}
         - service: media_player.volume_set
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             volume_level: '1'
         - service: media_player.play_media
           data_template:
             entity_id:
-              - media_player.volumio_tts
+              - media_player.tts_hallway
             media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Unusual-music-loop-120-bpm.mp3"
             media_content_type: audio/mp4
         - delay: '00:00:16'
         - service: tts.google_say
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             message: >
               {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
               It is time to get up!! {{time}} It is time to get up
         - service: media_player.volume_set
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             volume_level: '1'
-        # - service: logbook.log
-        #   data_template:
-        #     name: "Alarm Executed: "
-        #     message: >-
-        #       {{ state.sensor.alarm_status }}
         - service: homeassistant.turn_on
           entity_id: input_boolean.alarm_has_gone_off
 
@@ -416,27 +387,89 @@ script:
       sequence:
         - service: media_player.volume_set
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             volume_level: '1'
         - service: media_player.play_media
           data_template:
             entity_id:
-              - media_player.volumio_tts
+              - media_player.tts_hallway
             media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Alarm-tone.mp3"
             media_content_type: audio/mp4
         - delay: '00:00:15'
         - service: tts.google_say
           data_template:
-            entity_id: media_player.volumio_tts
+            entity_id: media_player.tts_hallway
             message: >
               {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
               It is time to get up!! {{time}} It is time to get up
-        # - service: media_player.volume_set
-        #   data_template:
-        #     entity_id: media_player.volumio_tts
-        #     volume_level: '0.4'
-        # - service: logbook.log
-        #   data_template:
-        #     name: "Alarm Executed: "
-        #     message: >-
-        #       {{ state.sensor.alarm_status }}
+              {% if is_state('switch.kahlan_bed', 'on') %} Kahlan you need to get out of bed!! {% endif %}
+              {% if is_state('switch.braelyn_bed', 'on') %} Braelyn you need to get out of bed!! {% endif %}
+              {% if is_state('switch.kent_bed', 'on') %} Kent you need to get out of bed!! {% endif %}
+              {% if is_state('switch.bennett_bed', 'on') %} Bennett you need to get out of bed!! {% endif %}
+
+    se_kids_tts_warn:
+      sequence:
+        - condition: state
+          entity_id: input_boolean.alarm_active
+          state: 'on'
+        - service: script.speech_engine
+          data_template:
+            call_no_announcement: 1
+            alarmclock_snooze: >
+              { [
+              "You have 9 more minutes to sleep before the alarm goes off.",
+              "The alarm is about to go off, just 9 more minutes to sleep."
+              ] | random }}
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.tts_hallway
+            volume_level: '1'
+
+    se_kids_tts_wake:
+      sequence:
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.tts_hallway
+            volume_level: '1'
+        - service: media_player.play_media
+          data_template:
+            entity_id:
+              - media_player.tts_hallway
+            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Unusual-music-loop-120-bpm.mp3"
+            media_content_type: audio/mp4
+        - delay: '00:00:16'
+        - service: script.speech_engine
+          data_template:
+            pagekids: >
+              {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
+              It is time to get up!! {{time}} It is time to get up
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.tts_hallway
+            volume_level: '1'
+        - service: homeassistant.turn_on
+          entity_id: input_boolean.alarm_has_gone_off
+
+
+    se_kids_tts_wake_repeat:
+      sequence:
+        - service: media_player.volume_set
+          data_template:
+            entity_id: media_player.tts_hallway
+            volume_level: '1'
+        - service: media_player.play_media
+          data_template:
+            entity_id:
+              - media_player.tts_hallway
+            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Alarm-tone.mp3"
+            media_content_type: audio/mp4
+        - delay: '00:00:15'
+        - service: script.speech_engine
+          data_template:
+            pagekids: >
+              {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
+              It is time to get up!! {{time}} It is time to get up
+              {% if is_state('switch.kahlan_bed', 'on') %} Kahlan you need to get out of bed!! {% endif %}
+              {% if is_state('switch.braelyn_bed', 'on') %} Braelyn you need to get out of bed!! {% endif %}
+              {% if is_state('switch.kent_bed', 'on') %} Kent you need to get out of bed!! {% endif %}
+              {% if is_state('switch.bennett_bed', 'on') %} Bennett you need to get out of bed!! {% endif %}

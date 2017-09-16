@@ -25,9 +25,14 @@ group:
   - sensor.Bruce_to_home
   - sensor.From_Home_to_Church
   - sensor.to_CC
+  - sensor.to_piano
   - proximity.lene_home
+  - proximity.lene_piano
   - proximity.bruce_home
   - proximity.home
+  - device_tracker.brucesiphone2_ios
+  - device_tracker.leneiphone_ios
+
   Maps:
   - camera.bruce_map
   - camera.lene_map
@@ -61,6 +66,12 @@ proximity:
       - device_tracker.leneiphone_ios
     tolerance: 50
     unit_of_measurement: !secret proximity_unit_of_measurement
+  lene_piano:
+      zone: piano
+      devices:
+        - device_tracker.leneiphone_ios
+      tolerance: 50
+      unit_of_measurement: !secret proximity_unit_of_measurement
 
 sensor:
   - platform: statistics
@@ -108,6 +119,13 @@ sensor:
     options:
       mode: driving
 
+  - platform: google_travel_time
+    name: To piano
+    api_key: !secret google_api_key
+    origin: zone.home
+    destination: zone.piano
+    options:
+      mode: driving
 
 automation:
 - alias: Time to church
@@ -137,7 +155,7 @@ automation:
         entity_id: device_tracker.brucesiphone2_ios
         state: 'home'
   action:
-    - service: notify.all
+    - service: notify.brucesiphone2_ios
       data_template:
         message: >-
           Look for a delay of {{ trigger.to_state.state|round }} minutes to Church
@@ -177,7 +195,7 @@ automation:
         entity_id: device_tracker.leneiphone_ios
         state: 'home'
   action:
-    - service: notify.all
+    - service: notify.brucesiphone2_ios
       data_template:
         message: >-
           Look for a delay of {{ trigger.to_state.state|round }} minutes to CC

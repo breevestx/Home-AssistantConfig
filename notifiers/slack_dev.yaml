@@ -2,5 +2,5 @@ name: slack__dev
 platform: slack
 api_key: !secret slack_home_key
 default_channel: '#ha'
-username: Guardian
+username: Jarvis
 icon: ":guardsman:"

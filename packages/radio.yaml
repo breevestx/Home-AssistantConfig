@@ -1,30 +1,98 @@
 ################################################################
 ## Packages / Radio
+
+##Station list##
+
+# 'Jazz Groove',http://199.180.75.116:80/stream
+# 'Audiophile Jazz',http://174.127.85.10:8800
+# 'Classic Rock',http://198.27.70.26:10042/stream
+# 'Awesome 80s',http://104.200.142.184:80/1719_128
+# 'Christian Hits',http://162.217.125.32:8126/stream
+# 'Venice Classical',http://144.217.49.251:80/stream1
+# 'I AM Christian Contemporary',http://198.50.158.92:8137/stream
+
 ################################################################
 homeassistant:
   customize:
     script.radio:
       friendly_name: Start Radio
       icon: mdi:radio
+    script.stop:
+      friendly_name: Stop Radio
+      icon: mdi:radio
 
 ###### STATE CARD
 group:
   Radio:
-    name: Radio
+    name: Radio Stations
+    entities:
+      - input_select.classical_radio_station
+      - input_select.jazz_radio_station
+      - input_select.other_radio_station
+
+  Radio_controls:
+    name: Radio Controls
     entities:
       - input_select.radio_station_location
-      - input_select.radio_station
       - input_slider.volume_radio
       - script.radio
       - script.stop
 
-  players:
-    name: media players
-    entities:
-      - media_player.volumio_tts
-      - media_player.kodi_MB
-      - media_player.kodi_LV
+input_slider:
+  volume_radio:
+    name: Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
 
+###### SELECTORS
+input_select:
+  classical_radio_station:
+    name: Classical Radio Stations
+    options:
+      - "-"
+      - Venice Classical
+    initial: "-"
+    icon: mdi:radio
+  jazz_radio_station:
+    name: Jazz Radio Stations
+    options:
+      - "-"
+      - Jazz Groove
+      - Audiophile Jazz
+    initial: "-"
+    icon: mdi:radio
+  other_radio_station:
+    name: Other Radio Stations
+    options:
+      - "-"
+      - Classic Rock
+      - Awesome 80s
+      - Christian Hits
+    initial: "-"
+    icon: mdi:radio
+  radio_station_location:
+    name: Radio Location
+    options:
+      - Kids
+      - Office
+      - Master bedroom
+      - Living Room
+      - All Zones
+    initial: "All Zones"
+    icon: mdi:radio
+
+sensor:
+  - platform: template
+    sensors:
+      radio_station:
+        friendly_name: 'Selected Station'
+        value_template: >
+          {% if not is_state('input_select.classical_radio_station', '-') %}  {{ states('input_select.classical_radio_station') }}
+          {% elif not is_state('input_select.jazz_radio_station', '-') %}  {{ states('input_select.jazz_radio_station') }}
+          {% elif not is_state('input_select.other_radio_station', '-') %}  {{ states('input_select.other_radio_station') }}
+          {%- endif -%}
 
 ###### SELECT LOCATION AND STATION
 script:
@@ -33,16 +101,22 @@ script:
       - service: media_player.play_media
         data_template:
           entity_id: >
-            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.volumio_tts
+            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.tts_hallway
+            {% elif is_state('input_select.radio_station_location', 'Office') %} media_player.kodi_office
             {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
-            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
+            {% elif is_state('input_select.radio_station_location', 'Living Room') %} media_player.kodi_LV
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players_to_start
             {% endif %}
           media_content_id: >
-            {% if is_state('input_select.radio_station', 'Jazz Groove') %} http://199.180.75.116:80/stream
-            {% elif is_state('input_select.radio_station', 'Audiophile Jazz') %} http://174.127.85.10:8800
-            {% elif is_state('input_select.radio_station', 'Classic Rock') %} http://198.27.70.26:10042/stream
-            {% elif is_state('input_select.radio_station', 'Awesome 80s') %} http://104.200.142.184:80/1719_128
-            {% elif is_state('input_select.radio_station', '90s Hits') %} http://rfcmedia.streamguys1.com/90hits.mp3
+            {% if is_state('sensor.radio_station', 'Jazz Groove') %} http://199.180.75.116:80/stream
+            {% elif is_state('sensor.radio_station', 'Audiophile Jazz') %} http://174.127.85.10:8800
+            {% elif is_state('sensor.radio_station', 'Classic Rock') %} http://198.27.70.26:10042/stream
+            {% elif is_state('sensor.radio_station', 'Awesome 80s') %} http://104.200.142.184:80/1719_128
+            {% elif is_state('sensor.radio_station', 'Christian Hits') %} http://162.217.125.32:8126/stream
+            {% elif is_state('sensor.radio_station', 'Christian Hits') %} http://162.217.125.32:8126/stream
+            {% elif is_state('sensor.radio_station', 'Venice Classical') %} http://144.217.49.251:80/stream1
+
+
             {% endif %}
           media_content_type: 'audio/mp3'
 
@@ -51,8 +125,10 @@ script:
       - service: media_player.media_stop
         data_template:
           entity_id: >
-            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.volumio_tts
+            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.tts_hallway
+            {% elif is_state('input_select.radio_station_location', 'Office') %} media_player.kodi_office
             {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
+            {% elif is_state('input_select.radio_station_location', 'Living Room') %} media_player.kodi_LV
             {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
             {% endif %}
 
@@ -67,39 +143,8 @@ automation:
       - service: media_player.volume_set
         data_template:
           entity_id: >
-            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.volumio_tts
+            {% if is_state('input_select.radio_station_location', 'Kids') %} media_player.tts_hallway
             {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
             {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
             {% endif %}
           volume_level: '{{  states.input_slider.volume_radio.state  }}'
-
-input_slider:
-  volume_radio:
-    name: Volume
-    icon: mdi:volume-high
-    min: 0
-    max: 1
-    step: 0.05
-
-###### SELECTORS
-input_select:
-  radio_station:
-    name: Radio Station
-    options:
-      - "-"
-      - Jazz Groove
-      - Audiophile Jazz
-      - Classic Rock
-      - Awesome 80s
-      - 90s Hits
-    initial: "-"
-    icon: mdi:radio
-  radio_station_location:
-    name: Radio Location
-    options:
-      - Kids
-      - Master bedroom
-      - All Zones
-    initial: "All Zones"
-    icon: mdi:radio
-

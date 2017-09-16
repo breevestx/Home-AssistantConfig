@@ -15,15 +15,15 @@ Alarm Clock:
   entities:
     - group.controls
     - group.kids
-    - group.automations
 
 Radio_view:
-  name: Volumio
+  name: Radio
   view: yes
   icon: mdi:radio
   entities:
     - group.radio
-    - group.alarm_clock
+    - group.radio_controls
+    - group.players
 
 location:
   name: Location
@@ -40,6 +40,7 @@ misc_view:
   icon: mdi:power
   entities:
     - group.system
+    - group.sabnzb
     - group.utilities
     - group.backup
     - group.processes
@@ -54,6 +55,7 @@ automation:
   - group.automation_override
   - group.automation_on_demand
   - group.location_controls
+  - group.alarm_automations
 
 # sensors:
 #   name: Sensors
@@ -84,7 +86,6 @@ Household:
     - light.bruce_lamp
     - media_player.kodi_lv
     # - media_player.kodi_mb
-    - sensor.freezer
     - sensor.freezer_ds1
     - input_boolean.alarm_active
 

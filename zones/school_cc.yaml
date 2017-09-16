@@ -1,0 +1,5 @@
+name: CC
+latitude: !secret zcc_latitude
+longitude: !secret zcc_longitude
+radius: !secret zcc_radius
+icon: mdi:school

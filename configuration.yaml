@@ -67,10 +67,17 @@ sun:
 
 # # Text to speech
 tts:
-  platform: google
-  cache: true
-  cache_dir: /tmp/tts
-  time_memory: 300
+  - platform: google
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+
+  - platform: amazon_polly
+    aws_access_key_id: !secret aws_access_key_id
+    aws_secret_access_key: !secret aws_secret_access_key
+    region_name: 'us-west-2'
+    text_type: ssml
+    cache: True
 
 alexa:
 
@@ -153,27 +160,33 @@ mqtt:
   username: !secret mqtt_user
   password: !secret mqtt_password
 
-zone:
-  name: Home
-  latitude: !secret zhome_latitude
-  longitude: !secret zhome_longitude
-  radius: !secret zhome_radius
-
-zone 2:
-  name: Church
-  latitude: !secret zchurch_latitude
-  longitude: !secret zchurch_longitude
-  radius: !secret zchurch_radius
-
-zone 3:
-  name: school_cc
-  latitude: !secret zcc_latitude
-  longitude: !secret zcc_longitude
-  radius: !secret zcc_radius
-#  beacon:
-#    uuid: 7223e44fac664412b854fe50d72977ff
-#    major: 60042
-#    minor: 43814
+zone: !include_dir_list zones
+#   name: Home
+#   latitude: !secret zhome_latitude
+#   longitude: !secret zhome_longitude
+#   radius: !secret zhome_radius
+#
+# zone 2:
+#   name: Church
+#   latitude: !secret zchurch_latitude
+#   longitude: !secret zchurch_longitude
+#   radius: !secret zchurch_radius
+#
+# zone 3:
+#   name: school_cc
+#   latitude: !secret zcc_latitude
+#   longitude: !secret zcc_longitude
+#   radius: !secret zcc_radius
+#
+# zone 4:
+#   name: piano
+#   latitude: !secret zpiano_latitude
+#   longitude: !secret zpiano_longitude
+#   radius: !secret zpiano_radius
+# #  beacon:
+# #    uuid: 7223e44fac664412b854fe50d72977ff
+# #    major: 60042
+# #    minor: 43814
 
 automation: !include automation.yaml
 group: !include groups.yaml

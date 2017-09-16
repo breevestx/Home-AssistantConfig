@@ -9,10 +9,16 @@ intent_script:
       text: OK
       # text: !include includes/alexa_confirm.yaml
   LocateIntent:
+    action:
+      - service: logbook.log
+        data_template:
+          name: "Alexa LocateIntent"
+          message: >-
+            Looking up {{  User }} is location
     speech:
       type: plain
       text: >
-          {%- for state in states.device_tracker -%}
+          {%- for state in states.sensor -%}
             {%- if state.name.lower() == User.lower() -%}
               {{ state.name }} is at {{ state.state }}
             {%- elif loop.last -%}
@@ -28,6 +34,19 @@ intent_script:
                 is_state('device_tracker.leneiphone_ios', 'home') -%}
           You are both home, you silly
         {%- else -%}
-          Leene is at {{ states("device_tracker.leneiphone_ios") }} and should be home in {{ states("sensor.Lene_to_home") }}
+          Leknee is at {{ states("device_tracker.leneiphone_ios") }} and should be home in {{ states("sensor.Lene_to_home") }} minutes
           Bruce is at {{ states("device_tracker.brucesiphone2_ios") }} and should be home in {{ states("sensor.Bruce_to_home") }}
         {% endif %}
+  PageIntent:
+    action:
+      - service: logbook.log
+        data_template:
+          name: "Alexa PageIntent"
+          message: >-
+            Paging {{  Name }} at input_boolean.pager_{{ Name }}
+      - service: input_boolean.turn_on
+        data_template:
+          entity_id: input_boolean.pager_{{ Name }}
+    speech:
+      type: plain
+      text: I will call {{ Name }}

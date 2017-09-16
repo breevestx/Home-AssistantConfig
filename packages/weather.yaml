@@ -35,7 +35,10 @@ camera:
     still_image_url: 'https://icons.wxug.com/data/weather-maps/radar/united-states/lawton-oklahoma-region-current-radar-animation.gif'
 
 
+
+
 sensor:
+  - platform: moon
   - platform: wunderground
     api_key: !secret wunderground_api
     monitored_conditions:

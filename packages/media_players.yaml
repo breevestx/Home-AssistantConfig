@@ -1,5 +1,5 @@
 ##############################
-##  Media players Consolodated
+##  Media players Consolodated to one space
 ##############################
 
 media_player:
@@ -9,14 +9,13 @@ media_player:
   - platform: mpd
     host: !secret volumio_url
     port: !secret volumio_mpd_port
-    name: Volumio TTS
-
-### Volumio Kids rooms
+    name: TTS Hallway
 
   - platform: volumio
     host: !secret volumio_url
     port: !secret volumio_port
-    name: Volumio
+    name: Hallway
+
 
 ### Kodi units
 
@@ -29,4 +28,26 @@ media_player:
     name: Kodi_LV
     port: 80
 
-  - platform: cast
+  - platform: kodi
+    # host: !secret kodi_host_MB
+    host: 192.168.100.28
+    name: Kodi_Office
+    port: 8081
+
+group:
+  players:
+    name: media players
+    entities:
+      - media_player.tts_hallway
+      - media_player.tts_office
+      - media_player.kodi_office
+      - media_player.kodi_MB
+      - media_player.kodi_LV
+
+  players_to_start:
+    name: media players
+    entities:
+      - media_player.tts_hallway
+      - media_player.tts_office
+      - media_player.kodi_MB
+      - media_player.kodi_LV

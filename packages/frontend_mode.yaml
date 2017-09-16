@@ -1,4 +1,4 @@
-homeassistant: 
+homeassistant:
   customize:
     # light.bruce_lamp:
     #   emulated_hue: false
@@ -17,7 +17,7 @@ homeassistant:
 #       primary-color: grey
 
 input_boolean:
-  switch_mode:  
+  switch_mode:
     initial: off
 
 
@@ -31,7 +31,7 @@ automation:
     action:
       service: frontend.set_theme
       data:
-        name: day
+        name: darkorange
   - alias: 'frontend mode night'
     trigger:
       - platform: state
@@ -41,7 +41,7 @@ automation:
     action:
       - service: frontend.set_theme
         data:
-          name: night
+          name: teal
   - alias: 'frontend mode day'
     trigger:
       - platform: state
@@ -51,7 +51,7 @@ automation:
     action:
       - service: frontend.set_theme
         data:
-          name: teal
+          name: darkred
 
 
 
@@ -82,7 +82,7 @@ automation:
     trigger:
       - platform: sun
         event: sunrise
-        offset: '+00:45:00'      
+        offset: '+00:45:00'
     action:
       - service: frontend.set_theme
         data:

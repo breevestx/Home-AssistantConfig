@@ -23,14 +23,31 @@ group:
     icon: mdi:bullhorn
     entities:
       - group.page_controls
+      - group.kids_pager
 
   Page Controls:
     control: hidden
     entities:
-      - input_select.pager_enable
-      - input_select.page_message
+      - input_boolean.pager_enable
+      - input_select.page_everyone
       - input_slider.volume_page
       - script.page
+
+  Kids Pager:
+    name: Call kids
+    control: hidden
+    entities:
+      - input_boolean.pager_kahlan
+      - input_boolean.pager_braelyn
+      - input_boolean.pager_kent
+      - input_boolean.pager_bennett
+
+  tts_page:
+    name: TTS Page devices
+    control: hidden
+    entities:
+      - media_player.tts_hallway
+      - media_player.tts_office
 
 
 input_boolean:
@@ -38,19 +55,32 @@ input_boolean:
     name: Pageing Enabled
     initial: on
     icon: mdi:bullhorn
+  pager_kahlan:
+    name: Kahlan
+    initial: off
+    icon: mdi:bullhorn
+  pager_braelyn:
+    name: Braelyn
+    initial: off
+    icon: mdi:bullhorn
+  pager_kent:
+    name: Kent
+    initial: off
+    icon: mdi:bullhorn
+  pager_bennett:
+    name: Bennett
+    initial: off
+    icon: mdi:bullhorn
 
 ###### SELECTORS
 input_select:
-  page_message:
-    name: Page to send out
+  page_everyone:
+    name: Page Everyone
     options:
-      - "-"
-      - "Kahlan to Mommy"
-      - "Kahlan to Daddy"
-      - "Breakfast"
-      - "Lunch"
-      - "Dinner"
-      - "Quack Quack"
+     - "-"
+     - "Lunch"
+     - "Dinner"
+     - "Quack Quack"
     initial: "-"
     icon: mdi:bullhorn
 
@@ -78,10 +108,54 @@ automation:
       - service: media_player.volume_set
         data_template:
           entity_id: >
-            {% if is_state("input_select.radio_station_location", "Office") %} media_player.volumio_tts
-            {% elif is_state("input_select.radio_station_location", "All Zones") %} media_player.volumio_tts
+            {% if is_state("input_select.radio_station_location", "Office") %} media_player.tts_hallway
+            {% elif is_state("input_select.radio_station_location", "All Zones") %} media_player.tts_hallway
             {% endif %}
           volume_level: '{{  states.input_slider.volume_page.state  }}'
+
+  - alias: 'Page Kids'
+    trigger:
+      - platform: state
+        entity_id:
+          - input_boolean.pager_kahlan
+          - input_boolean.pager_braelyn
+          - input_boolean.pager_kent
+          - input_boolean.pager_bennett
+        from: 'off'
+        to: 'on'
+    action:
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.tts_hallway
+          volume_level: '{{  states.input_slider.volume_page.state  }}'
+      # - service: media_player.play_media
+      #   data_template:
+      #     entity_id: >
+      #       {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio
+      #       {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio
+      #       {% endif %}
+      #     media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3"
+      #     media_content_type: 'audio/mp3'
+      # - delay: '00:00:06'
+      - service: script.speech_engine
+        data_template:
+          pagekids: >
+            {% set person = trigger.entity_id.split('_')[2] %}
+            {%- macro page_person(person) -%}
+            {{ [
+            "Hey " ~ person + " please report to your parents!!",
+            "Has anyone seen" ~ person +"? Tell them to come here!",
+            person + " please come out, we are looking for you.",
+            ] | random }}
+            {%- endmacro -%}
+            "{{page_person(person)}}"
+          call_no_announcement: 1
+      - service: input_boolean.turn_off
+        entity_id:
+          - input_boolean.pager_kahlan
+          - input_boolean.pager_braelyn
+          - input_boolean.pager_kent
+          - input_boolean.pager_bennett
 
 
 ###########################################################
@@ -93,35 +167,43 @@ script:
     sequence:
       - service: media_player.volume_set
         data_template:
-          entity_id: media_player.volumio_tts
+          entity_id: media_player.tts_hallway
           volume_level: '{{  states.input_slider.volume_page.state  }}'
       - service: media_player.play_media
         data_template:
           entity_id: >
-            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio
-            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio
+            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.tts_hallway
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.tts_hallway
             {% endif %}
           media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3"
-            # {% if is_state('input_select.page_message', 'Kahlan to Mommy') %} https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3
-            # {% elif is_state('input_select.page_message', 'Kahlan to Daddy') %} "mnt/NAS/freenas/Cuckoo-clock-sound.mp3"
-            # {% elif is_state('input_select.page_message', 'Breakfast') %} /mnt/usb/Cuckoo-clock-sound.mp3
-            # {% elif is_state('input_select.page_message', 'Lunch') %} /usb/Cuckoo-clock-sound.mp3
-            # {% elif is_state('input_select.page_message', 'Diner') %} https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3
-            # {% elif is_state('input_select.page_message', 'Quack Quack') %} https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3
-            # {% endif %}
           media_content_type: 'audio/mp3'
       - delay: '00:00:06'
       - service: tts.google_say
         data_template:
-          entity_id: >
-            {% if is_state('input_select.radio_station_location', 'Office') %} media_player.volumio_tts
-            {% elif is_state('input_select.radio_station_location', 'All Zones') %} media_player.volumio_tts
-            {% endif %}
+          entity_id: media_player.tts_hallway
           message: >
-            {% if is_state('input_select.page_message', 'Kahlan to Mommy') %} 'Kahlan come see Mommy'
-            {% elif is_state('input_select.page_message', 'Kahlan to Daddy') %} 'Kahlan come see Daddy'
-            {% elif is_state('input_select.page_message', 'Breakfast') %} 'Breakfast Time'
-            {% elif is_state('input_select.page_message', 'Lunch') %} 'Lunch Time'
-            {% elif is_state('input_select.page_message', 'Dinner') %} 'Dinner Time'
-            {% elif is_state('input_select.page_message', 'Quack Quack') %} 'Quack Quack Quack'
+            {% if is_state('input_select.page_kids', 'Kahlan') %} 'Kahlan come see Mommy'
+            {% elif is_state('input_select.page_kids', 'Braelyn') %} 'Braelyn come see Mommy'
+            {% elif is_state('input_select.page_kids', 'Kent') %} 'Kent come see Mommy'
+            {% elif is_state('input_select.page_kids', 'Bennett') %} 'Bennett come see Mommy'
+            {% elif is_state('input_select.page_everyone', 'Breakfast') %} 'Breakfast Time'
+            {% elif is_state('input_select.page_everyone', 'Lunch') %} 'Lunch Time'
+            {% elif is_state('input_select.page_everyone', 'Dinner') %} 'Dinner Time'
+            {% elif is_state('input_select.page_everyone', 'Quack Quack') %} 'Quack Quack Quack'
             {% endif %}
+      - service: tts.amazon_polly_say
+        entity_id: media_player.tts_hallway
+        data_template:
+          message: >
+            <speak>
+            {% if is_state('input_select.page_kids', 'Kahlan') %} 'Kahlan come see Mommy'
+            {% elif is_state('input_select.page_kids', 'Braelyn') %} 'Braelyn come see Mommy'
+            {% elif is_state('input_select.page_kids', 'Kent') %} 'Kent come see Mommy'
+            {% elif is_state('input_select.page_kids', 'Bennett') %} 'Bennett come see Mommy'
+            {% elif is_state('input_select.page_everyone', 'Breakfast') %} 'Breakfast Time'
+            {% elif is_state('input_select.page_everyone', 'Lunch') %} 'Lunch Time'
+            {% elif is_state('input_select.page_everyone', 'Dinner') %} 'Dinner Time'
+            {% elif is_state('input_select.page_everyone', 'Quack Quack') %} 'Quack Quack Quack'
+            {% endif %}
+            </speak>
+          cache: true

@@ -48,6 +48,16 @@ group:
       - sensor.process_dasher
       - sensor.process_mosquitto
 
+  SabNZB:
+    control: hidden
+    entities:
+      - sensor.sabnzbd_status
+      - sensor.sabnzbd_speed
+      - sensor.sabnzbd_queue
+      - sensor.sabnzbd_left
+      - sensor.sabnzbd_disk
+      - sensor.sabnzbd_disk_free
+
 weblink:
   entities:
     - name: release_log

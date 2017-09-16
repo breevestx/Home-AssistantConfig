@@ -12,6 +12,9 @@ homeassistant:
     script.restart_ha:
       friendly_name: Restart Home Assistant
       icon: mdi:restart
+    script.restart_dasher:
+      friendly_name: Restart Dasher
+      icon: mdi:restart
     script.clear_log:
       friendly_name: 'Clear Log File'
       icon: mdi:eraser
@@ -32,6 +35,8 @@ group:
       - script.update_ha
       - script.clear_log
       - script.clear_tts_cache
+      - script.restart_dasher
+
   backup:
     name: Backup
     control: hidden
@@ -53,6 +58,9 @@ script:
       - service: tts.clear_cache
       - service: shell_command.del_log
       - service: shell_command.restart_ha
+  restart_dasher:
+    sequence:
+      - service: shell_command.restart_dasher
   clear_log:
      sequence:
        - service: shell_command.del_log
@@ -83,6 +91,14 @@ automation:
   #       seconds: 0
   #   action:
   #     - service: script.refresh_devices
+  # - alias: "Dasher Rstart"
+  #   initial_state: 'on'
+  #   trigger:
+  #     platform: state
+  #     entity_id: sensor.process_dasher
+  #     state: off
+  #   action:
+  #     - service: script.restart_dasher
 
   - alias: "Auto Backup"
     initial_state: 'on'
@@ -105,8 +121,28 @@ sensor:
     name: 'Last Backup'
     scan_interval: 60
 
+  - platform: sabnzbd
+    host: !secret sabnzb_ip
+    port: 8081
+    api_key: !secret sabnzb_key
+    monitored_variables:
+      - 'current_status'
+      - 'speed'
+      - 'queue_size'
+      - 'queue_remaining'
+      - 'disk_size'
+      - 'disk_free'
+
 shell_command:
   backup_config: 'sudo bash /home/homeassistant/.homeassistant/shell/backup_config.sh'
   update_ha: 'sudo bash /home/homeassistant/.homeassistant/shell/update_ha.sh </dev/null >> /home/homeassistant/.homeassistant/shell/update_ha.log 2>&1 &'
   restart_ha: 'sudo hassctl restart'
   del_log: rm /home/homeassistant/.homeassistant/home-assistant.log && touch /home/homeassistant/.homeassistant/home-assistant.log && chown -R -v homeassistant:homeassistant /home/homeassistant/.homeassistant/home-assistant.log
+  restart_dasher: 'sudo dasher restart'
+
+# weblink:
+#   entities:
+#     - name: Router
+#       url: http://192.168.1.1/
+#     - name: Home Assistant
+#       url: https://home-assistant.io

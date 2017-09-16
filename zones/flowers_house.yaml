@@ -1,0 +1,5 @@
+name: flowers
+latitude: 32.8958799
+longitude: -97.2169762
+radius: !secret zcc_radius
+icon: mdi:house

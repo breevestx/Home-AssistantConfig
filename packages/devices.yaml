@@ -15,8 +15,8 @@
 
 
 # input_boolean:
-#   alert_delays:  
-#     initial: on  
+#   alert_delays:
+#     initial: on
 
 # group:
 #   Transit:
@@ -36,11 +36,11 @@
 #   - platform: generic
 #     name: Bruce Map
 #     still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.brucesiphone2_ios.attributes.latitude }},{{ states.device_tracker.brucesiphone2_ios.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:Bruce%7C{{ states.device_tracker.brucesiphone2_ios.attributes.latitude }},{{ states.device_tracker.brucesiphone2_ios.attributes.longitude }}
-#     limit_refetch_to_url_change: true 
+#     limit_refetch_to_url_change: true
 #   - platform: generic
 #     name: Lene Map
 #     still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.leneiphone_ios.attributes.latitude }},{{ states.device_tracker.leneiphone_ios.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:Bruce%7C{{ states.device_tracker.leneiphone_ios.attributes.latitude }},{{ states.device_tracker.leneiphone_ios.attributes.longitude }}
-#     limit_refetch_to_url_change: true 
+#     limit_refetch_to_url_change: true
 
 
 # proximity:
@@ -141,6 +141,5 @@ automation:
           message: >
             {%- set responses = [
             'It just tickles me pink to remind you that I turned the lights on for you.',
-            'Well isn\'t it just a breath of fresh air to know I can take care of turning lights on while your away?',
             'Got you covered, lamps are are on.'] -%}
             Bruce> {{ responses | random }}

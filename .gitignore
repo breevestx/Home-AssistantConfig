@@ -27,6 +27,7 @@ ip_bans.yaml
 google_calendars.yaml
 /icloud/*
 /notes/*
+/examples/*
 ip_bans.yaml
 /homebridge_config/*
 /dasher_config/*

@@ -1,0 +1,5 @@
+name: legacy
+latitude: !secret zlca_latitude
+longitude: !secret zlca_longitude
+radius: !secret zcc_radius
+icon: mdi:school

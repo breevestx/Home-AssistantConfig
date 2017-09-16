@@ -1,0 +1,4 @@
+name: Home
+latitude: !secret zhome_latitude
+longitude: !secret zhome_longitude
+radius: !secret zhome_radius
