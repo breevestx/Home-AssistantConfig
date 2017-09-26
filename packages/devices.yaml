@@ -101,6 +101,7 @@
 
 automation:
   - alias: Phone battery
+    initial_state: True
     trigger:
       platform: numeric_state
       entity_id:
@@ -121,6 +122,7 @@ automation:
 #################################################################
 
   - alias: 'Away lights On'
+    initial_state: True
     condition:
       - condition: state
         entity_id: device_tracker.brucesiphone2_ios

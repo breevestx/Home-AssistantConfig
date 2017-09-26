@@ -10,34 +10,34 @@
 #       - light
 #       - motion
 #       - pressure
-
-camera:
-  - platform: mjpeg
-    name: Office camera
-    mjpeg_url: http://192.168.100.28:8100/Mjpeg/0?authToken=b799a8ea-cfa2-4098-9046-fbb55ac506f1
-
-ffmpeg:
-  ffmpeg_bin: /usr/bin/ffmpeg
-
-# binary_sensor:
-#   - platform: ffmpeg_motion
-#     input: http://192.168.100.191:8080/video
-
-group:
-  cameras:
-    icon: mdi:video
-    view: true
-    entities:
-    - camera.ipwebcam
-    - camera.office_camera
-    - binary_sensor.ffmpeg_motion
-    - sensor.ipwebcam_audio_connections
-    - sensor.ipwebcam_battery_level
-    - sensor.ipwebcam_battery_temp
-    - sensor.ipwebcam_battery_voltage
-    - sensor.ipwebcam_light
-    - sensor.ipwebcam_motion
-    - sensor.ipwebcam_pressure
+# 
+# camera:
+#   - platform: mjpeg
+#     name: Office camera
+#     mjpeg_url: http://192.168.100.28:8100/Mjpeg/0?authToken=b799a8ea-cfa2-4098-9046-fbb55ac506f1
+#
+# ffmpeg:
+#   ffmpeg_bin: /usr/bin/ffmpeg
+#
+# # binary_sensor:
+# #   - platform: ffmpeg_motion
+# #     input: http://192.168.100.191:8080/video
+#
+# group:
+#   cameras:
+#     icon: mdi:video
+#     view: true
+#     entities:
+#     - camera.ipwebcam
+#     - camera.office_camera
+#     - binary_sensor.ffmpeg_motion
+#     - sensor.ipwebcam_audio_connections
+#     - sensor.ipwebcam_battery_level
+#     - sensor.ipwebcam_battery_temp
+#     - sensor.ipwebcam_battery_voltage
+#     - sensor.ipwebcam_light
+#     - sensor.ipwebcam_motion
+#     - sensor.ipwebcam_pressure
 
 # automation:
 #   - alias: Turn Off Dining Room Light - Motion

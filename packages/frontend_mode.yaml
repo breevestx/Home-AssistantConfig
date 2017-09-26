@@ -33,6 +33,7 @@ automation:
       data:
         name: darkorange
   - alias: 'frontend mode night'
+    initial_state: True
     trigger:
       - platform: state
         entity_id: input_boolean.switch_mode
@@ -43,6 +44,7 @@ automation:
         data:
           name: teal
   - alias: 'frontend mode day'
+    initial_state: True
     trigger:
       - platform: state
         entity_id: input_boolean.switch_mode
@@ -60,6 +62,7 @@ automation:
 # #################################################################
 
   - alias: 'Frontend Night On'
+    initial_state: True
     trigger:
       - platform: sun
         event: sunset
@@ -79,6 +82,7 @@ automation:
 ## Lights off 2 hours after sunset
 #################################################################
   - alias: 'Frontend Night Off'
+    initial_state: True
     trigger:
       - platform: sun
         event: sunrise

@@ -1,4 +1,4 @@
-homeassistant: 
+homeassistant:
   customize:
     input_boolean.teatimer:
       icon: midi:coffee
@@ -6,11 +6,12 @@ homeassistant:
       emulated_hue: true
 
 input_boolean:
-  teatimer:  
+  teatimer:
     initial: off
 
 automation:
   - alias: 'Tea Timer Start'
+    initial_state: True
     trigger:
       - platform: state
         entity_id: input_boolean.teatimer
@@ -27,6 +28,7 @@ automation:
             {{ responses | random }}
 
   - alias: 'Tea Timer Ended'
+    initial_state: True
     trigger:
       - platform: state
         entity_id: input_boolean.teatimer
@@ -89,7 +91,7 @@ automation:
 #     trigger:
 #       - platform: sun
 #         event: sunset
-#         offset: '+02:00:00'      
+#         offset: '+02:00:00'
 #     action:
 #       - service: homeassistant.turn_off
 #         entity_id: group.Bedroom_lamps

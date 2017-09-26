@@ -1,4 +1,4 @@
-homeassistant: 
+homeassistant:
   customize:
     input_boolean.vacation_mode:
       icon: midi:airplane_takeoff
@@ -6,11 +6,12 @@ homeassistant:
       emulated_hue: true
 
 input_boolean:
-  vacation_mode:  
+  vacation_mode:
     initial: off
 
 automation:
   - alias: 'Away mode On'
+    initial_state: True
     trigger:
       - platform: state
         entity_id: input_boolean.vacation_mode
@@ -27,6 +28,7 @@ automation:
             Bruce> {{ responses | random }}
 
   - alias: 'Away mode Off'
+    initial_state: True
     trigger:
       - platform: state
         entity_id: input_boolean.vacation_mode
@@ -48,6 +50,7 @@ automation:
 #################################################################
 
   - alias: 'Vacation mode lights On'
+    initial_state: True
     condition:
       - condition: state
         entity_id: input_boolean.vacation_mode
@@ -75,6 +78,7 @@ automation:
 ## Lights off 2 hours after sunset
 #################################################################
   - alias: 'Vacation mode lights Off'
+    initial_state: True
     condition:
       - condition: state
         entity_id: input_boolean.vacation_mode
@@ -82,7 +86,7 @@ automation:
     trigger:
       - platform: sun
         event: sunset
-        offset: '+02:00:00'      
+        offset: '+02:00:00'
     action:
       - service: homeassistant.turn_off
         entity_id: group.Bedroom_lamps

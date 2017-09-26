@@ -15,6 +15,7 @@ group:
 automation:
 - id: conf_no
   alias: 'Conference Off'
+  initial_state: True
   trigger:
     - platform: state
       entity_id: input_select.conference
@@ -42,13 +43,14 @@ automation:
 
 - id: conf_phone
   alias: 'Conference On Phone'
+  initial_state: True
   trigger:
     - platform: state
       entity_id: input_select.conference
       to: 'Phone'
 #  condition:
 #    - condition: template
-#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'    
+#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
   action:
     - service: logbook.log
       data_template:
@@ -66,13 +68,14 @@ automation:
 
 - id: conf_video
   alias: 'Conference On Video'
+  initial_state: True
   trigger:
     - platform: state
       entity_id: input_select.conference
       to: 'Video'
 #  condition:
 #    - condition: template
-#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'    
+#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
   action:
     - service: logbook.log
       data_template:

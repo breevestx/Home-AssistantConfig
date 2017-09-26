@@ -1,4 +1,4 @@
-homeassistant: 
+homeassistant:
   customize:
     input_boolean.trash:
       icon: mdi:delete-empty
@@ -7,13 +7,14 @@ homeassistant:
 
 
 input_boolean:
-  trash:  
+  trash:
     initial: off
   weekly_trash_reminder:
     initial: on
 
 automation:
    - alias: 'Trash needs to go out'
+     initial_state: True
      trigger:
        - platform: state
          entity_id: input_boolean.trash
@@ -30,6 +31,7 @@ automation:
              {{ responses | random }}
 
    - alias: 'Trash taken out'
+     initial_state: True
      trigger:
        - platform: state
          entity_id: input_boolean.trash
@@ -68,6 +70,7 @@ automation:
 #################################################################
 
    - alias: 'Weekly trash check'
+     initial_state: True
      trigger:
        # - platform: sun
        #   event: sunset
@@ -86,7 +89,7 @@ automation:
          at: '21:00:00'
      condition:
        - condition: time
-         weekday: 
+         weekday:
            - sun
        - condition: state
          entity_id: input_boolean.weekly_trash_reminder
@@ -112,8 +115,9 @@ automation:
            data:
              push:
                badge: 0
-               category: "TRASH" 
+               category: "TRASH"
    - alias: 'Trash cans set out'
+     initial_state: True
      trigger:
        - platform: event
          event_type: ios.notification_action_fired
@@ -145,13 +149,14 @@ automation:
 # ## Morning check if not cleared
 # #################################################################
    - alias: 'Reset Weekly check'
+     initial_state: True
      condition:
        - condition: state
          entity_id: input_boolean.weekly_trash_reminder
          state: 'on'
        - condition: time
-         weekday: 
-           - mon     
+         weekday:
+           - mon
      trigger:
        - platform: time
          at: '16:00:00'

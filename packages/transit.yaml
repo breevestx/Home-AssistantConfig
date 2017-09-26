@@ -115,7 +115,7 @@ sensor:
     name: To CC
     api_key: !secret google_api_key
     origin: zone.home
-    destination: zone.school_cc
+    destination: zone.cc
     options:
       mode: driving
 
@@ -129,6 +129,7 @@ sensor:
 
 automation:
 - alias: Time to church
+  initial_state: True
   trigger:
     - platform: numeric_state
       entity_id: sensor.From_Home_to_Church
@@ -169,6 +170,7 @@ automation:
 #        cache: true
 
 - alias: Time to CC
+  initial_state: True
   trigger:
     - platform: numeric_state
       entity_id: sensor.To_cc

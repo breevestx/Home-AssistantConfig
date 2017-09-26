@@ -1,26 +1,26 @@
-################################################################
-## Packages / Logger
-################################################################
-
-################################################
-## Customize
-################################################
-
-homeassistant:
-  customize:
-    ################################################
-    ## Node Anchors
-    ################################################
-
-    package.node_anchors:
-      customize: &customize
-        package: 'logger'
-
-      expose: &expose
-        <<: *customize
-        haaska_hidden: false
-        homebridge_hidden: false
-
+# ################################################################
+# ## Packages / Logger
+# ################################################################
+#
+# ################################################
+# ## Customize
+# ################################################
+#
+# homeassistant:
+#   customize:
+#     ################################################
+#     ## Node Anchors
+#     ################################################
+#
+#     package.node_anchors:
+#       customize: &customize
+#         package: 'logger'
+#
+#       expose: &expose
+#         <<: *customize
+#         haaska_hidden: false
+#         homebridge_hidden: false
+#
 ################################################
 ## Logger
 ################################################
@@ -30,7 +30,7 @@ logger:
   default: debug
   logs:
     # debug
-    homeassistant.components.sensor.darksky: debug
+
 
     # info
     bellows: info
@@ -42,6 +42,7 @@ logger:
     # warn
     botocore: warn
     dlipower: warn
+
     homeassistant.components.alarm_control_panel: warn
     homeassistant.components.alert: warn
     homeassistant.components.api: warn
@@ -50,6 +51,7 @@ logger:
     homeassistant.components.camera: warn
     homeassistant.components.climate: warn
     homeassistant.components.cover: warn
+    homeassistant.components.sensor.darksky: warn
     homeassistant.components.device_tracker: warn
     homeassistant.components.ecobee: warn
     homeassistant.components.http: warn

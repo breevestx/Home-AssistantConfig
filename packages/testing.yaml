@@ -123,6 +123,7 @@ group:
 
 automation:
    - alias: 'Test Weekly trash check'
+     initial_state: True
      trigger:
        - platform: state
          entity_id: input_boolean.trash_test

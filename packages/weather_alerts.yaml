@@ -1,6 +1,7 @@
 
 automation:
   - alias: 'Weather Alert'
+    initial_state: True
     hide_entity: true
     trigger:
       platform: state
@@ -10,7 +11,7 @@ automation:
         {% if states.sensor.pws_alerts.state | float < 2 %}
           script.onealert_script
         {% else %}
-          script.allalerts_script 
+          script.allalerts_script
         {% endif %}
 
 
@@ -111,7 +112,7 @@ script:
       - service: persistent_notification.dismiss
         data:
           notification_id: "pubalert"
-   
+
   wat_script:
     sequence:
       - condition: template

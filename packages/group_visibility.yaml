@@ -21,6 +21,7 @@ script:
 
 automation:
   - alias: Evening Active Scenes
+    initial_state: True
     trigger:
        - platform: time
          at: '17:00:00'

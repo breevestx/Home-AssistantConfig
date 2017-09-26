@@ -1,6 +1,7 @@
 
 automation:
   alias: Out of Office
+  initial_state: True
   trigger:
     - platform: state
       entity_id: input_boolean.test_notify

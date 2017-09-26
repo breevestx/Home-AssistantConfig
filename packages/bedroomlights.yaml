@@ -90,6 +90,7 @@ scene:
 
 automation:
   - alias: 'Lamps Off'
+    initial_state: True
     condition:
       - condition: state
         entity_id: group.bedroom_lamps
@@ -102,6 +103,7 @@ automation:
         entity_id: scene.bedroom_goodnight
 
   - alias: 'Lamps On'
+    initial_state: True
     condition:
       - condition: state
         entity_id: group.bedroom_lamps
@@ -115,6 +117,7 @@ automation:
 
 
   - alias: Bedroom Lamps - Adjust Brightness
+    initial_state: True
     trigger:
       platform: state
       entity_id: input_slider.bedroom_lamps_brightness

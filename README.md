@@ -4,7 +4,7 @@ This is my personal configuration backup repository for my home automation syste
 
 ## General Approach
 
-Piece by Piece it seems
+Piece by Piece it seems, originally I had 2 Phillips Hue lights and wanted to do a bit more with them. Add in a few echo dots and start wondering how to make them do more with the little I have. Then it was monitoring our freezer while we went away for long trips and knew it had a habit of shutting off. Now I am discovering more and more clever uses and wondering what else I could do with this and what to buy next...
 
 ## Device List:
 
@@ -26,6 +26,7 @@ Piece by Piece it seems
 - Sonoff unit for freezer - BRUH guide to Sonoff https://www.youtube.com/watch?v=-JxPWA-qxAk
 - Morning alarm clock for the kids to wake up, managed via alexa
 
+
 ## Future Projects:
 
 - Asterisk integration for state of office phones
@@ -42,3 +43,5 @@ Piece by Piece it seems
 - Pi Zero for Bluetooth LE Project with inkbird thermometer for the smoker
 - ibeacon - http://cnsky9.en.alibaba.com/product/60436149280-0/16_bluetooth_4_0_nordic_beacons_temperature_humidity_sensor_beacon_tag_motion_sensor.html?spm=a2700.8304367.prewdfa4cf.85.6150a83bvUWcpD
 - https://www.youtube.com/watch?v=oBkahrDfUFE https://www.happybubbles.tech/shop/
+- Broadlink to control fans, tv, and fireplace
+- Outlets and dimmers....

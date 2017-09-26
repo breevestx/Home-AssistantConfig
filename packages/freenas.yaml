@@ -17,6 +17,7 @@ input_boolean:
 
 automation:
 - alias: 'freenas Off'
+  initial_state: True
   condition:
     # - condition: state
     #   entity_id: input_boolean.freenas
@@ -47,6 +48,7 @@ automation:
           {%- endfor -%}
 
 - alias: 'freenas On'
+  initial_state: True
   condition:
     # - condition: state
     #   entity_id: input_boolean.freenas

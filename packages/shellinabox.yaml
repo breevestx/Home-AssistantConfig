@@ -3,5 +3,5 @@ panel_iframe:
     title: 'Shell'
     url: 'http://192.168.100.19:4200'
   glances:
-    title: 'GLances'
+    title: 'Glances'
     url: 'http://192.168.100.19:61208/'

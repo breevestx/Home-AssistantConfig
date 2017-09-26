@@ -29,6 +29,7 @@ group:
     control: hidden
     entities:
       - input_boolean.pager_enable
+      - input_select.page_location
       - input_select.page_everyone
       - input_slider.volume_page
       - script.page
@@ -114,6 +115,7 @@ automation:
           volume_level: '{{  states.input_slider.volume_page.state  }}'
 
   - alias: 'Page Kids'
+    initial_state: True
     trigger:
       - platform: state
         entity_id:

@@ -69,6 +69,7 @@ sensor:
 
 automation:
   - alias: Announce package delivery
+    initial_state: True
     trigger:
       platform: state
       entity_id: sensor.deliveries_today

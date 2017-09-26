@@ -105,7 +105,7 @@ script:
             {% elif is_state('input_select.radio_station_location', 'Office') %} media_player.kodi_office
             {% elif is_state('input_select.radio_station_location', 'Master bedroom') %} media_player.kodi_MB
             {% elif is_state('input_select.radio_station_location', 'Living Room') %} media_player.kodi_LV
-            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players_to_start
+            {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
             {% endif %}
           media_content_id: >
             {% if is_state('sensor.radio_station', 'Jazz Groove') %} http://199.180.75.116:80/stream

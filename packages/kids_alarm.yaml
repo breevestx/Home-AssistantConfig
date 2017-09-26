@@ -183,6 +183,7 @@ automation:
 
 ## Set all the kids to in bed nightly
   - alias: Kids in Bed
+    initial_state: True
     trigger:
       - platform: time
         at: '20:46:00'
@@ -199,6 +200,7 @@ automation:
         - switch.bennett_bed
 
   - alias: 'Snooze'
+    initial_state: True
     trigger:
       platform: time
       minutes: '/1'
@@ -246,6 +248,7 @@ automation:
       - service: script.kids_tts_warn
 
   - alias: 'Alarm Clock'
+    initial_state: True
     trigger:
       platform: time
       minutes: '/1'
@@ -277,6 +280,7 @@ automation:
       - service: script.kids_tts_wake
 
   - alias: 'Check for Repeat'
+    initial_state: True
     trigger:
       platform: time
       minutes: '/1'
@@ -294,6 +298,7 @@ automation:
       - service: script.kids_tts_wake_repeat
 
   - alias: 'Reset Alarm'
+    initial_state: True
     trigger:
       platform: time
       minutes: '/1'
@@ -315,6 +320,7 @@ automation:
 ## Test the alarm
 
   - alias: 'Test Alarm Clock'
+    initial_state: True
     trigger:
       platform: state
       entity_id: input_boolean.alarm_weekday
@@ -393,7 +399,8 @@ script:
           data_template:
             entity_id:
               - media_player.tts_hallway
-            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Alarm-tone.mp3"
+            # media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Alarm-tone.mp3"
+            media_content_id: "https://raw.githubusercontent.com/sixreeves/Home-AssistantConfig/master/sounds/Cuckoo-clock-sound.mp3"
             media_content_type: audio/mp4
         - delay: '00:00:15'
         - service: tts.google_say
