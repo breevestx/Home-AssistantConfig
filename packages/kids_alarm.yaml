@@ -53,9 +53,10 @@ group:
   Controls:
     control: hidden
     entities:
-      - input_slider.slider_hours
-      - input_slider.slider_minutes
+      - input_number.slider_hours
+      - input_number.slider_minutes
       # - input_select.alarm_tone
+      - input_datetime.alarm_time
       - input_boolean.alarm_weekday
       - input_boolean.alarm_active
       - input_boolean.alarm_has_gone_off
@@ -81,14 +82,21 @@ group:
       - script.se_kids_tts_wake
       - script.se_kids_tts_warn
 
+input_datetime:
+  alarm_time:
+    name: Wake up at?
+    has_date: false
+    has_time: true
+    initial: '1970-01-01 06:30'
 
-input_slider:
+input_number:
   slider_hours:
     name: Hours
     initial: 6
     min: 0
     max: 23
     step: 1
+    mode: slider
 
   slider_minutes:
     name: Minutes
@@ -96,6 +104,7 @@ input_slider:
     min: 0
     max: 59
     step: 1
+    mode: slider
 
 input_boolean:
   alarm_weekday:
@@ -133,11 +142,11 @@ sensor:
       alarm_status:
         friendly_name: 'Alarm Status'
         value_template: >
-          Set for {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int }}
-          {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
-          Snooze at {{ states("input_slider.slider_hours")|int - 1|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
+          Set for {{ states("input_number.slider_hours")|int }}:{{states("input_number.slider_minutes")|int }}
+          {% if states.input_number.slider_minutes.state |int -9 < 0 %}
+          Snooze at {{ states("input_number.slider_hours")|int - 1|int }}:{{states("input_number.slider_minutes")|int - 9|int}}
           {% else %}
-          Snooze at {{ states("input_slider.slider_hours")|int }}:{{states("input_slider.slider_minutes")|int - 9|int}}
+          Snooze at {{ states("input_number.slider_hours")|int }}:{{states("input_number.slider_minutes")|int - 9|int}}
           {% endif %}
 
 
@@ -210,14 +219,14 @@ automation:
       conditions:
         - condition: template ### Check if 9 minutes prior to the slider causes a negative. If so adjust the hour back one and use the formula to determine how many minutes back into the previous hour
           value_template: >
-            {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
-              {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_slider.slider_hours.state |int - 1 |int %}
+            {% if states.input_number.slider_minutes.state |int -9 < 0 %}
+              {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_number.slider_hours.state |int - 1 |int %}
                 true
               {% else %}
                 false
               {% endif %}
             {% else %}
-              {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_slider.slider_hours.state |int %}
+              {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_number.slider_hours.state |int %}
                 true
               {% else %}
                 false
@@ -225,14 +234,14 @@ automation:
             {% endif %}
         - condition: template
           value_template: >
-            {% if states.input_slider.slider_minutes.state |int -9 < 0 %}
-              {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int - 9 + 60 %}
+            {% if states.input_number.slider_minutes.state |int -9 < 0 %}
+              {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_number.slider_minutes.state |int - 9 + 60 %}
                 true
               {% else %}
                 false
               {% endif %}
             {% else %}
-              {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int - 9 %}
+              {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_number.slider_minutes.state |int - 9 %}
                 true
               {% else %}
                 false
@@ -258,14 +267,14 @@ automation:
       conditions:
         - condition: template
           value_template: >
-            {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_slider.slider_hours.state |int %}
+            {% if as_timestamp(now())|timestamp_custom('%H', True) |int == states.input_number.slider_hours.state |int %}
               true
             {% else %}
               false
             {% endif %}
         - condition: template
           value_template: >
-            {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_slider.slider_minutes.state |int %}
+            {% if as_timestamp(now())|timestamp_custom('%M', True) |int == states.input_number.slider_minutes.state |int %}
               true
             {% else %}
               false

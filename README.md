@@ -37,6 +37,7 @@ Piece by Piece it seems, originally I had 2 Phillips Hue lights and wanted to do
 - Various ESP8266 nodes collecting sensor data and controlling various automations
 - Amazon Kindle Fire 7 tablet running [ha-floorplan](https://github.com/pkozul/ha-floorplan)
 - Open Sprinker Pi [OpenSprinkler](opensprinkler.org)
+- iOS alarm clock - https://community.home-assistant.io/t/creating-an-ios-alarm-clock-w-snooze-and-awake-actionable-notifications/31337/3
 
 
 ## Shopping list
@@ -45,3 +46,9 @@ Piece by Piece it seems, originally I had 2 Phillips Hue lights and wanted to do
 - https://www.youtube.com/watch?v=oBkahrDfUFE https://www.happybubbles.tech/shop/
 - Broadlink to control fans, tv, and fireplace
 - Outlets and dimmers....
+
+
+## Credits
+- Lets Encrypt guide https://www.splitbrain.org/blog/2017-08/10-homeassistant_duckdns_letsencrypt
+- Dehydtrated script for automation
+

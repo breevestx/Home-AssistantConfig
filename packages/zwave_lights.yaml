@@ -8,10 +8,22 @@ homeassistant:
       friendly_name: 'Guest Bathroom Light'
       icon: mdi:light
       emulated_hue: true
+    script.light_alert:
+      friendly_name: 'Warn Guest Bathroom'
+      icon: mdi:light
+      emulated_hue: true
+
+# mqtt_statestream:
+#   base_topic: homeassistant
+
+# mqtt_eventstream:
+#   publish_topic: master
+#   subscribe_topic: hub
+
 
 group:
   guest_bath:
-    view: true
+    # view: true
     name: Guest Bath
     entities:
       - switch.guest_bathroom_light
@@ -42,9 +54,18 @@ automation:
         before: '15:00:00'
         weekday:
           - mon
+          - tue
           - wed
           - thu
           - fri
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
+      - condition: state
+        entity_id: input_boolean.gb_auto_off
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'off'
     trigger:
       - platform: mqtt
         topic: homeassistant/switch/guest_bath_light_switch/state
@@ -54,7 +75,33 @@ automation:
         data:
           entity_id: input_boolean.gb_auto_off
 
-  - alias: 'Bathroom off'
+  - alias: 'School Bathroom Cancel'
+    initial_state: True
+    condition:
+      - condition: time
+        after: '8:00:00'
+        before: '15:00:00'
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) < 180 }}'
+      - condition: state
+        entity_id: input_boolean.gb_auto_off
+        state: 'on'
+    trigger:
+      - platform: mqtt
+        topic: homeassistant/switch/guest_bath_light_switch/state
+        payload: 'off'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.gb_auto_off
+
+  - alias: 'Bathroom auto-off'
     initial_state: True
     condition:
       - condition: state
@@ -67,34 +114,12 @@ automation:
       minutes: '/1'
       seconds: 00
     action:
-      - service: switch.turn_off
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:01'
-      - service: switch.turn_on
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:01'
-      - service: switch.turn_off
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:01'
-      - service: switch.turn_on
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:59'
-      - service: switch.turn_off
-        data:
-          entity_id: switch.guest_bathroom_light
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.gb_auto_off
-# mqtt_statestream:
-#   base_topic: homeassistant
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            Triggering the GB light alert
+      - service: script.light_alert
 
-# mqtt_eventstream:
-#   publish_topic: master
-#   subscribe_topic: hub
 
 script:
   light_alert:
@@ -102,15 +127,15 @@ script:
       - service: switch.turn_off
         data:
           entity_id: switch.guest_bathroom_light
-      - delay: '00:00:02'
+      - delay: '00:00:01'
       - service: switch.turn_on
         data:
           entity_id: switch.guest_bathroom_light
-      - delay: '00:00:02'
+      - delay: '00:00:01'
       - service: switch.turn_off
         data:
           entity_id: switch.guest_bathroom_light
-      - delay: '00:00:02'
+      - delay: '00:00:01'
       - service: switch.turn_on
         data:
           entity_id: switch.guest_bathroom_light
@@ -118,6 +143,8 @@ script:
       - service: switch.turn_off
         data:
           entity_id: switch.guest_bathroom_light
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.gb_auto_off
       # - service: tts.google_say
       #   data_template:
       #     entity_id: media_player.tts_hallway

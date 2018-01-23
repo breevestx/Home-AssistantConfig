@@ -31,7 +31,7 @@ group:
       - input_boolean.pager_enable
       - input_select.page_location
       - input_select.page_everyone
-      - input_slider.volume_page
+      - input_number.volume_page
       - script.page
 
   Kids Pager:
@@ -85,7 +85,7 @@ input_select:
     initial: "-"
     icon: mdi:bullhorn
 
-input_slider:
+input_number:
   volume_page:
     name: Page Volume
     icon: mdi:volume-high
@@ -93,6 +93,7 @@ input_slider:
     max: 1
     step: 0.05
     initial: 0.8
+    mode: slider
 
 ###############################################################################
 #  Automation
@@ -104,7 +105,7 @@ automation:
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: input_slider.volume_page
+        entity_id: input_number.volume_page
     action:
       - service: media_player.volume_set
         data_template:
@@ -112,7 +113,7 @@ automation:
             {% if is_state("input_select.radio_station_location", "Office") %} media_player.tts_hallway
             {% elif is_state("input_select.radio_station_location", "All Zones") %} media_player.tts_hallway
             {% endif %}
-          volume_level: '{{  states.input_slider.volume_page.state  }}'
+          volume_level: '{{  states.input_number.volume_page.state  }}'
 
   - alias: 'Page Kids'
     initial_state: True
@@ -129,7 +130,7 @@ automation:
       - service: media_player.volume_set
         data_template:
           entity_id: media_player.tts_hallway
-          volume_level: '{{  states.input_slider.volume_page.state  }}'
+          volume_level: '{{  states.input_number.volume_page.state  }}'
       # - service: media_player.play_media
       #   data_template:
       #     entity_id: >
@@ -170,7 +171,7 @@ script:
       - service: media_player.volume_set
         data_template:
           entity_id: media_player.tts_hallway
-          volume_level: '{{  states.input_slider.volume_page.state  }}'
+          volume_level: '{{  states.input_number.volume_page.state  }}'
       - service: media_player.play_media
         data_template:
           entity_id: >

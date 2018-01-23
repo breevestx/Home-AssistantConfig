@@ -95,14 +95,14 @@ automation:
          entity_id: input_boolean.weekly_trash_reminder
          state: 'on'
      action:
-       - service: notify.slack__dev
-         data_template:
-           message: >
-             {%- set responses = [
-             'Don\'t forget to set out the trash cans.',
-             'Did you forget, the trash truck comes tomorrow?',
-             'Got you covered, vacation lights are on'] -%}
-             {{ responses | random }}
+      #  - service: notify.slack__dev
+      #    data_template:
+      #      message: >
+      #        {%- set responses = [
+      #        'Don\'t forget to set out the trash cans.',
+      #        'Did you forget, the trash truck comes tomorrow?',
+      #        'Got you covered, vacation lights are on'] -%}
+      #        {{ responses | random }}
        - service: notify.ios_brucesiphone2_ios
          data_template:
            title: "Trash can reminder"

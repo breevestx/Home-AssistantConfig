@@ -3,6 +3,7 @@ default_view:
   icon: mdi:home
   entities:
   - group.scenes
+  - group.guest_bath
   - group.Household
   - group.Devices
   - group.Office
@@ -81,13 +82,12 @@ Household:
   control: hidden
   name: Household Status
   entities:
-    # - group.bedroom_lamps
     - light.lene_lamp
     - light.bruce_lamp
-    - media_player.kodi_lv
-    # - media_player.kodi_mb
-    - sensor.freezer_ds1
     - input_boolean.alarm_active
+    - switch.guest_bathroom_light
+    - script.light_alert
+    - sensor.freezer_ds1
 
 Devices:
   control: hidden
@@ -95,7 +95,7 @@ Devices:
   entities:
     - sensor.openelec
     - sensor.freezer
-    - sensor.freenas
+    - device_tracker.freenas
     - sensor.bruce
     - sensor.lene
     - sensor.kahlan
@@ -105,6 +105,7 @@ Automation Override:
   control: hidden
   name: Automation Override
   entities:
+    - input_boolean.gb_auto_off
     - input_boolean.freezer
     - input_boolean.disable_lock_unlock_doors
     - input_boolean.disable_auto_garage

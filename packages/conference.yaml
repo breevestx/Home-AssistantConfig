@@ -1,3 +1,11 @@
+######################################################################
+##  Office devices and Automations
+##
+##
+##
+######################################################################
+
+
 input_select:
   conference:
     name: Conference
@@ -8,9 +16,26 @@ input_select:
     initial: False
     icon: mdi:camera
 
+# input_boolean:
+#   office_motion:
+#     name: Motion Detected
+#     initial: off
+#     icon: mdi:light
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: "homeassistant/binary_sensor/pir_office/state"
+    name: Office Motion
+    device_class: motion
+    payload_on: "on"
+    payload_off: "off"
+
+
 group:
   Office:
     - input_select.conference
+    - switch.monitors
+    - binary_sensor.office_motion
 
 automation:
 - id: conf_no
@@ -90,3 +115,22 @@ automation:
           {%- for state in states if state.entity_id == trigger.entity_id -%}
             Bruce is on a {{states.input_select.conference.state}} Conference call.
           {%- endfor -%}
+
+- id: activate_monitors
+  alias: 'Turn monitors on'
+  initial_state: True
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.monitors
+        state: 'off'
+      - condition: time
+        after: '00:01:00'    
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.office_motion
+      to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.monitors

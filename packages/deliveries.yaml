@@ -7,24 +7,24 @@ homeassistant:
 
 group:
   Deliveries:
-    - sensor.usps_mail
-    - sensor.usps_packages
+    # - sensor.usps_mail
+    # - sensor.usps_packages
     - sensor.ups
     - sensor.fedex
     - sensor.deliveries_today
     - sensor.packages_in_transit
-    - camera.usps_mail_mail
+    # - camera.usps_mail_mail
 
-usps:
-    name: 'USPS'
-    username: !secret myusps_username
-    password: !secret myusps_password
+# usps:
+#     name: USPS
+#     username: !secret myusps_username
+#     password: !secret myusps_password
 
 
-camera:
-  - platform: usps
-    name: Mail
-    scan_interval: 5
+# camera:
+#   - platform: usps
+#     name: Mail
+#     scan_interval: 5
 
 sensor:
   # - platform: usps

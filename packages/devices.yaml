@@ -97,6 +97,9 @@
 #     destination: zone.school_cc
 #     options:
 #       mode: driving
+device_tracker:
+  - platform: owntracks_http
+    max_gps_accuracy: 200
 
 
 automation:

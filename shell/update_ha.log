@@ -90,3 +90,127 @@ Installing collected packages: async-timeout, homeassistant, multidict
     Uninstalling multidict-3.1.3:
       Successfully uninstalled multidict-3.1.3
 Successfully installed async-timeout-1.4.0 homeassistant-0.54.0 multidict-3.2.0
+Collecting homeassistant
+  Downloading homeassistant-0.55.1-py2.py3-none-any.whl (7.4MB)
+Requirement already up-to-date: typing<4,>=3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pip>=8.0.3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pytz>=2017.02 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: requests==2.14.2 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: async-timeout==1.4.0 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pyyaml<4,>=3.11 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: aiohttp==2.2.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: astral==1.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: chardet==3.0.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: voluptuous==0.10.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: jinja2>=2.9.6 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting yarl>=0.11 (from aiohttp==2.2.5->homeassistant)
+  Downloading yarl-0.13.0-cp35-cp35m-manylinux1_x86_64.whl (174kB)
+Collecting multidict>=2.1.4 (from aiohttp==2.2.5->homeassistant)
+  Downloading multidict-3.3.0-cp35-cp35m-manylinux1_x86_64.whl (440kB)
+Requirement already up-to-date: MarkupSafe>=0.23 in /srv/homeassistant/lib/python3.5/site-packages (from jinja2>=2.9.6->homeassistant)
+Installing collected packages: homeassistant, multidict, yarl
+  Found existing installation: homeassistant 0.54.0
+    Uninstalling homeassistant-0.54.0:
+      Successfully uninstalled homeassistant-0.54.0
+  Found existing installation: multidict 3.2.0
+    Uninstalling multidict-3.2.0:
+      Successfully uninstalled multidict-3.2.0
+  Found existing installation: yarl 0.12.0
+    Uninstalling yarl-0.12.0:
+      Successfully uninstalled yarl-0.12.0
+Successfully installed homeassistant-0.55.1 multidict-3.3.0 yarl-0.13.0
+Collecting homeassistant
+  Downloading homeassistant-0.56.2-py2.py3-none-any.whl (7.6MB)
+Requirement already up-to-date: chardet==3.0.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pyyaml<4,>=3.11 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pip>=8.0.3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: aiohttp==2.2.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting async-timeout==2.0.0 (from homeassistant)
+  Downloading async_timeout-2.0.0-py3-none-any.whl
+Collecting certifi>=2017.4.17 (from homeassistant)
+  Downloading certifi-2017.7.27.1-py2.py3-none-any.whl (349kB)
+Requirement already up-to-date: pytz>=2017.02 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: voluptuous==0.10.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: typing<4,>=3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: jinja2>=2.9.6 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: astral==1.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: requests==2.14.2 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: multidict>=2.1.4 in /srv/homeassistant/lib/python3.5/site-packages (from aiohttp==2.2.5->homeassistant)
+Requirement already up-to-date: yarl>=0.11 in /srv/homeassistant/lib/python3.5/site-packages (from aiohttp==2.2.5->homeassistant)
+Requirement already up-to-date: MarkupSafe>=0.23 in /srv/homeassistant/lib/python3.5/site-packages (from jinja2>=2.9.6->homeassistant)
+Installing collected packages: async-timeout, certifi, homeassistant
+  Found existing installation: async-timeout 1.4.0
+    Uninstalling async-timeout-1.4.0:
+      Successfully uninstalled async-timeout-1.4.0
+  Found existing installation: homeassistant 0.55.1
+    Uninstalling homeassistant-0.55.1:
+      Successfully uninstalled homeassistant-0.55.1
+Successfully installed async-timeout-2.0.0 certifi-2017.7.27.1 homeassistant-0.56.2
+Collecting homeassistant
+  Downloading homeassistant-0.58.1-py2.py3-none-any.whl (7.5MB)
+Requirement already up-to-date: async-timeout==2.0.0 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pip>=8.0.3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pyyaml<4,>=3.11 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting jinja2>=2.9.6 (from homeassistant)
+  Downloading Jinja2-2.10-py2.py3-none-any.whl (126kB)
+Requirement already up-to-date: requests==2.18.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: voluptuous==0.10.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: certifi>=2017.4.17 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting yarl==0.14.0 (from homeassistant)
+  Downloading yarl-0.14.0-cp35-cp35m-manylinux1_x86_64.whl (152kB)
+Requirement already up-to-date: chardet==3.0.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: typing<4,>=3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting aiohttp==2.3.2 (from homeassistant)
+  Downloading aiohttp-2.3.2-cp35-cp35m-manylinux1_x86_64.whl (647kB)
+Requirement already up-to-date: pytz>=2017.02 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: astral==1.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: MarkupSafe>=0.23 in /srv/homeassistant/lib/python3.5/site-packages (from jinja2>=2.9.6->homeassistant)
+Requirement already up-to-date: idna<2.7,>=2.5 in /srv/homeassistant/lib/python3.5/site-packages (from requests==2.18.4->homeassistant)
+Requirement already up-to-date: urllib3<1.23,>=1.21.1 in /srv/homeassistant/lib/python3.5/site-packages (from requests==2.18.4->homeassistant)
+Requirement already up-to-date: multidict>=2.0 in /srv/homeassistant/lib/python3.5/site-packages (from yarl==0.14.0->homeassistant)
+Installing collected packages: jinja2, yarl, aiohttp, homeassistant
+  Found existing installation: Jinja2 2.9.6
+    Uninstalling Jinja2-2.9.6:
+      Successfully uninstalled Jinja2-2.9.6
+  Found existing installation: yarl 0.13.0
+    Uninstalling yarl-0.13.0:
+      Successfully uninstalled yarl-0.13.0
+  Found existing installation: aiohttp 2.2.5
+    Uninstalling aiohttp-2.2.5:
+      Successfully uninstalled aiohttp-2.2.5
+  Found existing installation: homeassistant 0.57.2
+    Uninstalling homeassistant-0.57.2:
+      Successfully uninstalled homeassistant-0.57.2
+Successfully installed aiohttp-2.3.2 homeassistant-0.58.1 jinja2-2.10 yarl-0.14.0
+Collecting homeassistant
+  Downloading homeassistant-0.59.1-py2.py3-none-any.whl (7.6MB)
+Requirement already up-to-date: voluptuous==0.10.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting aiohttp==2.3.5 (from homeassistant)
+  Downloading aiohttp-2.3.5-cp35-cp35m-manylinux1_x86_64.whl (648kB)
+Requirement already up-to-date: pip>=8.0.3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pyyaml<4,>=3.11 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Collecting yarl==0.15.0 (from homeassistant)
+  Downloading yarl-0.15.0-cp35-cp35m-manylinux1_x86_64.whl (157kB)
+Requirement already up-to-date: jinja2>=2.9.6 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: certifi>=2017.4.17 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: typing<4,>=3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: chardet==3.0.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: requests==2.18.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: astral==1.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: async-timeout==2.0.0 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pytz>=2017.02 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: multidict>=3.0.0 in /srv/homeassistant/lib/python3.5/site-packages (from aiohttp==2.3.5->homeassistant)
+Requirement already up-to-date: MarkupSafe>=0.23 in /srv/homeassistant/lib/python3.5/site-packages (from jinja2>=2.9.6->homeassistant)
+Requirement already up-to-date: urllib3<1.23,>=1.21.1 in /srv/homeassistant/lib/python3.5/site-packages (from requests==2.18.4->homeassistant)
+Requirement already up-to-date: idna<2.7,>=2.5 in /srv/homeassistant/lib/python3.5/site-packages (from requests==2.18.4->homeassistant)
+Installing collected packages: yarl, aiohttp, homeassistant
+  Found existing installation: yarl 0.14.0
+    Uninstalling yarl-0.14.0:
+      Successfully uninstalled yarl-0.14.0
+  Found existing installation: aiohttp 2.3.2
+    Uninstalling aiohttp-2.3.2:
+      Successfully uninstalled aiohttp-2.3.2
+  Found existing installation: homeassistant 0.58.1
+    Uninstalling homeassistant-0.58.1:
+      Successfully uninstalled homeassistant-0.58.1
+Successfully installed aiohttp-2.3.5 homeassistant-0.59.1 yarl-0.15.0
