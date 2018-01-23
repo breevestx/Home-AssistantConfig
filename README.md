@@ -15,6 +15,9 @@ Piece by Piece it seems, originally I had 2 Phillips Hue lights and wanted to do
 - Phillips Hue bulbs in 1 room
 - 2 Echo dots
 - Sonoff TH16 with DS1820 probe
+- Aeotec Z-stick gen 5 for Z-wave integration on an older RPi with HA and MQTT State Stream
+- Z-wave GE Switch
+- RPi W Zero to start testing with BLE thermometer
 
 ## Completed Projects
 - Basics like weather and system state
@@ -25,6 +28,7 @@ Piece by Piece it seems, originally I had 2 Phillips Hue lights and wanted to do
 - ssl setup
 - Sonoff unit for freezer - BRUH guide to Sonoff https://www.youtube.com/watch?v=-JxPWA-qxAk
 - Morning alarm clock for the kids to wake up, managed via alexa
+- Control of a bathroom light to "help" get kids out of the bathroom quicker...
 
 
 ## Future Projects:
@@ -41,7 +45,7 @@ Piece by Piece it seems, originally I had 2 Phillips Hue lights and wanted to do
 
 
 ## Shopping list
-- Pi Zero for Bluetooth LE Project with inkbird thermometer for the smoker
+X Pi Zero for Bluetooth LE Project with inkbird thermometer for the smoker
 - ibeacon - http://cnsky9.en.alibaba.com/product/60436149280-0/16_bluetooth_4_0_nordic_beacons_temperature_humidity_sensor_beacon_tag_motion_sensor.html?spm=a2700.8304367.prewdfa4cf.85.6150a83bvUWcpD
 - https://www.youtube.com/watch?v=oBkahrDfUFE https://www.happybubbles.tech/shop/
 - Broadlink to control fans, tv, and fireplace
