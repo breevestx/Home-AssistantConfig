@@ -25,10 +25,63 @@ homeassistant:
 frontend:
   themes: !include themes.yaml
 
-map:
+# Enable Floorplan UI
+panel_custom:
+  - name: floorplan
+    sidebar_title: Floorplan
+    sidebar_icon: mdi:home
+    url_path: floorplan
+    config: !include floorplan.yaml
 
-# Enables configuration UI
+panel_iframe:
+  # front_room_ha:
+  #   title: Front Room HA
+  #   icon: mdi:home-assistant
+  #   url: !secret front_room_ha_url
+  # tv_room_ha:
+  #   title: TV Room HA
+  #   icon: mdi:home-assistant
+  #   url: !secret tv_room_ha_url
+  # cockpit_gui:
+  #   title: Cockpit GUI
+  #   icon: mdi:view-dashboard
+  #   url: !secret cockpit_gui_url
+  snapcast_server:
+    title: Snapcast Server
+    icon: mdi:music
+    url: 'http://192.168.100.12' #!secret snapcast_server_url
+
+map:
 config:
+cloud:
+  alexa:
+    filter:
+      include_entities:
+        - light.bruce_lamp
+        - light.lene_lamp
+      include_domains:
+        - switch
+      exclude_entities:
+        - switch.outside
+    entity_config:
+      scene.bedroom_morning:
+        name: Good Morning
+        description: Turn on the bedroom lamps
+      scene.bedroom_goodnight:
+        name: Good night
+        description: Turn off the bedroom lamps
+      switch.monitors:
+        display_categories: SMARTPLUG
+        name: Office monitors
+      switch.salt_lamp:
+        display_categories: SMARTPLUG
+        name: Fireplace
+      script.radio_stop:
+        name: Stop Comfort Noise
+        display_categories: SCENE_TRIGGER
+      script.radio_start:
+        name: Start Comfort noise
+        display_categories: SCENE_TRIGGER
 
 http:
   # Uncomment this to add a password (recommended!)

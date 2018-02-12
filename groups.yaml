@@ -7,6 +7,7 @@ default_view:
   - group.Household
   - group.Devices
   - group.Office
+  - group.Nodes
 
 
 Alarm Clock:
@@ -47,6 +48,16 @@ misc_view:
     - group.processes
     - group.hassctl
 
+nodes:
+  name: Sensor Nodes
+  view: yes
+  icon: mdi:access-point-network
+  entities:
+    - group.sensor_node_1_card
+    - group.sensor_node_2_card
+    - group.sensor_node_2_card
+
+
 
 automation:
   name: Automation
@@ -77,7 +88,6 @@ automation:
 # General/Global Groups
 ############################
 
-
 Household:
   control: hidden
   name: Household Status
@@ -85,9 +95,9 @@ Household:
     - light.lene_lamp
     - light.bruce_lamp
     - input_boolean.alarm_active
-    - switch.guest_bathroom_light
     - script.light_alert
-    - sensor.freezer_ds1
+    - switch.mb_heater
+    - sensor.mbheater_ds1
 
 Devices:
   control: hidden

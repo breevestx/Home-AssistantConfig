@@ -1,0 +1,15 @@
+binary_sensor.driveway_camera_motion:
+  platform: hikvision
+  unique_id: 5c75e10a-ef30-11b4-8396-4cbd8fe0a5bf.Motion.1
+switch.monitors:
+  platform: wemo
+  unique_id: 221714K010266B
+switch.salt_lamp:
+  platform: wemo
+  unique_id: 221724K0103DDA
+light.bruce_lamp_2:
+  platform: hue
+  unique_id: 00:17:88:01:02:3e:0c:ff-0b
+light.lene_lamp_2:
+  platform: hue
+  unique_id: 00:17:88:01:02:3a:54:84-0b

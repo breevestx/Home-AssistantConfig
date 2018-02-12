@@ -1,69 +1,91 @@
 # android_ip_webcam:
 #     host: 192.168.100.191
 #     port: 8080
-#     name: ipwebcam
+#     name: driveway
 #     sensors:
-#       - audio_connections
+#       # - audio_connections
 #       - battery_level
 #       - battery_temp
-#       - battery_voltage
-#       - light
-#       - motion
-#       - pressure
-# 
+#       # - battery_voltage
+#       # - light
+#       # - motion
+#       # - pressure
+
 # camera:
 #   - platform: mjpeg
 #     name: Office camera
 #     mjpeg_url: http://192.168.100.28:8100/Mjpeg/0?authToken=b799a8ea-cfa2-4098-9046-fbb55ac506f1
-#
+
+camera:
+  - platform: generic
+    name: Driveway Camera
+    still_image_url: !secret driveway_camera_url
+
 # ffmpeg:
 #   ffmpeg_bin: /usr/bin/ffmpeg
-#
-# # binary_sensor:
-# #   - platform: ffmpeg_motion
-# #     input: http://192.168.100.191:8080/video
-#
-# group:
-#   cameras:
-#     icon: mdi:video
-#     view: true
-#     entities:
-#     - camera.ipwebcam
-#     - camera.office_camera
-#     - binary_sensor.ffmpeg_motion
-#     - sensor.ipwebcam_audio_connections
-#     - sensor.ipwebcam_battery_level
-#     - sensor.ipwebcam_battery_temp
-#     - sensor.ipwebcam_battery_voltage
-#     - sensor.ipwebcam_light
-#     - sensor.ipwebcam_motion
-#     - sensor.ipwebcam_pressure
+
+# binary_sensor:
+#   - platform: ffmpeg_motion
+#     input: http://192.168.100.191:8080/video
+binary_sensor:
+  - platform: hikvision
+    name: Driveway Camera
+    host: !secret driveway_camera_ip
+    username: !secret hkcamera_username
+    password: !secret hkcamera_password
+
+
+group:
+  cameras:
+    icon: mdi:video
+    view: true
+    entities:
+    - camera.driveway_camera
+    - group.skybell
+    # - camera.office_camera
+    # - binary_sensor.ffmpeg_motion
+    # # - sensor.driveway_audio_connections
+    # - sensor.driveway_battery_level
+    # - sensor.driveway_battery_temp
+    # - sensor.driveway_battery_voltage
+    # - sensor.driveway_light
+    # - sensor.driveway_motion
+    # - sensor.driveway_pressure
 
 # automation:
-#   - alias: Turn Off Dining Room Light - Motion
+#   - alias: Driveway camera
 #     trigger:
 #       - platform: state
 #         entity_id: binary_sensor.ffmpeg_motion
 #         from: 'off'
 #         to: 'on'
-#     condition:
-#        - condition: state
-#          entity_id: device_tracker.brucesiphone2_ios
-#          state: 'not_home'
+#     # condition:
+#     #    - condition: state
+#     #      entity_id: device_tracker.brucesiphone2_ios
+#     #      state: 'not_home'
 #     action:
 #       - service: notify.slack__dev
 #         data_template:
-#           message: Motion detected
-#        # - service: notify.ios_brucesiphone2_ios
-#        #   data_template:
-#        #     title: "Trash can reminder"
-#        #     message: >
-#        #       {%- set responses = [
-#        #       'Don\'t forget to set out the trash cans.',
-#        #       'Did you forget, the trash truck comes tomorrow?',
-#        #       'Got you covered, vacation lights are on'] -%}
-#        #       {{ responses | random }}
-#        #     data:
-#        #       push:
-#        #         badge: 0
-#        #         category: "TRASH"
+#            message: >
+#              {%- set responses = [
+#              'Motion detected near the driveway.',
+#              'Something or Someone is in the driveway',
+#              'I have notice activity in the driveway.'] -%}
+#              {{ responses | random }}
+#       - service: notify.ios_brucesiphone2_ios
+#         data_template:
+#            title: "Motion Detected"
+#            message: >
+#              {%- set responses = [
+#              'Motion detected near the driveway.',
+#              'Something or Someone is in the driveway',
+#              'I have notice activity in the driveway.'] -%}
+#              {{ responses | random }}
+#            data:
+#              push:
+#                badge: 0
+#                category: camera
+#              entity_id: camera.driveway
+#              attachment:
+#                url: camera.driveway.attributes.entity_picture
+#                content-type: jpg

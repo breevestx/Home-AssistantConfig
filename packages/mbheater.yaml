@@ -1,0 +1,105 @@
+homeassistant:
+  customize:
+    sensor.mbheater:
+      icon: mdi:fridge
+    sensor.mbheater_state:
+      icon: mdi:fridge
+    sensor.mbheater_ds1:
+      friendly_name: 'Bathroom Temperature'
+      icon: mdi:thermometer
+
+device_tracker:
+  - platform: ping
+    hosts:
+      mbheater: 192.168.100.207
+
+sensor:
+  - platform: template
+    sensors:
+      mbheater:
+        friendly_name: 'Master Bath Heater'
+        value_template: "{{ 'Online' if is_state('device_tracker.mbheater', 'home') else 'Offline' }}"
+      # freezer_temp:
+      #   friendly_name: 'Freezer Temperature'
+      #   value_template: '{{ "%+.1f"|format(states.sensor.freezer_ds1) }}'
+      #   unit_of_measurement: 'F'
+  - platform: mqtt
+    state_topic: "tele/mb-heater/STATE"
+    name: "mbheater_state"
+    value_template: "{{ value }}"
+  # - platform: mqtt
+  #   state_topic: "tele/mb-heater/SENSOR"
+  #   name: freezer_ds1
+  #   value_template: "{{ value_json.DS18x20.DS1.Temperature }}"
+  #   unit_of_measurement: 'F'
+  - platform: mqtt
+    state_topic: "stat/mb-heater/STATUS10"
+    name: mbheater_ds1
+    value_template: "{{ value_json.StatusSNS.DS18x20.DS1.Temperature }}"
+    unit_of_measurement: 'F'
+
+switch:
+  - platform: mqtt
+    name: "MB Heater"
+    state_topic: "stat/mb-heater/POWER"
+    command_topic: "cmnd/mb-heater/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+automation:
+- alias: 'MB Check Temp'
+  initial_state: True
+  # condition:
+  #   - condition: state
+  #     entity_id: input_boolean.freezer
+  #     state: 'on'
+  #   - condition: template
+  #     value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
+  trigger:
+    platform: time
+    minutes: '/1'
+    seconds: 00
+  action:
+      - service: shell_command.query_mbheater
+
+- alias: 'MB Temp low'
+  initial_state: True
+  trigger:
+    platform: time
+    minutes: '/5'
+    seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.mb_heater
+        state: 'off'
+      - condition: time
+        # At least one of the following is required.
+        after: '05:00:00'
+        before: '08:00:00'
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.switch.mb_heater.last_changed)) > 300 }}'
+      - condition: numeric_state
+        entity_id: sensor.mbheater_ds1
+        # At least one of the following required
+        # above: 10
+        below: 65.0
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.mb_heater
+    - service: logbook.log
+      data_template:
+        name: "MB Temp Alarm: "
+        message: >-
+          The Master bathroom is currently at {{  states("sensor.mbheater_ds1") }}°F degrees and I'm turning the heater on.
+    - service: notify.slack__home
+      data_template:
+        message: >
+         The Master bedroom is currently at {{  states("sensor.mbheater_ds1") }}°F degrees and I'm turning the heater on.
+
+
+shell_command:
+  query_mbheater: 'sudo bash /home/homeassistant/.homeassistant/shell/sonoff_getSNS.sh mb-heater'

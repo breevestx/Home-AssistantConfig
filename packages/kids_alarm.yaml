@@ -8,37 +8,37 @@ homeassistant:
   customize:
     switch.kahlan_bed:
       icon: mdi:hotel
-      emulated_hue: true
+      emulated_hue_hidden: true
       emulated_hue_name: "Kahlan Alarm"
       friendly_name: Kahlan Alarm
 
     switch.braelyn_bed:
       icon: mdi:hotel
-      emulated_hue: true
+      emulated_hue_hidden: true
       emulated_hue_name: "Braelyn Alarm"
       friendly_name: Braelyn Alarm
 
     switch.kent_bed:
       icon: mdi:hotel
-      emulated_hue: true
+      emulated_hue_hidden: true
       emulated_hue_name: "Kent Alarm"
       friendly_name: Kent Alarm
 
     switch.bennett_bed:
       icon: mdi:hotel
-      emulated_hue: true
+      emulated_hue_hidden: true
       emulated_hue_name: "Bennett Alarm"
       friendly_name: Bennett Alarm
 
     input_boolean.alarm_active:
       icon: mdi:clock
-      # emulated_hue: true
+      # emulated_hue_hidden: true
       # emulated_hue_name: "Bennett Alarm"
       friendly_name: Alarm Clock Enabled
 
     input_boolean.alarm_weekday:
       icon: mdi:calendar
-      # emulated_hue: true
+      # emulated_hue_hidden: true
       # emulated_hue_name: "Bennett Alarm"
       friendly_name: Weekdays only
 
@@ -87,7 +87,7 @@ input_datetime:
     name: Wake up at?
     has_date: false
     has_time: true
-    initial: '1970-01-01 06:30'
+    initial: 06:30
 
 input_number:
   slider_hours:
@@ -416,8 +416,8 @@ script:
           data_template:
             entity_id: media_player.tts_hallway
             message: >
-              {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
-              It is time to get up!! {{time}} It is time to get up
+              {% set time = 'Today is ' + states('sensor.date_weekday')  %}
+              It is time to get up and get your charts done. It is {{time}}
               {% if is_state('switch.kahlan_bed', 'on') %} Kahlan you need to get out of bed!! {% endif %}
               {% if is_state('switch.braelyn_bed', 'on') %} Braelyn you need to get out of bed!! {% endif %}
               {% if is_state('switch.kent_bed', 'on') %} Kent you need to get out of bed!! {% endif %}

@@ -35,8 +35,8 @@ group:
     entities:
       - input_select.radio_station_location
       - input_number.volume_radio
-      - script.radio
-      - script.stop
+      - script.radio_start
+      - script.radio_stop
 
 input_number:
   volume_radio:
@@ -98,7 +98,7 @@ sensor:
 
 ###### SELECT LOCATION AND STATION
 script:
-  radio:
+  radio_start:
     sequence:
       - service: media_player.play_media
         data_template:
@@ -122,7 +122,7 @@ script:
             {% endif %}
           media_content_type: 'audio/mp3'
 
-  stop:
+  radio_stop:
     sequence:
       - service: media_player.media_stop
         data_template:
