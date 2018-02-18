@@ -15,16 +15,16 @@ group:
     - sensor.packages_in_transit
     - camera.usps_mail_mail
 
-# usps:
-#     name: USPS
-#     username: !secret myusps_username
-#     password: !secret myusps_password
-#
-#
-# camera:
-#   - platform: usps
-#     name: Mail
-#     scan_interval: 5
+usps:
+    name: USPS
+    username: !secret myusps_username
+    password: !secret myusps_password
+
+
+camera:
+  - platform: usps
+    name: Mail
+    scan_interval: 5
 
 sensor:
   # - platform: usps

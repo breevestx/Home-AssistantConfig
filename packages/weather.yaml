@@ -25,6 +25,7 @@ group:
     - sensor.dark_sky_nearest_storm_bearing
 
   Weather Home:
+    - weather.main_floor
     - sensor.dark_sky_hourly_summary
     - sensor.dark_sky_daily_summary
     - camera.lawton_doppler_weather

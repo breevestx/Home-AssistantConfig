@@ -46,6 +46,13 @@ group:
       # - sensor.lv_ldr
       - binary_sensor.mb_closet_pir
       # - light.lv_led
+  sensor_node_4_card:
+    name: Outside Sensors
+    control: hidden
+    entities:
+      - binary_sensor.skybell_front_door_button
+      - binary_sensor.skybell_front_door_motion
+      - binary_sensor.driveway_camera_motion
 
 
 # light:

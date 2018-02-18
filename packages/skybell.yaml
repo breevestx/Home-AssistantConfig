@@ -2,26 +2,23 @@
 ## [SkyBell HD](http://amzn.to/2dcexIB)
 ###################################
 
-# homeassistant:
-#   customize_glob:
-#     "sensor.skybell_*":
-#       icon: mdi:camera-front
-#
-#       hidden: False
-#       homebridge_hidden: True
+homeassistant:
+  customize_glob:
+    "sensor.skybell_*":
+      icon: mdi:camera-front
+
+      hidden: False
+      homebridge_hidden: True
 
 group:
   skybell:
     name: Skybell HD Front Door
     control: hidden
     entities:
-      - binary_sensor.skybell_front_door_button
-      - binary_sensor.skybell_front_door_motion
       - camera.front_door
-      # - sensor.skybell_front_door_chime_level
-      # - sensor.skybell_front_door_motion_sensor
-      # - switch.skybell_front_door_do_not_disturb
-      # - switch.skybell_front_door_motion_sensor
+      - sensor.skybell_front_door_chime_level
+      - switch.skybell_front_door_do_not_disturb
+      - switch.skybell_front_door_motion_sensor
 
 skybell:
   username: !secret skybell_user
@@ -33,28 +30,28 @@ camera:
 binary_sensor:
   - platform: skybell
     monitored_conditions:
-      - button
+      # - button
       - motion
 
-# light:
-#   - platform: skybell   # Part of the Outdoor Front Lights Group
-#
-# sensor:
-#   - platform: skybell
-#     monitored_conditions:
-#       - chime_level
-#
-# switch:
-#   - platform: skybell
-#     monitored_conditions:
-#       - do_not_disturb
-#       - motion_sensor
+light:
+  - platform: skybell   # Part of the Outdoor Front Lights Group
+
+sensor:
+  - platform: skybell
+    monitored_conditions:
+      - chime_level
+
+switch:
+  - platform: skybell
+    monitored_conditions:
+      - do_not_disturb
+      - motion_sensor
 
 ###################################
 ##  Automations
 ###################################
 ## Doorbell Press
-# automation:
+automation:
 #   - alias: 'Log SkyBell Pressed Activity'
 #     hide_entity: True
 #     trigger:
@@ -90,15 +87,39 @@ binary_sensor:
 #             " (http://www.vmwareinfo.com/2017/07/my-smart-home-look-at-parts-that-make.html)",
 #             " #HomeAutomation"
 #             ] | random }}
-# # Motion Sensing
+# Motion Sensing
   # - alias: 'Log SkyBell Motion detection'
   #   hide_entity: True
   #   trigger:
   #     - platform: event
   #       event_type: skybell_motion
-
+  #
   #   action:
-  #     - service: script.front_house_motion
+  #     - service: notify.slack__dev
+  #       data_template:
+  #          message: >
+  #            {%- set responses = [
+  #            'Motion detected near the driveway.',
+  #            'Something or Someone is in the driveway',
+  #            'I have notice activity in the driveway.'] -%}
+  #            {{ responses | random }}
+  #     - service: notify.ios_brucesiphone2_ios
+  #       data_template:
+  #          title: "Motion Detected"
+  #          message: >
+  #            {%- set responses = [
+  #            'Motion detected near the driveway.',
+  #            'Something or Someone is in the driveway',
+  #            'I have notice activity in the driveway.'] -%}
+  #            {{ responses | random }}
+  #          data:
+  #            push:
+  #              badge: 0
+  #              category: camera
+  #            entity_id: camera.driveway
+  #            attachment:
+  #              url: camera.driveway.attributes.entity_picture
+  #              content-type: jpg
 
 # Turn SkyBell Light and Neato Schedule back on if it's turned off. Like any Good Watchdog.
 

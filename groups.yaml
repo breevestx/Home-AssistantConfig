@@ -7,8 +7,7 @@ default_view:
   - group.Household
   - group.Devices
   - group.Office
-  - group.Nodes
-
+  - group.Ecobee
 
 Alarm Clock:
   name: Alarm Clock
@@ -17,6 +16,16 @@ Alarm Clock:
   entities:
     - group.controls
     - group.kids
+
+nodes:
+  name: Sensor Nodes
+  view: yes
+  icon: mdi:access-point-network
+  entities:
+    - group.sensor_node_1_card
+    - group.sensor_node_2_card
+    - group.sensor_node_3_card
+    - group.sensor_node_4_card
 
 Radio_view:
   name: Radio
@@ -47,17 +56,6 @@ misc_view:
     - group.backup
     - group.processes
     - group.hassctl
-
-nodes:
-  name: Sensor Nodes
-  view: yes
-  icon: mdi:access-point-network
-  entities:
-    - group.sensor_node_1_card
-    - group.sensor_node_2_card
-    - group.sensor_node_2_card
-
-
 
 automation:
   name: Automation
@@ -98,6 +96,7 @@ Household:
     - script.light_alert
     - switch.mb_heater
     - sensor.mbheater_ds1
+    - input_boolean.windows_open
 
 Devices:
   control: hidden

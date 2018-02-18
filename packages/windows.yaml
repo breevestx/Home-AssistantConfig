@@ -1,0 +1,46 @@
+######################################################################
+##  Window devices and Automations
+##
+##
+##
+######################################################################
+
+
+input_boolean:
+  windows_open:
+    name: Windows Open
+    icon: mdi:window
+    initial: False
+
+group:
+  Windows:
+    - input_boolean.windows_open
+    - switch.monitors
+    - sensor.office_pir
+
+automation:
+  alias: 'Windows need to be closed'
+  initial_state: True
+  trigger:
+    platform: time
+    minutes: '/5'
+    seconds: 00
+  condition:
+    - condition: state
+      entity_id: input_boolean.windows_open
+      state: 'True'
+    - condition: template
+      value_template: '{{ states("sensor.dark_sky_temperature") > states("sensor.main_floor_temperature") }}'
+      # The outside temperature is {{  states("sensor.dark_sky_temperature") }} and the inside temp is {{ states("sensor.main_floor_temperature")  }}
+  action:
+    - service: notify.slack__home
+      data_template:
+        message: >-
+          The outside temperature is {{  states("sensor.dark_sky_temperature") }} and the inside temp is {{ states("sensor.main_floor_temperature")  }} so it would be a good time to close the windows
+    # - service: logbook.log
+    #   data_template:
+    #     name: "Conference"
+    #     message: >-
+    #       {%- for state in states if state.entity_id == trigger.entity_id -%}
+    #         {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+    #       {%- endfor -%}

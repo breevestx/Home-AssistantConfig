@@ -2,158 +2,158 @@
 ##  Use MQTT to connect to another HA running Zwave Devices
 ##
 ######################################################################
-homeassistant:
-  customize:
-    switch.guest_bathroom_light:
-      friendly_name: 'Guest Bathroom Light'
-      icon: mdi:light
-      emulated_hue: true
-    script.light_alert:
-      friendly_name: 'Warn Guest Bathroom'
-      icon: mdi:light
-      emulated_hue: true
-
-# mqtt_statestream:
-#   base_topic: homeassistant
-
-# mqtt_eventstream:
-#   publish_topic: master
-#   subscribe_topic: hub
-
-
-group:
-  guest_bath:
-    # view: true
-    name: Guest Bath
-    entities:
-      - switch.guest_bathroom_light
-      - script.light_alert
-
-switch:
-  - platform: mqtt
-    state_topic: "homeassistant/switch/guest_bath_light_switch/state"
-    command_topic: "homeassistant/switch/guest_bath_light_switch/state"
-    name: Guest Bathroom Light
-    payload_on: "turn_on"
-    payload_off: "turn_off"
-    optimistic: false
-    qos: 0
-    retain: true
-
-input_boolean:
-  gb_auto_off:
-    initial: off
-
-
-automation:
-  - alias: 'School Bathroom'
-    initial_state: True
-    condition:
-      - condition: time
-        after: '8:00:00'
-        before: '15:00:00'
-        weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-      # - condition: template
-      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
-      - condition: state
-        entity_id: input_boolean.gb_auto_off
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.guest_mode
-        state: 'off'
-    trigger:
-      - platform: mqtt
-        topic: homeassistant/switch/guest_bath_light_switch/state
-        payload: 'on'
-    action:
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.gb_auto_off
-
-  - alias: 'School Bathroom Cancel'
-    initial_state: True
-    condition:
-      - condition: time
-        after: '8:00:00'
-        before: '15:00:00'
-        weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-      - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) < 180 }}'
-      - condition: state
-        entity_id: input_boolean.gb_auto_off
-        state: 'on'
-    trigger:
-      - platform: mqtt
-        topic: homeassistant/switch/guest_bath_light_switch/state
-        payload: 'off'
-    action:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.gb_auto_off
-
-  - alias: 'Bathroom auto-off'
-    initial_state: True
-    condition:
-      - condition: state
-        entity_id: input_boolean.gb_auto_off
-        state: 'on'
-      - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
-    trigger:
-      platform: time
-      minutes: '/1'
-      seconds: 00
-    action:
-      - service: notify.slack__dev
-        data_template:
-          message: >
-            Triggering the GB light alert
-      - service: script.light_alert
-
-
-script:
-  light_alert:
-    sequence:
-      - service: switch.turn_off
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:01'
-      - service: switch.turn_on
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:01'
-      - service: switch.turn_off
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:01'
-      - service: switch.turn_on
-        data:
-          entity_id: switch.guest_bathroom_light
-      - delay: '00:00:59'
-      - service: switch.turn_off
-        data:
-          entity_id: switch.guest_bathroom_light
-      - service: homeassistant.turn_off
-        entity_id: input_boolean.gb_auto_off
-      # - service: tts.google_say
-      #   data_template:
-      #     entity_id: media_player.tts_hallway
-      #     message: >
-      #       {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
-      #       It is time to get up!! {{time}} It is time to get up
-      # - service: media_player.volume_set
-      #   data_template:
-      #     entity_id: media_player.tts_hallway
-      #     volume_level: '1'
-      # - service: homeassistant.turn_on
-      #   entity_id: input_boolean.alarm_has_gone_off
+# homeassistant:
+#   customize:
+#     switch.guest_bathroom_light:
+#       friendly_name: 'Guest Bathroom Light'
+#       icon: mdi:light
+#       emulated_hue: true
+#     script.light_alert:
+#       friendly_name: 'Warn Guest Bathroom'
+#       icon: mdi:light
+#       emulated_hue: true
+#
+# # mqtt_statestream:
+# #   base_topic: homeassistant
+#
+# # mqtt_eventstream:
+# #   publish_topic: master
+# #   subscribe_topic: hub
+#
+#
+# group:
+#   guest_bath:
+#     # view: true
+#     name: Guest Bath
+#     entities:
+#       - switch.guest_bathroom_light
+#       - script.light_alert
+#
+# switch:
+#   - platform: mqtt
+#     state_topic: "homeassistant/switch/guest_bath_light_switch/state"
+#     command_topic: "homeassistant/switch/guest_bath_light_switch/state"
+#     name: Guest Bathroom Light
+#     payload_on: "turn_on"
+#     payload_off: "turn_off"
+#     optimistic: false
+#     qos: 0
+#     retain: true
+#
+# input_boolean:
+#   gb_auto_off:
+#     initial: off
+#
+#
+# automation:
+#   - alias: 'School Bathroom'
+#     initial_state: True
+#     condition:
+#       - condition: time
+#         after: '8:00:00'
+#         before: '15:00:00'
+#         weekday:
+#           - mon
+#           - tue
+#           - wed
+#           - thu
+#           - fri
+#       # - condition: template
+#       #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
+#       - condition: state
+#         entity_id: input_boolean.gb_auto_off
+#         state: 'off'
+#       - condition: state
+#         entity_id: input_boolean.guest_mode
+#         state: 'off'
+#     trigger:
+#       - platform: mqtt
+#         topic: homeassistant/switch/guest_bath_light_switch/state
+#         payload: 'on'
+#     action:
+#       - service: input_boolean.turn_on
+#         data:
+#           entity_id: input_boolean.gb_auto_off
+#
+#   - alias: 'School Bathroom Cancel'
+#     initial_state: True
+#     condition:
+#       - condition: time
+#         after: '8:00:00'
+#         before: '15:00:00'
+#         weekday:
+#           - mon
+#           - tue
+#           - wed
+#           - thu
+#           - fri
+#       - condition: template
+#         value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) < 180 }}'
+#       - condition: state
+#         entity_id: input_boolean.gb_auto_off
+#         state: 'on'
+#     trigger:
+#       - platform: mqtt
+#         topic: homeassistant/switch/guest_bath_light_switch/state
+#         payload: 'off'
+#     action:
+#       - service: input_boolean.turn_off
+#         data:
+#           entity_id: input_boolean.gb_auto_off
+#
+#   - alias: 'Bathroom auto-off'
+#     initial_state: True
+#     condition:
+#       - condition: state
+#         entity_id: input_boolean.gb_auto_off
+#         state: 'on'
+#       - condition: template
+#         value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
+#     trigger:
+#       platform: time
+#       minutes: '/1'
+#       seconds: 00
+#     action:
+#       - service: notify.slack__dev
+#         data_template:
+#           message: >
+#             Triggering the GB light alert
+#       - service: script.light_alert
+#
+#
+# script:
+#   light_alert:
+#     sequence:
+#       - service: switch.turn_off
+#         data:
+#           entity_id: switch.guest_bathroom_light
+#       - delay: '00:00:01'
+#       - service: switch.turn_on
+#         data:
+#           entity_id: switch.guest_bathroom_light
+#       - delay: '00:00:01'
+#       - service: switch.turn_off
+#         data:
+#           entity_id: switch.guest_bathroom_light
+#       - delay: '00:00:01'
+#       - service: switch.turn_on
+#         data:
+#           entity_id: switch.guest_bathroom_light
+#       - delay: '00:00:59'
+#       - service: switch.turn_off
+#         data:
+#           entity_id: switch.guest_bathroom_light
+#       - service: homeassistant.turn_off
+#         entity_id: input_boolean.gb_auto_off
+#       # - service: tts.google_say
+#       #   data_template:
+#       #     entity_id: media_player.tts_hallway
+#       #     message: >
+#       #       {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
+#       #       It is time to get up!! {{time}} It is time to get up
+#       # - service: media_player.volume_set
+#       #   data_template:
+#       #     entity_id: media_player.tts_hallway
+#       #     volume_level: '1'
+#       # - service: homeassistant.turn_on
+#       #   entity_id: input_boolean.alarm_has_gone_off

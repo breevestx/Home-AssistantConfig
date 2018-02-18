@@ -65,3 +65,29 @@ Installing collected packages: idna, urllib3, certifi, requests, pytz, homeassis
     Uninstalling multidict-3.3.0:
       Successfully uninstalled multidict-3.3.0
 Successfully installed certifi-2017.11.5 homeassistant-0.57.2 idna-2.6 multidict-3.3.2 pytz-2017.3 requests-2.18.4 urllib3-1.22
+Collecting homeassistant
+  Downloading homeassistant-0.63.2-py2.py3-none-any.whl (7.7MB)
+Requirement already up-to-date: pip>=8.0.3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: aiohttp==2.3.10 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: chardet==3.0.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: astral==1.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: requests==2.18.4 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: voluptuous==0.10.5 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: jinja2>=2.10 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: async-timeout==2.0.0 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: attrs==17.4.0 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: typing<4,>=3 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pyyaml<4,>=3.11 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: pytz>=2017.02 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: yarl==1.1.0 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: certifi>=2017.4.17 in /srv/homeassistant/lib/python3.5/site-packages (from homeassistant)
+Requirement already up-to-date: idna-ssl>=1.0.0 in /srv/homeassistant/lib/python3.5/site-packages (from aiohttp==2.3.10->homeassistant)
+Requirement already up-to-date: multidict>=4.0.0 in /srv/homeassistant/lib/python3.5/site-packages (from aiohttp==2.3.10->homeassistant)
+Requirement already up-to-date: urllib3<1.23,>=1.21.1 in /srv/homeassistant/lib/python3.5/site-packages (from requests==2.18.4->homeassistant)
+Requirement already up-to-date: idna<2.7,>=2.5 in /srv/homeassistant/lib/python3.5/site-packages (from requests==2.18.4->homeassistant)
+Requirement already up-to-date: MarkupSafe>=0.23 in /srv/homeassistant/lib/python3.5/site-packages (from jinja2>=2.10->homeassistant)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.63.1
+    Uninstalling homeassistant-0.63.1:
+      Successfully uninstalled homeassistant-0.63.1
+Successfully installed homeassistant-0.63.2

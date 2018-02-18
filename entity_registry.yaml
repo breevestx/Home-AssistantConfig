@@ -13,3 +13,39 @@ light.bruce_lamp_2:
 light.lene_lamp_2:
   platform: hue
   unique_id: 00:17:88:01:02:3a:54:84-0b
+media_player.plex_web_chrome:
+  platform: plex
+  unique_id: xcmd6wvlgppm0aj6jkukrhr9
+media_player.kfdowi:
+  platform: plex
+  unique_id: 68701fa1d2dd316e-com-plexapp-android
+media_player.kfdowi_2:
+  platform: plex
+  unique_id: 3fb451e9b4b38452-com-plexapp-android
+sensor.iphone_battery_level:
+  platform: ios
+  unique_id: level_brucesiphone2_ios
+sensor.leneiphone_battery_state:
+  platform: ios
+  unique_id: state_LeneiPhone_ios
+sensor.breevs_ipad_battery_state:
+  platform: ios
+  unique_id: state_breevs_ipad
+sensor.iphone_battery_state:
+  platform: ios
+  unique_id: state_brucesiphone2_ios
+sensor.leneiphone_battery_level:
+  platform: ios
+  unique_id: level_LeneiPhone_ios
+sensor.breevs_ipad_battery_level:
+  platform: ios
+  unique_id: level_breevs_ipad
+binary_sensor.driveway_camera_tamper_detection:
+  platform: hikvision
+  unique_id: 5c75e10a-ef30-11b4-8396-4cbd8fe0a5bf.Tamper Detection.1
+binary_sensor.driveway_camera_line_crossing:
+  platform: hikvision
+  unique_id: 5c75e10a-ef30-11b4-8396-4cbd8fe0a5bf.Line Crossing.1
+media_player.kfdowi_3:
+  platform: plex
+  unique_id: 941d8d18e01c6fa7-com-plexapp-android
