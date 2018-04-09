@@ -41,6 +41,10 @@ input_number:
     step: 1
     mode: slider
 
+timer:
+  closet_light:
+    duration: '00:01:00'
+
 sensor:
   - platform: template
     sensors:
@@ -51,7 +55,7 @@ sensor:
 group:
   scenes:
     control: hidden
-    name: Bedroom Lights
+    name: Bedroom Controls
     entities:
       - scene.bedroom_morning
       - script.good_morning
@@ -59,6 +63,7 @@ group:
       - input_slider.bedroom_lamps_brightness
       - sensor.kodi_mb
       - mediaplayer.kodi_mb
+      - switch.mb_closet_light
 
   Bedroom lamps:
     control: hidden
@@ -66,8 +71,6 @@ group:
     entities:
       - light.lene_lamp
       - light.bruce_lamp
-      - group.scene
-      - mediaplayer.kodi_mb
 
 scene:
   - name: bedroom_morning
@@ -129,3 +132,48 @@ automation:
             - light.bruce_lamp
             - light.lene_lamp
           brightness: '{{ trigger.to_state.state | int }}'
+
+  - alias: 'Closet - Motion'
+    initial_state: True
+    condition:
+      - condition: state
+        entity_id: switch.mb_closet_light
+        state: 'off'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.mb_closet_pir
+        from: 'off'
+        to: 'on'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.mb_closet_light
+      - service: timer.start
+        entity_id: timer.closet_light
+
+  - alias: 'Closet - Manual'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: switch.mb_closet_light
+        from: 'off'
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.closet_light
+
+  - alias: 'Closet - Off'
+    initial_state: True
+    condition:
+      - condition: state
+        entity_id: switch.mb_closet_light
+        state: 'on'
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.mb_closet_pir.last_changed)) > 30 }}'
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.closet_light
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.mb_closet_light

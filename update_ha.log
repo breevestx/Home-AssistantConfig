@@ -91,3 +91,6 @@ Installing collected packages: homeassistant
     Uninstalling homeassistant-0.63.1:
       Successfully uninstalled homeassistant-0.63.1
 Successfully installed homeassistant-0.63.2
+Collecting homeassistant
+  Downloading homeassistant-0.65.3-py2.py3-none-any.whl (7.8MB)
+homeassistant requires Python '>=3.5.3' but the running Python is 3.5.2

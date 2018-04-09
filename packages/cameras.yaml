@@ -97,7 +97,9 @@ camera:
 switch:
   - platform: hikvisioncam
     name: Driveway Camera
-    host: driveway_camera_ip
+    host: !secret driveway_camera_ip
+    username: !secret hkcamera_username
+    password: !secret hkcamera_password
 #
 # # ffmpeg:
 # #   ffmpeg_bin: /usr/bin/ffmpeg
@@ -135,7 +137,10 @@ automation:
   - alias: Driveway camera
     trigger:
       - platform: state
-        entity_id: binary_sensor.ffmpeg_motion
+        entity_id:
+          - binary_sensor.driveway_camera_line_crossing
+          - binary_sensor.driveway_camera_field_detection
+          - binary_sensor.skybell_front_door_motion
         from: 'off'
         to: 'on'
     # condition:
@@ -151,20 +156,13 @@ automation:
              'Something or Someone is in the driveway',
              'I have notice activity in the driveway.'] -%}
              {{ responses | random }}
-#       - service: notify.ios_brucesiphone2_ios
-#         data_template:
-#            title: "Motion Detected"
-#            message: >
-#              {%- set responses = [
-#              'Motion detected near the driveway.',
-#              'Something or Someone is in the driveway',
-#              'I have notice activity in the driveway.'] -%}
-#              {{ responses | random }}
-#            data:
-#              push:
-#                badge: 0
-#                category: camera
-#              entity_id: camera.driveway
-#              attachment:
-#                url: camera.driveway.attributes.entity_picture
-#                content-type: jpg
+      - service: notify.ios_devices
+        data_template:
+          message: "Check {{ trigger.entity_id.split('.')[1].split('_')[0] | title }} camera."
+          data:
+            push:
+              category: camera
+            entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[0] ~ '' ~ '_camera' }}"
+            attachment:
+              url: "{{ states.camera[trigger.entity_id.split('.')[1].split('_')[0] ~ '' ~ '_camera'].attributes.entity_picture }}"
+              content-type: jpg

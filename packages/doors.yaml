@@ -1,0 +1,186 @@
+homeassistant:
+  customize:
+    binary_sensor.garage_door:
+      friendly_name: Garage Door
+    binary_sensor.laundry_room_door:
+      friendly_name: Laundry Room Door
+
+group:
+  entry_points:
+    name: Entry Points
+    entities:
+      - binary_sensor.laundry_room_door
+
+
+sensor:
+  - platform: template
+    sensors:
+      garage_door:
+        friendly_name: 'Garage Door'
+        value_template: "{{ 'Open' if is_state('binary_sensor.garage_door', 'on') else 'Closed' }}"
+      laundry_door:
+        friendly_name: 'Laundry Room Door'
+        value_template: "{{ 'Open' if is_state('binary_sensor.laundry_room_door', 'on') else 'Closed' }}"
+
+cover:
+  - platform: template
+    covers:
+      garage_door:
+        friendly_name: "Garage Door"
+        value_template: "{{ 'Open' if is_state('binary_sensor.garage_door', 'on') else 'Closed' }}"
+        open_cover:
+          service: script.open_garage_door
+        close_cover:
+          service: script.close_garage_door
+        stop_cover:
+          service: script.stop_garage_door
+
+automation:
+  - alias: 'Turn on Driveway light Door open'
+    initial_state: True
+    condition:
+      - condition: or  # 'when dark' condition: either after sunset or before sunrise
+        conditions:
+          - condition: sun
+            after: sunset
+            # offset: '-1:00:00'
+          - condition: sun
+            before: sunrise
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
+      - condition: state
+        entity_id: binary_sensor.sensor_2
+        state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.sensor_2
+          - binary_sensor.driveway_camera_line_crossing
+          - binary_sensor.driveway_camera_field_detection
+        to: 'on'
+    action:
+      - service: switch.turn_on
+        data:
+          entity_id: switch.driveway_garage_light
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            Turning on the driveway light
+
+  - alias: 'Turn off Driveway light Door Closed'
+    initial_state: True
+    condition:
+      # - condition: or  # 'when dark' condition: either after sunset or before sunrise
+      #   conditions:
+      #     - condition: sun
+      #       after: sunset
+      #     - condition: sun
+      #       before: sunrise
+      - condition: template
+        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.switch.driveway_garage_light.last_changed)) > 300 }}'
+      - condition: state
+        entity_id: switch.driveway_garage_light
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.sensor_2
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.vacation_mode
+        state: 'off'
+    trigger:
+      platform: time
+      minutes: '/1'
+      seconds: 00
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id: switch.driveway_garage_light
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            Turning off the driveway light
+
+  # - alias: 'Garage Door open'
+  #   initial_state: True
+  #   trigger:
+  #     - platform: state
+  #       entity_id:
+  #         - binary_sensor.garage_door
+  #       to: 'on'
+  #   action:
+  #     - service: notify.ios_devices
+  #       data:
+  #         message: “Garage Door is open”
+  #         data:
+  #           push:
+  #             # sound: "US-EN-Morgan-Freeman-Garage-Door-Opened.wav"
+  #
+  # - alias: 'Garage Door Closed'
+  #   initial_state: True
+  #   trigger:
+  #     - platform: state
+  #       entity_id:
+  #         - binary_sensor.garage_door
+  #       to: 'off'
+  #   action:
+  #     - service: notify.ios_devices
+  #       data:
+  #         message: “Garage Door is Closed”
+  #         data:
+  #           push:
+  #             # sound: "US-EN-Morgan-Freeman-Garage-Door-Closed.wav"
+
+  - alias: Notify Door Status
+    initial_state: true
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.garage_door
+      - binary_sensor.laundry_room_door
+    condition:
+      - condition: template
+        value_template: "{% if trigger.from_state %} True {% else %} False {% endif %}"
+    action:
+      - service: script.notify_me
+        data_template:
+          message: >
+              {% if trigger.to_state.state | lower == "on" %}
+                  {{ trigger.to_state.attributes.friendly_name }} is OPEN!
+              {% elif trigger.to_state.state | lower == "off" %}
+                  {{ trigger.to_state.attributes.friendly_name }} has been CLOSED!
+              {% endif %}
+          sound: >
+              {% if trigger.to_state.state | lower == "on" %}
+                  "US-EN-Alexa-Garage-Door-Closed.wav"
+              {% elif trigger.to_state.state | lower == "off" %}
+                  "US-EN-Alexa-Garage-Door-Closed.wav"
+              {% endif %}
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.page_location
+          option: 'Office'
+      - service: script.speech_engine
+        data_template:
+          DoorEvent: >
+            {% set door = trigger.entity_id.split('.')[1]|replace('_', ' ')%}
+
+            {%- macro door_sentence(door) -%}
+            {% if trigger.to_state.state | lower == "on" %}
+              {{ [
+              "I noticed the "~ door + " is open",
+              "Just so you know the " ~ door + " is open"
+              ] | random }}
+            {% elif trigger.to_state.state | lower == "off" %}
+              {{ [
+              "I noticed the "~ door + " is closed",
+              "Just so you know the " ~ door + " is closed"
+              ] | random }}
+            {% endif %}
+
+            {%- endmacro -%}
+            ""{{door_sentence(door)}}"
+          call_no_announcement: 0
+
+
+# https://raw.githubusercontent.com/home-assistant/home-assistant-iOS/master/HomeAssistant/Sounds/MorganFreeman/US-EN-Morgan-Freeman-Garage-Door-Closed.wav

@@ -37,6 +37,7 @@ group:
       - input_number.volume_radio
       - script.radio_start
       - script.radio_stop
+      - script.radio_away
 
 input_number:
   volume_radio:
@@ -133,6 +134,16 @@ script:
             {% elif is_state('input_select.radio_station_location', 'Living Room') %} media_player.kodi_LV
             {% elif is_state('input_select.radio_station_location', 'All Zones') %} group.players
             {% endif %}
+
+  radio_away:
+    sequence:
+      - service: media_player.play_media
+        data_template:
+          entity_id: 
+            - media_player.tts_hallway
+            - media_player.kodi_office
+          media_content_id: http://199.180.75.116:80/stream
+          media_content_type: 'audio/mp3'
 
 ###### VOLUME SLIDER CONTROL (LOCATION BASED)
 automation:

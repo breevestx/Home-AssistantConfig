@@ -1,0 +1,24 @@
+sensor:
+  - platform: alpha_vantage
+    api_key: !secret vantage_api
+    symbols:
+      - name: Tesla
+        currency: USD
+        symbol: TSLA
+      - name: Facebook
+        currency: USD
+        symbol: FB
+    foreign_exchange:
+      - from: BTC
+        to: USD
+        name: Bitcoin
+      - name: USD_CAD
+        from: USD
+        to: CAD
+#-------------------------------------------
+group:
+  finance:
+    entities:
+      - sensor.tesla
+      - sensor.facebook
+      - sensor.bitcoin

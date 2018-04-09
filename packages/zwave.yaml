@@ -1,0 +1,35 @@
+homeassistant:
+  customize:
+    switch.driveway_garage_light:
+      friendly_name: 'Garage Outside light'
+    switch.mb_closet_light:
+      friendly_name: 'Master Bedroom Closet Light'
+      #emulated_hue: true
+    zwave.switch_driveway_garage_light:
+      friendly_name: 'Garage Outside Light'
+
+group:
+  zwave_devices:
+    #view: true
+    name: Zwave Devices
+    entities:
+      - zwave.switch_driveway_garage_light
+      - zwave.mb_closet_light
+      - zwave.garage_door
+      - zwave.laundry_room_door
+      - binary_sensor.garage_door
+      - binary_sensor.laundry_room_door
+      - sensor.garage_door
+      #- cover.garage_door
+      - sensor.laundry_door
+
+zwave:
+  usb_path: !secret zwave_device_path
+  #new_entity_ids: true
+  config_path: !secret zwave_config_path
+  network_key: !secret zwave_network_key
+  device_config:
+    light.driveway_garage_light:
+      polling_intensity: 2
+      refresh_value: true
+      delay: 3

@@ -250,6 +250,9 @@ automation:
         - condition: state
           entity_id: input_boolean.alarm_active
           state: 'on'
+        - condition: state
+          entity_id: input_boolean.vacation_mode
+          state: 'off'
     action:
       - service: notify.slack__dev
         data_template:
@@ -282,6 +285,9 @@ automation:
         - condition: state
           entity_id: input_boolean.alarm_active
           state: 'on'
+        - condition: state
+          entity_id: input_boolean.vacation_mode
+          state: 'off'
     action:
       - service: notify.slack__dev
         data_template:
@@ -417,11 +423,19 @@ script:
             entity_id: media_player.tts_hallway
             message: >
               {% set time = 'Today is ' + states('sensor.date_weekday')  %}
-              It is time to get up and get your charts done. It is {{time}}
-              {% if is_state('switch.kahlan_bed', 'on') %} Kahlan you need to get out of bed!! {% endif %}
-              {% if is_state('switch.braelyn_bed', 'on') %} Braelyn you need to get out of bed!! {% endif %}
-              {% if is_state('switch.kent_bed', 'on') %} Kent you need to get out of bed!! {% endif %}
-              {% if is_state('switch.bennett_bed', 'on') %} Bennett you need to get out of bed!! {% endif %}
+              It is time to get up and get your charts done.
+                {% if states.group.kids.state != 'off' -%}
+                {% set comma = joiner(', ') %}
+                {%- for state in states.switch if state.state == 'on' -%}
+                {%- endfor %}
+                {% for group in states.switch|groupby('state')  -%}
+                {%- for entity in group.list  if entity.state == 'on' and entity.name.split(' ')[1]|lower == 'alarm' -%}
+                {{ ' and' if loop.last and not loop.first else comma() }}
+                {{ entity.attributes.friendly_name.split(' ')[0] }}
+                {%- endfor -%}
+                {%- endfor %}
+                still need to get out of bed.
+                {%- endif -%}
 
     se_kids_tts_warn:
       sequence:
@@ -483,9 +497,17 @@ script:
         - service: script.speech_engine
           data_template:
             pagekids: >
-              {% set time = 'Today is ' + states('sensor.date_weekday') + states('sensor.date_month') +  states('sensor.date_day') %}
-              It is time to get up!! {{time}} It is time to get up
-              {% if is_state('switch.kahlan_bed', 'on') %} Kahlan you need to get out of bed!! {% endif %}
-              {% if is_state('switch.braelyn_bed', 'on') %} Braelyn you need to get out of bed!! {% endif %}
-              {% if is_state('switch.kent_bed', 'on') %} Kent you need to get out of bed!! {% endif %}
-              {% if is_state('switch.bennett_bed', 'on') %} Bennett you need to get out of bed!! {% endif %}
+              {% set time = 'Today is ' + states('sensor.date_weekday')  %}
+              It is time to get up and get your charts done.
+              {% if states.group.kids.state != 'off' -%}
+              {% set comma = joiner(', ') %}
+              {%- for state in states.switch if state.state == 'on' -%}
+              {%- endfor %}
+              {% for group in states.switch|groupby('state')  -%}
+              {%- for entity in group.list  if entity.state == 'on' and entity.name.split(' ')[1]|lower == 'alarm' -%}
+              {{ ' and' if loop.last and not loop.first else comma() }}
+              {{ entity.attributes.friendly_name.split(' ')[0] }}
+              {%- endfor -%}
+              {%- endfor %}
+              still need to get out of bed.
+              {%- endif -%}

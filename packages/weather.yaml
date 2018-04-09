@@ -4,6 +4,14 @@ homeassistant:
       name: 'Hourly'
     sensor.dark_sky_daily_summary:
       name: 'Daily'
+    sensor.dark_sky_temperature:
+      name: 'Outside Temp'
+    sensor.dark_sky_precip_accumulation:
+      name: 'Total Precp'
+    sensor.dark_sky_nearest_storm_distance:
+      name: 'Nearest Storm'
+    sensor.uv_burn_time:
+      name: 'Estimated safe Sun exposure'
     sensor.pws_alerts:
       icon: mdi:alert-outline
       friendly_name: Alerts
@@ -23,6 +31,10 @@ group:
     - sensor.dark_sky_precip_intensity
     - sensor.dark_sky_nearest_storm_distance
     - sensor.dark_sky_nearest_storm_bearing
+    - sensor.uv_burn_time
+    - sensor.weather_report
+    - sensor.dark_sky_daily_max_precip_intensity
+    - sensor.dark_sky_precip_accumulation
 
   Weather Home:
     - weather.main_floor
@@ -55,6 +67,7 @@ sensor:
       - precip_type
       - precip_intensity
       - precip_probability
+      - precip_accumulation
       - temperature
       - apparent_temperature
       - dew_point
@@ -98,7 +111,7 @@ sensor:
 ### SUB IN CORRECT VALUE FOR YOUR SKIN#################################################################################################################################
 ### Celtic"all babies and children" = 67Min // caucasian = 100Min // Central Europe = 200Min // south american = 200Min // Middle Eastern = 400Min // African = 500Min
         value_template: >
-          {% if is_state('sensor.pws_uv', '0') %}
+          {% if is_state('sensor.pws_uv', '0.0') %}
             0
           {% elif is_state('sensor.pws_uv', '-1') %}
             0

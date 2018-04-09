@@ -18,7 +18,7 @@ automation:
         from: 'off'
         to: 'on'
     action:
-      - service: notify.slack__home
+      - service: notify.slack__dev
         data_template:
           message: >
             {%- set responses = [
@@ -35,15 +35,41 @@ automation:
         from: 'on'
         to: 'off'
     action:
-      - service: notify.slack__home
+      - service: notify.slack__dev
         data_template:
           message: >
             {%- set responses = [
             'Did you have fun, I covered everything while your away.',
             'Well it is about time you came back around',
-            'AFFIRMATIVE SIR, standing downs!!!'] -%}
+            'AFFIRMATIVE SIR, standing down!!!'] -%}
             Bruce> {{ responses | random }}
 
+  - alias: 'Vacation mode radio On'
+    initial_state: True
+    condition:
+      - condition: state
+        entity_id: input_boolean.vacation_mode
+        state: 'on'
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: '-00:35:00'
+    action:
+      - service: homeassistant.turn_on
+        entity_id:
+          - group.Bedroom_lamps
+      - service: script.radio_away
+#    - service: logbook.log
+#      data_template:
+#        name: "Bedroom lamps On: "
+#        message: Turned lamps on via Automation
+      - service: notify.slack__dev
+        data_template:
+          message: >
+            {%- set responses = [
+            'It just tickles me pink to Start music and turn the lamps on',
+            'Got you covered, vacation lights are on'] -%}
+            Bruce> {{ responses | random }}
 
 #################################################################
 ## Lights on 45 minutes before sunset
@@ -61,12 +87,17 @@ automation:
         offset: '-00:45:00'
     action:
       - service: homeassistant.turn_on
-        entity_id: group.Bedroom_lamps
+        entity_id:
+          - group.Bedroom_lamps
+          - switch.switch_2
+          - switch.monitors
+          - switch.salt_lamp
+      - service: script.radio_stop
 #    - service: logbook.log
 #      data_template:
 #        name: "Bedroom lamps On: "
 #        message: Turned lamps on via Automation
-      - service: notify.slack__home
+      - service: notify.slack__dev
         data_template:
           message: >
             {%- set responses = [
@@ -89,12 +120,17 @@ automation:
         offset: '+02:00:00'
     action:
       - service: homeassistant.turn_off
-        entity_id: group.Bedroom_lamps
+        entity_id:
+          - group.Bedroom_lamps
+          - switch.switch_2
+          - switch.monitors
+          - switch.salt_lamp
 #      - service: logbook.log
 #        data_template:
 #          name: "Bedroom lamps Off: "
 #          message: Turned lamps off via Automation
-      - service: notify.slack__home
+      - service: script.radio_stop
+      - service: notify.slack__dev
         data_template:
           message: >
             {%- set responses = [

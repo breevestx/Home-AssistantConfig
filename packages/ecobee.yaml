@@ -48,19 +48,55 @@ input_boolean:
     name: Heater
     icon: mdi:hot-tub
 
+sensor:
+  - platform: template
+    sensors:
+      main_floor_mode:
+        friendly_name: "Main Floor AC Mode"
+        value_template: "{{ states.climate.main_floor.attributes.operation }}"
+
+      upstairs_mode:
+        friendly_name: "Upstairs AC Mode"
+        value_template: "{{ states.climate.upstairs.attributes.operation }}"
+
+
 group:
-  Ecobee:
+  Climate:
+    name: Climate controls
+    view: yes
+    icon: mdi:nest-thermostat
+    entities:
+      - group.ecobee_main
+      - group.ecobee_upstairs
+      - group.climate_controls
+
+  Ecobee Main:
     - binary_sensor.bedroom_occupancy
-    - binary_sensor.downstairs_Occupancy
+    - binary_sensor.office_occupancy
+    - binary_sensor.main_floor_occupancy
     - sensor.bedroom_temperature
-    - sensor.downstairs_temperature
+    - sensor.office_temperature_2
     - sensor.main_floor_humidity
     - sensor.main_floor_temperature
+    - climate.main_floor_operation
+    - sensor.main_floor_mode
+
+  Ecobee Upstairs:
+    - binary_sensor.kids_room_occupancy
+    - sensor.kids_room_temperature
     - sensor.upstairs_humidity
     - sensor.upstairs_temperature
+    - climate.upstairs_operation
+    - sensor.upstairs_mode
+    # - automation.turn_off_ac_after_3_hours_of_cooling
+    # - input_boolean.air_condition
+    # - input_boolean.heater
+
+  Climate controls:
     - automation.turn_off_ac_after_3_hours_of_cooling
     - input_boolean.air_condition
     - input_boolean.heater
+    - automation.Ecobee_Status
 
 automation:
 # ###############################################################################
@@ -146,3 +182,50 @@ automation:
         data:
           entity_id: climate.main_floor
           operation_mode: 'off'
+
+  - alias: 'ecobee logger'
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id:
+        - sensor.main_floor_mode
+        - sensor.upstairs_mode
+    condition:
+      # - condition: state
+      #   entity_id: input_boolean.freezer
+      #   state: 'on'
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.freezer_ds1.last_changed)) > 300 }}'
+    action:
+      # - service: homeassistant.turn_on
+      #   entity_id: input_boolean.freezer
+      - service: logbook.log
+        data_template:
+          name: "Ecobee Activity: "
+          message: >-
+            {{ trigger.entity_id.attributes.friendly_name }} changed to {{(trigger.to_state.state)}} from {{(trigger.last_state)}}
+      - service: notify.slack__home
+        data_template:
+          message: >
+            {{ trigger.entity_id.attributes.friendly_name }} changed to {{(trigger.to_state.state)}} from {{(trigger.last_state)}}
+
+  - alias: 'Ecobee Status'
+    trigger:
+      - platform: state
+        entity_id:
+        - sensor.main_floor_mode
+        - sensor.upstairs_mode
+        from: 'idle'
+    # condition:
+    #   - condition: template
+    #     value_template: >-
+    #       {{ as_timestamp(states.automation.nest_status.attributes.last_triggered) > as_timestamp(now()) - (1800) }}
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.page_location
+          option: 'Office'
+      - service: script.speech_engine
+        data_template:
+          EcobeeStatus: "The {{ trigger.entity_id.split('.')[1].split('_')[0]}} {{ trigger.entity_id.split('.')[1].split('_')[1]}} has now been turned on for {{(trigger.to_state.state)}}."
+          call_window_check: 1

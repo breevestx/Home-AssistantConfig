@@ -11,9 +11,9 @@ group:
     name: Family
     control: hidden
     entities:
-      - device_tracker.brucesiphone2_ios
-      - device_tracker.leneiphone_ios
-      - device_tracker.kahlans_iphone_ios
+      - device_tracker.bruce_iphone
+      - device_tracker.lene_iphone
+#      - device_tracker.kahlans_iphone
 
 input_boolean:
   guest_mode:
@@ -168,21 +168,21 @@ script:
                 ] | random }}
             {%- endmacro -%}
             {%- macro responsibilities() -%}
-                {%if now().strftime("%a") == 'Wed' or now().strftime("%a") == 'Sun'%}
+                {%if now().strftime("%a") == 'Mon' %}
                   Today is {{now().strftime("%A")}} and {{now().strftime("%A")}} is garbage day.
                 {%endif%}
-                {%if now().strftime("%a") == 'Wed'%}
+                {%if now().strftime("%a") == 'Sun'%}
                   Both Recycling and regular Garbage goes out. Please take out all of the garbage cans tonight.
                 {%endif%}
             {%- endmacro -%}
             {%- macro inside_weather() -%}
-                Inside the house, it is {{ states.climate.downstairs.attributes["current_temperature"]}} degrees with around {{states('sensor.downstairs_thermostat_humidity')}} percent humidity.
+                Inside the house, it is {{ states.climate.main_floor.attributes["current_temperature"]}} degrees downstairs and it is {{ states.climate.upstairs.attributes["current_temperature"]}} degrees upstairs.
             {%- endmacro -%}
             {%- macro outside_weather() -%}
                 Outside, it is going to be {{states('sensor.dark_sky_minutely_summary')}}  and {{states('sensor.dark_sky_temperature')}} degrees
             {%- endmacro -%}
             {%- macro light_check() -%}
-                {% if states.group.all_lights.state != 'off' -%}
+                {% if states.group.bedroom_lamps.state != 'off' -%}
                 There are
                 {% for state in states.light if state.state == 'on' -%}
                   {%- if loop.last -%}
@@ -191,12 +191,12 @@ script:
                 {%- endfor %}  lights on right now.
                 {% set comma = joiner(', ') %} The
                 {% for group in states.group|groupby('state') -%}
-                  {%- for entity in group.list if entity.state == 'on' and entity.name.split(' ')[1]|lower == 'lights' and entity.name.split(' ')[0]|lower != 'all' and entity.name.split(' ')[0]|lower != 'interior' -%}
+                  {%- for entity in group.list if entity.state == 'on' and entity.name.split(' ')[1]|lower == 'lamps' and entity.name.split(' ')[0]|lower != 'all' and entity.name.split(' ')[0]|lower != 'interior' -%}
                   {{ ' and' if loop.last and not loop.first else comma() }}
                   {{ entity.name }}
                   {%- endfor -%}
                 {%- endfor -%}
-                .
+                ' are on.'
                 {%- endif -%}
             {%- endmacro -%}
             {%- macro window_check() -%}
@@ -211,26 +211,24 @@ script:
                 {{ entity.attributes.friendly_name }}
                 {%- endfor -%}
                 {%- endfor %}
-                need to be closed.
+                needs to be closed.
                 {%- endif -%}
             {%- endmacro -%}
             {% macro garage_check() %}
-                {% if states.group.garage_doors.state !='closed' -%}
+                {% if states.sensor.garage_door.state !='Closed' -%}
                 The
-                {%- for state in states.cover -%}
-                {%- endfor %}
-                {% for group in states.cover|groupby('state') -%}
-                {%- for entity in group.list  if entity.state == 'open' and entity.attributes.device_class == 'garage'  -%}
-                {{ ' and' if loop.last and not loop.first }}
-                {{ entity.attributes.friendly_name }}
-                {%- endfor -%}
-                {%- endfor %}
-                need to be closed.
+                {{ states.sensor.garage_door.attributes.friendly_name }}
+                needs to be closed.
                 {%- endif -%}
             {%- endmacro -%}
             {% macro medicine() %}
                 {% if is_state('input_boolean.medicine', 'off') -%}
                   It looks like Carlo has not taken his medicine yet.  Please make sure Carlo takes his medicine now.
+                {% endif -%}
+            {%- endmacro -%}
+            {% macro office_window() %}
+                {% if states.sensor.office_temperature.state > '70' and states.sensor.office_temperature.state > states.sensor.dark_sky_temperature.state -%}
+                  It looks like it is cooler outside than inside the office, I would open the window.
                 {% endif -%}
             {%- endmacro -%}
             {% macro iss() %}
@@ -260,7 +258,7 @@ script:
               {{ personarriving }} {# Called from Annoucenments #}
               {{ pagekids }} {# Called from kids_page #}
               {{ goodmorning }} {# Called from good_morning.yaml #}
-              {{ NestStatus}} {# Called from Nest when thermostats turn on #}
+              {{ EcobeeStatus}} {# Called from the thermostats when they turn on #}
               {{alarmclock_snooze}}
               {% if call_inside_weather == 1 %}
                 {{inside_weather()}}
@@ -268,8 +266,7 @@ script:
               {% if call_outside_weather == 1 and is_state('sun.sun', 'above_horizon') %}
                 {{outside_weather()}}
               {%endif%}
-              {{ DoorOpened }}
-              {{ DoorClosed }}
+              {{ DoorEvent }}
               {% if call_dark_outside == 1 %}
               {{ dark_outside() }}
               {%endif%}
@@ -283,11 +280,14 @@ script:
               {% if call_light_check == 1 %}
                 {{light_check()}}
               {%endif%}
-              {% if call_responsibilities == 1%}
+              {% if call_responsibilities == 1 %}
                 {{responsibilities()}}
               {%endif%}
               {% if now().strftime("%H")|int > 22 %}
                 {{medicine()}}
+              {%endif%}
+              {% if call_open_office_window == 1 %}
+              {{ office_window() }}
               {%endif%}
               {{ value1 }}
               {{([iss, moon]| random)()}} {# call a Random fact about the house #}

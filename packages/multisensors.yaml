@@ -27,6 +27,8 @@ group:
       - sensor.office_humidity
       - sensor.office_ldr
       - sensor.office_pir
+      - binary_sensor.office_occupancy
+      - sensor.office_temperature_2
       # - light.office_led
   sensor_node_2_card:
     name: Living Room Node
@@ -45,6 +47,8 @@ group:
       # - sensor.lv_humidity
       # - sensor.lv_ldr
       - binary_sensor.mb_closet_pir
+      - binary_sensor.bedroom_occupancy
+      - sensor.bedroom_temperature
       # - light.lv_led
   sensor_node_4_card:
     name: Outside Sensors
@@ -53,6 +57,9 @@ group:
       - binary_sensor.skybell_front_door_button
       - binary_sensor.skybell_front_door_motion
       - binary_sensor.driveway_camera_motion
+      - binary_sensor.driveway_camera_line_crossing
+      - binary_sensor.driveway_camera_field_detection
+      - switch.driveway_camera
 
 
 # light:

@@ -5,9 +5,11 @@ default_view:
   - group.scenes
   - group.guest_bath
   - group.Household
+  - group.entry_points
   - group.Devices
   - group.Office
-  - group.Ecobee
+  - group.finance
+  - group.climate
 
 Alarm Clock:
   name: Alarm Clock
@@ -26,6 +28,8 @@ nodes:
     - group.sensor_node_2_card
     - group.sensor_node_3_card
     - group.sensor_node_4_card
+    - group.zwave_devices
+
 
 Radio_view:
   name: Radio
@@ -56,6 +60,7 @@ misc_view:
     - group.backup
     - group.processes
     - group.hassctl
+    - group.pihole
 
 automation:
   name: Automation
@@ -97,6 +102,7 @@ Household:
     - switch.mb_heater
     - sensor.mbheater_ds1
     - input_boolean.windows_open
+    - binary_sensor.garage_door
 
 Devices:
   control: hidden

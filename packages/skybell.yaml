@@ -88,38 +88,38 @@ automation:
 #             " #HomeAutomation"
 #             ] | random }}
 # Motion Sensing
-  # - alias: 'Log SkyBell Motion detection'
-  #   hide_entity: True
-  #   trigger:
-  #     - platform: event
-  #       event_type: skybell_motion
-  #
-  #   action:
-  #     - service: notify.slack__dev
-  #       data_template:
-  #          message: >
-  #            {%- set responses = [
-  #            'Motion detected near the driveway.',
-  #            'Something or Someone is in the driveway',
-  #            'I have notice activity in the driveway.'] -%}
-  #            {{ responses | random }}
-  #     - service: notify.ios_brucesiphone2_ios
-  #       data_template:
-  #          title: "Motion Detected"
-  #          message: >
-  #            {%- set responses = [
-  #            'Motion detected near the driveway.',
-  #            'Something or Someone is in the driveway',
-  #            'I have notice activity in the driveway.'] -%}
-  #            {{ responses | random }}
-  #          data:
-  #            push:
-  #              badge: 0
-  #              category: camera
-  #            entity_id: camera.driveway
-  #            attachment:
-  #              url: camera.driveway.attributes.entity_picture
-  #              content-type: jpg
+  - alias: 'Log SkyBell Motion detection'
+    hide_entity: True
+    trigger:
+      - platform: event
+        event_type: skybell_motion
+
+    action:
+      - service: notify.slack__dev
+        data_template:
+           message: >
+             {%- set responses = [
+             'Motion detected near the front door.',
+             'Something or Someone is in the front door',
+             'I have notice activity in the front door.'] -%}
+             {{ responses | random }}
+      - service: notify.ios_brucesiphone2_ios
+        data_template:
+           title: "Motion Detected"
+           message: >
+             {%- set responses = [
+             'Motion detected near the front door.',
+             'Something or Someone is in the front door',
+             'I have notice activity in the front door.'] -%}
+             {{ responses | random }}
+           data:
+             push:
+               badge: 0
+               category: camera
+             entity_id: camera.front_door
+             attachment:
+               url: camera.front_door.attributes.entity_picture
+               content-type: jpg
 
 # Turn SkyBell Light and Neato Schedule back on if it's turned off. Like any Good Watchdog.
 

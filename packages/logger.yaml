@@ -30,7 +30,6 @@ logger:
   default: debug
   logs:
     # debug
-    skybell: debug
     ios: debug
 
     # info
@@ -80,6 +79,7 @@ logger:
     pyecobee: warn
     pytradfri: warn
     PyXiaomiGateway: warn
+    skybell: warn
     root: warn
     telegram: warn
     urllib3: warn

@@ -1,0 +1,79 @@
+homeassistant:
+  customize:
+    script.voice_notify:
+      hidden: true
+    script.voice_greeting:
+      hidden: true
+    script.ifttt_leeo_color_change:
+      hidden: true
+    script.lifx_breathe:
+      hidden: true
+    script.owntracks_update:
+      hidden: true
+    script.start_colorloop:
+      hidden: true
+    script.stop_colorloop:
+      hidden: true
+    script.ios_notify:
+      hidden: true
+    script.notify_me:
+      hidden: true
+
+
+notify:
+  - name: slack__dev
+    platform: slack
+    api_key: !secret slack_home_key
+    default_channel: '#ha'
+    username: Guardian
+    icon: ":guardsman:"
+
+  - name: slack__home
+    platform: slack
+    api_key: !secret slack_home_key
+    default_channel: '#general'
+    username: Guardian
+    icon: ":guardsman:"
+
+  - name: ios_devices
+    platform: group
+    services:
+      - service: ios_brucesiphone2_ios
+      - service: ios_leneiphone_ios
+      - service: ios_breevs_ipad
+      # - service: ios_srinika
+      # - service: ios_hasika
+
+script:
+  notify_me:
+    sequence:
+      - condition: template
+        value_template: '{{ message | trim != "" }}'
+      - service: script.ios_notify
+        data_template:
+          message: "{{ message }}"
+          sound: "{{ sound }}"
+      # - service: notify.slack__dev
+      #   data_template:
+      #     message: "{{ message }}"
+
+  ios_notify:
+    sequence:
+      - condition: template
+        value_template: '{{ message | trim != "" }}'
+      - service: notify.ios_devices
+        data_template:
+          message: "{{ message }}"
+          data:
+            push:
+              sound: "{{ sound }}"
+
+  # ifttt_notify:
+  #   sequence:
+  #     - condition: template
+  #       value_template: '{{ message | trim != "" }}'
+  #     - service: ifttt.trigger
+  #       data_template:
+  #         event: "Smart_Home"
+  #         value1: "{{ message }}"
+  #         value2: ""

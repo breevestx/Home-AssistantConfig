@@ -36,6 +36,11 @@ group:
     - input_select.conference
     - switch.monitors
     - sensor.office_pir
+    - binary_sensor.office_occupancy
+    - sensor.office_temperature
+    - sensor.main_floor_temperature
+    - climate.main_floor_operation
+    - sensor.main_floor_mode
 
 automation:
 - id: conf_no
@@ -140,7 +145,7 @@ automation:
   initial_state: True
   trigger:
     platform: time
-    minutes: '/5'
+    minutes: '/1'
     seconds: 00
   condition:
     condition: and
@@ -153,7 +158,46 @@ automation:
       #   after: '17:00:00'
       #   before: '05:00:00'
       - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.office_pir.last_changed)) > 300 }}'
+        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.office_pir.last_changed)) > 180 }}'
+      - condition: state
+        entity_id: input_boolean.vacation_mode
+        state: 'off'
   action:
     - service: switch.turn_off
       entity_id: switch.monitors
+
+
+- id: open_office_window
+  alias: Open Windows
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: time
+    minutes: '/1'
+    seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.monitors
+        state: 'on'
+      - condition: template
+        value_template: '{{ states.sensor.office_temperature.state > states.sensor.dark_sky_temperature.state }}'
+      - condition: template
+        value_template: '{{ states.sensor.dark_sky_temperature.state > 65 }}'
+      - condition: time
+        # At least one of the following is required.
+        after: '09:00:00'
+        before: '18:00:00'
+      - condition: state
+        entity_id: input_boolean.windows_open
+        state: 'off'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.page_location
+        option: 'Office'
+    - service: script.speech_engine
+      data:
+        call_open_office_window: 1
+        call_no_announcement: 0
