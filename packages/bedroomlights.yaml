@@ -43,7 +43,7 @@ input_number:
 
 timer:
   closet_light:
-    duration: '00:01:00'
+    duration: '00:00:30'
 
 sensor:
   - platform: template
@@ -62,8 +62,9 @@ group:
       - scene.Bedroom_goodnight
       - input_slider.bedroom_lamps_brightness
       - sensor.kodi_mb
-      - mediaplayer.kodi_mb
+      - media_player.kodi_mb
       - switch.mb_closet_light
+      - timer.closet_light
 
   Bedroom lamps:
     control: hidden
@@ -133,42 +134,64 @@ automation:
             - light.lene_lamp
           brightness: '{{ trigger.to_state.state | int }}'
 
+
+######### Closet Light ###################
+
   - alias: 'Closet - Motion'
     initial_state: True
-    condition:
-      - condition: state
-        entity_id: switch.mb_closet_light
-        state: 'off'
     trigger:
       - platform: state
         entity_id: binary_sensor.mb_closet_pir
         from: 'off'
         to: 'on'
+    condition:
+      - condition: state
+        entity_id: switch.mb_closet_light
+        state: 'off'
     action:
+      # - service: timer.start
+      #   entity_id: timer.closet_light
       - service: homeassistant.turn_on
         entity_id: switch.mb_closet_light
-      - service: timer.start
-        entity_id: timer.closet_light
 
-  - alias: 'Closet - Manual'
+  - alias: 'Closet - Motion - start timer'
     initial_state: True
     trigger:
       - platform: state
+        entity_id: binary_sensor.mb_closet_pir
+        from: 'on'
+        to: 'off'
+    condition:
+      - condition: state
         entity_id: switch.mb_closet_light
-        from: 'off'
-        to: 'on'
+        state: 'on'
     action:
       - service: timer.start
         entity_id: timer.closet_light
 
-  - alias: 'Closet - Off'
+  - alias: 'Closet - Motion - restart timer'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.mb_closet_pir
+        from: 'off'
+        to: 'on'
+    condition:
+      - condition: state
+        entity_id: switch.mb_closet_light
+        state: 'on'
+    action:
+      - service: timer.cancel
+        entity_id: timer.closet_light
+
+  - alias: 'Closet - timer - off'
     initial_state: True
     condition:
       - condition: state
         entity_id: switch.mb_closet_light
         state: 'on'
-      - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.mb_closet_pir.last_changed)) > 30 }}'
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.mb_closet_pir.last_changed)) > 30 }}'
     trigger:
       platform: event
       event_type: timer.finished
@@ -177,3 +200,32 @@ automation:
     action:
       - service: homeassistant.turn_off
         entity_id: switch.mb_closet_light
+
+  # - alias: 'Closet - On'
+  #   initial_state: True
+  #   condition:
+  #     - condition: state
+  #       entity_id: switch.mb_closet_light
+  #       state: 'off'
+  #     # - condition: template
+  #     #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.mb_closet_pir.last_changed)) > 30 }}'
+  #   trigger:
+  #     platform: event
+  #     event_type: timer.start
+  #     event_data:
+  #       entity_id: timer.closet_light
+  #   action:
+  #     - service: homeassistant.turn_on
+  #       entity_id: switch.mb_closet_light
+
+
+  # - alias: 'Closet - Manual'
+  #   initial_state: True
+  #   trigger:
+  #     - platform: state
+  #       entity_id: switch.mb_closet_light
+  #       from: 'off'
+  #       to: 'on'
+  #   action:
+  #     - service: timer.start
+  #       entity_id: timer.closet_light

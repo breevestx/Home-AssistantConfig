@@ -52,13 +52,13 @@ script:
 
       - service: script.speech_engine
         data:
-          call_no_announcement: 0
-          call_dark_outside: 1
+          call_no_announcement: 1
+          call_dark_outside: 0
           call_inside_weather: 1
           call_responsibilities: 0
           call_outside_weather: 1
           call_garage_check: 1
-          call_window_check: 1
+          call_window_check: 0
           call_light_check: 1
 
   test_door_alert:
@@ -68,6 +68,7 @@ script:
 
       - service: script.speech_engine
         data:
+          call_no_announcement: 1
           # call_inside_weather: 1
           # call_responsibilities: 1
           # call_outside_weather: 1
@@ -96,18 +97,21 @@ script:
 
 
 sensor:
-  #- platform: example
-  # - platform: miflora
-  #   mac: 'xx:xx:xx:xx:xx:xx'
-  #   name: Flower 1
-  #   force_update: false
-  #   median: 3
-  #   monitored_conditions:
-  #     - moisture
-  #     - light
-  #     - temperature
-  #     - conductivity
-  #     - battery
+  - platform: template
+    sensors:
+      led_color:
+        friendly_name: 'led_color'
+        value_template: >
+            {% if is_state('input_select.LED_Color', 'white') %} 0
+            {% elif is_state('input_select.LED_Color', 'red') %} 1
+            {% elif is_state('input_select.LED_Color', 'green') %} 2
+            {% elif is_state('input_select.LED_Color', 'blue') %} 3
+            {% elif is_state('input_select.LED_Color', 'magenta') %} 4
+            {% elif is_state('input_select.LED_Color', 'yellow') %} 5
+            {% elif is_state('input_select.LED_Color', 'cyan') %} 6
+            {%- endif -%}
+
+
 
 
 input_boolean:
@@ -121,6 +125,24 @@ input_boolean:
     initial: off
   test_hidegroup:
     initial: off
+  test_led_color:
+    initial: off
+  test_led_status:
+    initial: off
+
+input_select:
+  led_color:
+    name: LED Color Selector
+    options:
+      - white
+      - red
+      - green
+      - blue
+      - Magenta
+      - Yellow
+      - Cyan
+    initial: white
+    icon: mdi:light
 
 group:
   dev:
@@ -130,16 +152,19 @@ group:
     - sensor.example
     - input_boolean.trash_test
     - group.family
-    - input_boolean.guest_mode
+    - switch.guest_mode
     - input_boolean.switch_mode
     - input_boolean.test_hidegroup
     - input_boolean.test_tts
+    - input_select.led_color
     - group.live_scenes
     - sensor.date_weekday
     - sensor.date_month
     - sensor.date_day
     - script.test_speech_engine
     - script.test_door_alert
+    - script.notify_office
+    - sensor.last_message
 
 
   live_scenes:
@@ -158,39 +183,90 @@ group:
 
 
 automation:
-   - alias: 'Test Weekly trash check'
-     initial_state: True
-     trigger:
+   # - alias: 'Test Weekly trash check'
+   #   initial_state: True
+   #   trigger:
+   #     - platform: state
+   #       entity_id: input_boolean.trash_test
+   #       from: 'off'
+   #       to: 'on'
+   #   condition:
+   #     # - condition: time
+   #     #   weekday:
+   #     #     - sun
+   #     - condition: state
+   #       entity_id: input_boolean.weekly_trash_reminder
+   #       state: 'on'
+   #   action:
+   #     # - service: notify.slack__dev
+   #     #   data_template:
+   #     #     message: >
+   #     #       {%- set responses = [
+   #     #       'Don\'t forget to set out the trash cans.',
+   #     #       'Did you forget, the trash truck comes tomorrow?',
+   #     #       'Got you covered, vacation lights are on'] -%}
+   #     #       {{ responses | random }}
+   #     - service: notify.ios_brucesiphone2_ios
+   #       data_template:
+   #         title: "Trash can reminder DEV"
+   #         message: >
+   #           {%- set responses = [
+   #           'Don\'t forget to set out the trash cans.',
+   #           'Did you forget, the trash truck comes tomorrow?',
+   #           'Got you covered, vacation lights are on'] -%}
+   #           {{ responses | random }}
+   #         data:
+   #           push:
+   #             badge: 0
+   #             category: "TRASH"
+
+  - alias: Kitchen Dimmer - Test Blue
+    trigger:
        - platform: state
          entity_id: input_boolean.trash_test
          from: 'off'
          to: 'on'
-     condition:
-       # - condition: time
-       #   weekday:
-       #     - sun
-       - condition: state
-         entity_id: input_boolean.weekly_trash_reminder
-         state: 'on'
-     action:
-       # - service: notify.slack__dev
-       #   data_template:
-       #     message: >
-       #       {%- set responses = [
-       #       'Don\'t forget to set out the trash cans.',
-       #       'Did you forget, the trash truck comes tomorrow?',
-       #       'Got you covered, vacation lights are on'] -%}
-       #       {{ responses | random }}
-       - service: notify.ios_brucesiphone2_ios
-         data_template:
-           title: "Trash can reminder DEV"
-           message: >
-             {%- set responses = [
-             'Don\'t forget to set out the trash cans.',
-             'Did you forget, the trash truck comes tomorrow?',
-             'Got you covered, vacation lights are on'] -%}
-             {{ responses | random }}
-           data:
-             push:
-               badge: 0
-               category: "TRASH"
+    action:
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 13
+          value: 1
+          size: 1
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 3
+
+
+  - alias: Kitchen Dimmer - Test Off
+    trigger:
+       - platform: state
+         entity_id: input_boolean.trash_test
+         from: 'on'
+         to: 'off'
+    action:
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 13
+          value: 0
+          size: 1
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 0
+
+  - alias: Kitchen Dimmer - LED Color
+    trigger:
+       - platform: state
+         entity_id: input_select.led_color
+    action:
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 14
+          value: sensor.led_color
+          size: 1

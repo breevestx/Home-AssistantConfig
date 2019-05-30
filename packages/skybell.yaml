@@ -95,7 +95,7 @@ automation:
         event_type: skybell_motion
 
     action:
-      - service: notify.slack__dev
+      - service: notify.home
         data_template:
            message: >
              {%- set responses = [

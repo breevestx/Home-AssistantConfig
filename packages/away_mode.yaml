@@ -1,24 +1,35 @@
 homeassistant:
   customize:
-    input_boolean.vacation_mode:
+    switch.vacation_mode:
       icon: midi:airplane_takeoff
       emulated_hue_name: "Vacation Mode"
       emulated_hue: true
 
-input_boolean:
-  vacation_mode:
-    initial: off
+# input_boolean:
+#   vacation_mode:
+#     initial: off
+
+
+switch:
+  - platform: mqtt
+    state_topic: "/home/mode/vacation"
+    command_topic: "/home/mode/vacation"
+    name: Vacation Mode
+    icon: mdi:account-alert
+    retain: yes
+    payload_on: "on"
+    payload_off: "off"
 
 automation:
   - alias: 'Away mode On'
     initial_state: True
     trigger:
       - platform: state
-        entity_id: input_boolean.vacation_mode
+        entity_id: switch.vacation_mode
         from: 'off'
         to: 'on'
     action:
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: >
             {%- set responses = [
@@ -31,11 +42,11 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: input_boolean.vacation_mode
+        entity_id: switch.vacation_mode
         from: 'on'
         to: 'off'
     action:
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: >
             {%- set responses = [
@@ -48,7 +59,7 @@ automation:
     initial_state: True
     condition:
       - condition: state
-        entity_id: input_boolean.vacation_mode
+        entity_id: switch.vacation_mode
         state: 'on'
     trigger:
       - platform: sun
@@ -59,11 +70,7 @@ automation:
         entity_id:
           - group.Bedroom_lamps
       - service: script.radio_away
-#    - service: logbook.log
-#      data_template:
-#        name: "Bedroom lamps On: "
-#        message: Turned lamps on via Automation
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: >
             {%- set responses = [
@@ -79,7 +86,7 @@ automation:
     initial_state: True
     condition:
       - condition: state
-        entity_id: input_boolean.vacation_mode
+        entity_id: switch.vacation_mode
         state: 'on'
     trigger:
       - platform: sun
@@ -89,19 +96,20 @@ automation:
       - service: homeassistant.turn_on
         entity_id:
           - group.Bedroom_lamps
+          - group.kitchen_accent
           - switch.switch_2
-          - switch.monitors
+          # - switch.monitors
           - switch.salt_lamp
+          - switch.christmas_tree
+          - switch.landing_lights
+          - switch.stairs_lights
+          - switch.office_light
       - service: script.radio_stop
-#    - service: logbook.log
-#      data_template:
-#        name: "Bedroom lamps On: "
-#        message: Turned lamps on via Automation
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: >
             {%- set responses = [
-            'It just tickles me pink to remind you that I turned the bedroom lights on',
+            'It just tickles me pink to remind you that I turned the lights on',
             'Well isn\'t it just a breath of fresh air to know I can take care of turning lights on while your away?',
             'Got you covered, vacation lights are on'] -%}
             Bruce> {{ responses | random }}
@@ -112,7 +120,7 @@ automation:
     initial_state: True
     condition:
       - condition: state
-        entity_id: input_boolean.vacation_mode
+        entity_id: switch.vacation_mode
         state: 'on'
     trigger:
       - platform: sun
@@ -122,15 +130,16 @@ automation:
       - service: homeassistant.turn_off
         entity_id:
           - group.Bedroom_lamps
+          - group.kitchen_accent
           - switch.switch_2
-          - switch.monitors
+          # - switch.monitors
           - switch.salt_lamp
-#      - service: logbook.log
-#        data_template:
-#          name: "Bedroom lamps Off: "
-#          message: Turned lamps off via Automation
+          - switch.christmas_tree
+          - switch.landing_lights
+          - switch.stairs_lights
+          - switch.office_light
       - service: script.radio_stop
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: >
             {%- set responses = [

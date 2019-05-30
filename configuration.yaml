@@ -12,6 +12,10 @@ homeassistant:
   time_zone: !secret time_zone
   customize: !include_dir_merge_named customizations
   packages: !include_dir_named packages
+  auth_providers:
+   - type: homeassistant
+   - type: legacy_api_password
+     api_password: !secret http_password
 
 # Show links to resources in log and frontend
 #introduction:
@@ -33,11 +37,17 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
-# panel_iframe:
-#   # front_room_ha:
-#   #   title: Front Room HA
-#   #   icon: mdi:home-assistant
-#   #   url: !secret front_room_ha_url
+custom_updater:
+  component_urls:
+# Released build
+    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
+
+panel_iframe:
+  motioneye:
+    title: motioneye
+    icon: mdi:cctv
+    url: "http://192.168.100.185:8765"
+
 #   # tv_room_ha:
 #   #   title: TV Room HA
 #   #   icon: mdi:home-assistant
@@ -53,14 +63,17 @@ panel_custom:
 
 map:
 config:
+person:
 cloud:
   alexa:
     filter:
-      include_entities:
-        - light.bruce_lamp
-        - light.lene_lamp
+      # include_entities:
+      #   - light.bruce_lamp
+      #   - light.lene_lamp
       include_domains:
         - switch
+        - light
+        - fan
       exclude_entities:
         - switch.outside
     entity_config:
@@ -85,8 +98,7 @@ cloud:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
-  # Uncomment this if you are using SSL or running in Docker etc
+    # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret base_url
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
@@ -124,7 +136,8 @@ sun:
 
 # # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
@@ -184,14 +197,13 @@ emulated_hue:
   expose_by_default: false
 
 
-device_tracker:
-  - platform: asuswrt
+asuswrt:
     host: !secret asus_host
     username: !secret asus_username
     password: !secret asus_password
-    track_new_devices: no
-    interval_seconds: 12
-    consider_home: 180
+    # track_new_devices: no
+    # interval_seconds: 12
+    # consider_home: 180
 
 #notify: !include_dir_named notifiers
 # notify: !include notify.yaml

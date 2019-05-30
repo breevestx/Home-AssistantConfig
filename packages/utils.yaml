@@ -86,19 +86,11 @@ automation:
   # - alias: "Owntracks Refresh"
   #   initial_state: 'on'
   #   trigger:
-  #     - platform: time
+  #     - platform: time_pattern
   #       minutes: '/5'
   #       seconds: 0
   #   action:
   #     - service: script.refresh_devices
-  # - alias: "Dasher Rstart"
-  #   initial_state: 'on'
-  #   trigger:
-  #     platform: state
-  #     entity_id: sensor.process_dasher
-  #     state: off
-  #   action:
-  #     - service: script.restart_dasher
 
   - alias: "Auto Backup"
     initial_state: 'on'
@@ -107,6 +99,13 @@ automation:
       value_template: "{{ states('sensor.last_commit') > states('sensor.last_backup') }}"
     action:
       - service: script.backup_config
+  - alias: "Dasher Restart"
+    initial_state: 'on'
+    trigger:
+      platform: template
+      value_template: "{% if is_state('sensor.process_dasher','off') %}true{% endif %}"
+    action:
+      - service: script.restart_dasher
 #########################################################################
 sensor:
 ###### Latest github Commit
@@ -121,24 +120,29 @@ sensor:
     name: 'Last Backup'
     scan_interval: 60
 
-  - platform: sabnzbd
-    host: !secret sabnzb_ip
-    port: 8081
-    api_key: !secret sabnzb_key
-    monitored_variables:
-      - 'current_status'
-      - 'speed'
-      - 'queue_size'
-      - 'queue_remaining'
-      - 'disk_size'
-      - 'disk_free'
+sabnzbd:
+  host: !secret sabnzb_ip
+  port: 8081
+  api_key: !secret sabnzb_key
+  sensors:
+    - current_status
+    - speed
+    - queue_size
+    - queue_remaining
+    - disk_size
+    - disk_free
+    - queue_count
+    - day_size
+    - week_size
+    - month_size
+    - total_size
 
 shell_command:
   backup_config: 'sudo bash /home/homeassistant/.homeassistant/shell/backup_config.sh'
   update_ha: 'sudo bash /home/homeassistant/.homeassistant/shell/update_ha.sh </dev/null >> /home/homeassistant/.homeassistant/shell/update_ha.log 2>&1 &'
   restart_ha: 'sudo hassctl restart'
   del_log: rm /home/homeassistant/.homeassistant/home-assistant.log && touch /home/homeassistant/.homeassistant/home-assistant.log && chown -R -v homeassistant:homeassistant /home/homeassistant/.homeassistant/home-assistant.log
-  restart_dasher: 'sudo dasher restart'
+  restart_dasher: 'sudo service dasher restart'
 
 # weblink:
 #   entities:

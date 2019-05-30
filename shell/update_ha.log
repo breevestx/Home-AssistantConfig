@@ -434,3 +434,1263 @@ Installing collected packages: pip, async-timeout, astral, aiohttp, homeassistan
     Uninstalling homeassistant-0.65.5:
       Successfully uninstalled homeassistant-0.65.5
 Successfully installed aiohttp-3.0.9 astral-1.6 async-timeout-2.0.1 homeassistant-0.66.1 pip-9.0.3
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/76/71/b7f25aab27df6d7f3b740aa96f2a0eec7faf7533545589369015f6d68e3e/homeassistant-0.67.0-py2.py3-none-any.whl (2.5MB)
+Collecting pip>=8.0.3 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/62/a1/0d452b6901b0157a0134fd27ba89bf95a857fbda64ba52e1ca2cf61d8412/pip-10.0.0-py2.py3-none-any.whl (1.3MB)
+Requirement already up-to-date: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant)
+Collecting certifi>=2017.4.17 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/7c/e6/92ad559b7192d846975fc916b65f667c7b8c3a32bea7372340bfe9a15fa5/certifi-2018.4.16-py2.py3-none-any.whl (150kB)
+Requirement already up-to-date: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant)
+Requirement already up-to-date: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant)
+Requirement already up-to-date: astral==1.6 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant)
+Requirement already up-to-date: attrs==17.4.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant)
+Collecting pytz>=2017.02 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/dc/83/15f7833b70d3e067ca91467ca245bae0f6fe56ddc7451aa0dc5606b120f2/pytz-2018.4-py2.py3-none-any.whl (510kB)
+Requirement already up-to-date: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant)
+Collecting aiohttp==3.1.1 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/17/87/b8ac32d5bdda906236bbf7a543d3910a240cbc1cb9dd7ce75c979ada5735/aiohttp-3.1.1-cp36-cp36m-manylinux1_x86_64.whl (658kB)
+Requirement already up-to-date: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant)
+Requirement already up-to-date: async-timeout==2.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant)
+Collecting multidict<5.0,>=4.0 (from aiohttp==3.1.1->homeassistant)
+  Downloading https://files.pythonhosted.org/packages/cc/07/57f9f78986c6616a1515d6d0ecb7d9f7fd8a431f0eefba6556dc3998c9f3/multidict-4.2.0-cp36-cp36m-manylinux1_x86_64.whl (473kB)
+Requirement already up-to-date: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.1->homeassistant)
+Requirement already up-to-date: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.1.1->homeassistant)
+Requirement already up-to-date: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.1->homeassistant)
+Requirement already up-to-date: idna>=2.0 in /usr/lib/python3/dist-packages (from idna-ssl>=1.0->aiohttp==3.1.1->homeassistant)
+Installing collected packages: pip, certifi, pytz, multidict, aiohttp, homeassistant
+  Found existing installation: pip 9.0.3
+    Uninstalling pip-9.0.3:
+      Successfully uninstalled pip-9.0.3
+  Found existing installation: certifi 2018.1.18
+    Not uninstalling certifi at /usr/lib/python3/dist-packages, outside environment /srv/homeassistant
+  Found existing installation: pytz 2018.3
+    Not uninstalling pytz at /usr/lib/python3/dist-packages, outside environment /srv/homeassistant
+  Found existing installation: multidict 4.1.0
+    Uninstalling multidict-4.1.0:
+      Successfully uninstalled multidict-4.1.0
+  Found existing installation: aiohttp 3.0.9
+    Uninstalling aiohttp-3.0.9:
+      Successfully uninstalled aiohttp-3.0.9
+  Found existing installation: homeassistant 0.66.1
+    Uninstalling homeassistant-0.66.1:
+      Successfully uninstalled homeassistant-0.66.1
+Successfully installed aiohttp-3.1.1 certifi-2018.4.16 homeassistant-0.67.0 multidict-4.2.0 pip-10.0.0 pytz-2018.4
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/ca/b0/21c1b478c052bcd58fe615b09284bd127b9dc3809f2f911710b195377cff/homeassistant-0.67.1-py2.py3-none-any.whl (7.9MB)
+Requirement not upgraded as not directly required: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.6.4)
+Requirement not upgraded as not directly required: certifi>=2017.4.17 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: astral==1.6 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6)
+Requirement not upgraded as not directly required: pytz>=2017.02 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: aiohttp==3.1.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.1)
+Requirement not upgraded as not directly required: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant) (2.18.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: async-timeout==2.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.1)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: attrs==17.4.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (17.4.0)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.1.1->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.1->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.1->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.1->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: idna>=2.0 in /usr/lib/python3/dist-packages (from yarl<2.0,>=1.0->aiohttp==3.1.1->homeassistant) (2.6)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+skybellpy 0.1.1 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.2 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.67.0
+    Uninstalling homeassistant-0.67.0:
+      Successfully uninstalled homeassistant-0.67.0
+Successfully installed homeassistant-0.67.1
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/91/73/7c94360e60ea73cacaf4c30ce19bbfa6b8b03921dc81462c22f2735e206f/homeassistant-0.68.1-py2.py3-none-any.whl (2.5MB)
+Requirement not upgraded as not directly required: astral==1.6 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6)
+Requirement not upgraded as not directly required: certifi>=2017.4.17 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Collecting aiohttp==3.1.3 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/09/7f/95e1f38eb778c76b1d5f008efc9f3d648dadd22275497a038ee0844dcd62/aiohttp-3.1.3-cp36-cp36m-manylinux1_x86_64.whl (661kB)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.6.4)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: async-timeout==2.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.1)
+Requirement not upgraded as not directly required: attrs==17.4.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (17.4.0)
+Requirement not upgraded as not directly required: pytz>=2017.02 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant) (2.18.4)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.1.3->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna>=2.0 in /usr/lib/python3/dist-packages (from idna-ssl>=1.0->aiohttp==3.1.3->homeassistant) (2.6)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+skybellpy 0.1.1 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.2 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: aiohttp, homeassistant
+  Found existing installation: aiohttp 3.1.1
+    Uninstalling aiohttp-3.1.1:
+      Successfully uninstalled aiohttp-3.1.1
+  Found existing installation: homeassistant 0.67.1
+    Uninstalling homeassistant-0.67.1:
+      Successfully uninstalled homeassistant-0.67.1
+Successfully installed aiohttp-3.1.3 homeassistant-0.68.1
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/46/bb/c11c07be77149eb45b52ebe9ecd26e32d445d3ae179c4ab6f80d455f653e/homeassistant-0.70.0-py3-none-any.whl (2.6MB)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: aiohttp==3.1.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.3)
+Requirement not upgraded as not directly required: async-timeout==2.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.1)
+Collecting astral==1.6.1 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/01/2b/0b60f1cef7d2a7a863cd06bae5fc7e3553803739c4834e921b4996920f76/astral-1.6.1-py2.py3-none-any.whl
+Requirement not upgraded as not directly required: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.6.4)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant) (2.18.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Collecting attrs==18.1.0 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/41/59/cedf87e91ed541be7957c501a92102f9cc6363c623a7666d69d51c78ac5b/attrs-18.1.0-py2.py3-none-any.whl
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.1.3->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna>=2.0 in /usr/lib/python3/dist-packages (from idna-ssl>=1.0->aiohttp==3.1.3->homeassistant) (2.6)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.2 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: astral, attrs, homeassistant
+  Found existing installation: astral 1.6
+    Uninstalling astral-1.6:
+      Successfully uninstalled astral-1.6
+  Found existing installation: attrs 17.4.0
+    Uninstalling attrs-17.4.0:
+      Successfully uninstalled attrs-17.4.0
+  Found existing installation: homeassistant 0.68.1
+    Uninstalling homeassistant-0.68.1:
+Collecting homeassistant
+  Using cached https://files.pythonhosted.org/packages/46/bb/c11c07be77149eb45b52ebe9ecd26e32d445d3ae179c4ab6f80d455f653e/homeassistant-0.70.0-py3-none-any.whl
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant) (2.18.4)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: aiohttp==3.1.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.3)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.6.4)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: async-timeout==2.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.1)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.1.3->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: idna>=2.0 in /usr/lib/python3/dist-packages (from yarl<2.0,>=1.0->aiohttp==3.1.3->homeassistant) (2.6)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.2 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.68.1
+      Successfully uninstalled homeassistant-0.68.1
+    Uninstalling homeassistant-0.68.1:
+
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Successfully installed astral-1.6.1 attrs-18.1.0 homeassistant-0.70.0
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/dd/f2/2ef935add2d07bc1a5e238b94ffe7c680bdc461bc67a19671736d50eae19/homeassistant-0.70.1-py3-none-any.whl (2.6MB)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: async-timeout==2.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.1)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.6.4)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: aiohttp==3.1.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.3)
+Requirement not upgraded as not directly required: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant) (2.18.4)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.1.3->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.1.3->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna>=2.0 in /usr/lib/python3/dist-packages (from yarl<2.0,>=1.0->aiohttp==3.1.3->homeassistant) (2.6)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.70.0
+    Uninstalling homeassistant-0.70.0:
+      Successfully uninstalled homeassistant-0.70.0
+Successfully installed homeassistant-0.70.1
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/cb/0f/1fa5177e59e0af8c4bad7f842d7edfc37fd57a8d003b94f7276901faa64a/homeassistant-0.72.1-py3-none-any.whl (2.7MB)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Collecting async-timeout==3.0.0 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/96/0f/e6357458c87fb4ed8f3df215773f3caad40968f10e05552cbd8bd28415e4/async_timeout-3.0.0-py3-none-any.whl
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Collecting aiohttp==3.3.2 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/54/f9/8b47199ceae89a867edc45c43dc908384fd2e1ac22406b60d101d988752b/aiohttp-3.3.2-cp36-cp36m-manylinux1_x86_64.whl (876kB)
+Requirement not upgraded as not directly required: requests==2.18.4 in /usr/lib/python3/dist-packages (from homeassistant) (2.18.4)
+Requirement not upgraded as not directly required: typing<4,>=3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.6.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.3.2->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna>=2.0 in /usr/lib/python3/dist-packages (from yarl<2.0,>=1.0->aiohttp==3.3.2->homeassistant) (2.6)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.18.4 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: async-timeout, aiohttp, homeassistant
+  Found existing installation: async-timeout 2.0.1
+    Uninstalling async-timeout-2.0.1:
+      Successfully uninstalled async-timeout-2.0.1
+  Found existing installation: aiohttp 3.1.3
+    Uninstalling aiohttp-3.1.3:
+      Successfully uninstalled aiohttp-3.1.3
+  Found existing installation: homeassistant 0.70.1
+    Uninstalling homeassistant-0.70.1:
+      Successfully uninstalled homeassistant-0.70.1
+Successfully installed aiohttp-3.3.2 async-timeout-3.0.0 homeassistant-0.72.1
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/91/e6/306b47f3891d4dcacbd0031fa29218c4699054388e20d667fb2f1fb97d92/homeassistant-0.73.0-py3-none-any.whl (2.7MB)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Collecting requests==2.19.1 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/65/47/7e02164a2a3db50ed6d8a6ab1d6d60b69c4c3fdf57a284257925dfc12bda/requests-2.19.1-py2.py3-none-any.whl (91kB)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: aiohttp==3.3.2 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.3.2)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (4.2.0)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: requests, homeassistant
+  Found existing installation: requests 2.18.4
+    Not uninstalling requests at /usr/lib/python3/dist-packages, outside environment /srv/homeassistant
+    Can't uninstall 'requests'. No files were found to uninstall.
+  Found existing installation: homeassistant 0.72.1
+    Uninstalling homeassistant-0.72.1:
+      Successfully uninstalled homeassistant-0.72.1
+Successfully installed homeassistant-0.73.0 requests-2.19.1
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/bc/fe/96d4e74db54548d4029cbcc64013e2447e52044d5425fcaf1fa2cd1c3354/homeassistant-0.73.1-py3-none-any.whl (2.7MB)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.11 in /usr/lib/python3/dist-packages (from homeassistant) (3.12)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: aiohttp==3.3.2 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.3.2)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: voluptuous==0.11.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.1)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.3.2->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.73.0
+    Uninstalling homeassistant-0.73.0:
+      Successfully uninstalled homeassistant-0.73.0
+Successfully installed homeassistant-0.73.1
+You are using pip version 10.0.0, however version 10.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/56/f5/39abe009a1d3080815ec2081ea02151605d05447a2134a6abbc255c3a59c/homeassistant-0.75.2-py3-none-any.whl (2.8MB)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Collecting pyyaml<4,>=3.13 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/9e/a3/1d13970c3f36777c583f136c136f804d70f500168edc1edea6daa7200769/PyYAML-3.13.tar.gz (270kB)
+Requirement not upgraded as not directly required: aiohttp==3.3.2 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.3.2)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Collecting voluptuous==0.11.5 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/59/95/fa6218477c6999c9b7fdfab7c12c1bd4da2d5930f5eb2b232ec74eb344e7/voluptuous-0.11.5-py2.py3-none-any.whl
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (4.2.0)
+Building wheels for collected packages: pyyaml
+  Running setup.py bdist_wheel for pyyaml: started
+  Running setup.py bdist_wheel for pyyaml: finished with status 'done'
+  Stored in directory: /home/homeassistant/.cache/pip/wheels/ad/da/0c/74eb680767247273e2cf2723482cb9c924fe70af57c334513f
+Successfully built pyyaml
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: pyyaml, voluptuous, homeassistant
+  Found existing installation: PyYAML 3.12
+    Not uninstalling pyyaml at /usr/lib/python3/dist-packages, outside environment /srv/homeassistant
+    Can't uninstall 'PyYAML'. No files were found to uninstall.
+  Found existing installation: voluptuous 0.11.1
+    Uninstalling voluptuous-0.11.1:
+      Successfully uninstalled voluptuous-0.11.1
+  Found existing installation: homeassistant 0.73.1
+    Uninstalling homeassistant-0.73.1:
+      Successfully uninstalled homeassistant-0.73.1
+Successfully installed homeassistant-0.75.2 pyyaml-3.13 voluptuous-0.11.5
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/7a/9f/5c6951442b94dff3530aef3058cf7429fd7839230cddf481fc76437b357f/homeassistant-0.76.1-py3-none-any.whl (2.8MB)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4.16)
+Collecting PyJWT==1.6.4 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/93/d1/3378cc8184a6524dc92993090ee8b4c03847c567e298305d6cf86987e005/PyJWT-1.6.4-py2.py3-none-any.whl
+Requirement not upgraded as not directly required: aiohttp==3.3.2 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.3.2)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Collecting cryptography==2.3.1 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/59/32/92cade62c645756a83598edf56289e9b19aae5370642a7ce690cd06bc72f/cryptography-2.3.1-cp34-abi3-manylinux1_x86_64.whl (2.1MB)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.3.2->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna-ssl>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.3.2->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Collecting cffi!=1.11.3,>=1.7 (from cryptography==2.3.1->homeassistant)
+  Downloading https://files.pythonhosted.org/packages/6d/c0/47db8f624f3e4e2f3f27be03a93379d1ba16a1450a7b1aacfa0366e2c0dd/cffi-1.11.5-cp36-cp36m-manylinux1_x86_64.whl (421kB)
+Collecting pycparser (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant)
+  Downloading https://files.pythonhosted.org/packages/8c/2d/aad7f16146f4197a11f8e91fb81df177adcc2073d36a17b1491fd09df6ed/pycparser-2.18.tar.gz (245kB)
+Building wheels for collected packages: pycparser
+  Running setup.py bdist_wheel for pycparser: started
+  Running setup.py bdist_wheel for pycparser: finished with status 'done'
+  Stored in directory: /home/homeassistant/.cache/pip/wheels/c0/a1/27/5ba234bd77ea5a290cbf6d675259ec52293193467a12ef1f46
+Successfully built pycparser
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: PyJWT, pycparser, cffi, cryptography, homeassistant
+  Found existing installation: cryptography 2.1.4
+    Not uninstalling cryptography at /usr/lib/python3/dist-packages, outside environment /srv/homeassistant
+    Can't uninstall 'cryptography'. No files were found to uninstall.
+  Found existing installation: homeassistant 0.75.2
+    Uninstalling homeassistant-0.75.2:
+      Successfully uninstalled homeassistant-0.75.2
+Successfully installed PyJWT-1.6.4 cffi-1.11.5 cryptography-2.3.1 homeassistant-0.76.1 pycparser-2.18
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/0a/57/abfd4cab9b8b43fd99e61fad2eabae9fecd426232878774cb25fa2039846/homeassistant-0.77.1-py3-none-any.whl (2.9MB)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Collecting aiohttp==3.4.0 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/c6/ee/7ea531447cdf5ca7687a28928fd8b97124f0791992614b804742375e33ac/aiohttp-3.4.0-cp36-cp36m-manylinux1_x86_64.whl (1.1MB)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Collecting bcrypt==3.1.4 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/b8/09/905ec939994e2c49dcffff72f823802557f166b3815ea54c1db3671eed42/bcrypt-3.1.4-cp36-cp36m-manylinux1_x86_64.whl (54kB)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.13)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.0->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: aiohttp, bcrypt, homeassistant
+  Found existing installation: aiohttp 3.3.2
+    Uninstalling aiohttp-3.3.2:
+      Successfully uninstalled aiohttp-3.3.2
+  Found existing installation: homeassistant 0.76.2
+    Uninstalling homeassistant-0.76.2:
+      Successfully uninstalled homeassistant-0.76.2
+Successfully installed aiohttp-3.4.0 bcrypt-3.1.4 homeassistant-0.77.1
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/d9/12/5453e2cb7f230c6275c53f5408734866f609dbe0c922f263e0fbec8b07b9/homeassistant-0.77.2-py3-none-any.whl (2.9MB)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: aiohttp==3.4.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.0)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.0->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.77.1
+    Uninstalling homeassistant-0.77.1:
+      Successfully uninstalled homeassistant-0.77.1
+Successfully installed homeassistant-0.77.2
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/24/ce/f6bd8738ff1f7d2a91a64d7d468e9718f4eb71a1a43a0fb6c0a14ddc86a1/homeassistant-0.77.3-py3-none-any.whl (2.9MB)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: attrs==18.1.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1.0)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: aiohttp==3.4.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.0)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.0->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.0->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.77.2
+    Uninstalling homeassistant-0.77.2:
+      Successfully uninstalled homeassistant-0.77.2
+Successfully installed homeassistant-0.77.3
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/51/a8/14bf4dce677bda82e4209562500d5c310f4c7838d3b9dd1359d509d8aaac/homeassistant-0.78.0-py3-none-any.whl (3.0MB)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Collecting aiohttp==3.4.4 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/52/f9/c22977fc95346911d8fe507f90c3c4e4f445fdf339b750be6f03f090498d/aiohttp-3.4.4-cp36-cp36m-manylinux1_x86_64.whl (1.1MB)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Collecting attrs==18.2.0 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/3a/e1/5f9023cc983f1a628a8c2fd051ad19e76ff7b142a0faf329336f9a62a514/attrs-18.2.0-py2.py3-none-any.whl
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: attrs, aiohttp, homeassistant
+  Found existing installation: attrs 18.1.0
+    Uninstalling attrs-18.1.0:
+      Successfully uninstalled attrs-18.1.0
+  Found existing installation: aiohttp 3.4.0
+    Uninstalling aiohttp-3.4.0:
+      Successfully uninstalled aiohttp-3.4.0
+  Found existing installation: homeassistant 0.77.3
+    Uninstalling homeassistant-0.77.3:
+      Successfully uninstalled homeassistant-0.77.3
+Successfully installed aiohttp-3.4.4 attrs-18.2.0 homeassistant-0.78.0
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/74/fc/86bfc662332b1246130af07098125424799257bfa614faccaad72f755546/homeassistant-0.78.2-py3-none-any.whl (3.0MB)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.78.0
+    Uninstalling homeassistant-0.78.0:
+      Successfully uninstalled homeassistant-0.78.0
+Successfully installed homeassistant-0.78.2
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/c4/72/f0fc9c5c9808fe8f7882094f1b40519f8bb4c78ded5c5ec78a091e5cf0a9/homeassistant-0.78.3-py3-none-any.whl (3.0MB)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement not upgraded as not directly required: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.78.2
+    Uninstalling homeassistant-0.78.2:
+      Successfully uninstalled homeassistant-0.78.2
+Successfully installed homeassistant-0.78.3
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/e4/bb/a71f334b3662fab060bc4f525fa4be986abcb9a5418b10da7b6181e8b8e1/homeassistant-0.79.0-py3-none-any.whl (3.1MB)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.78.3
+    Uninstalling homeassistant-0.78.3:
+      Successfully uninstalled homeassistant-0.78.3
+Successfully installed homeassistant-0.79.0
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/6a/22/19f7bd9b09c7cd714208e139047250171cfb567210f5c1ed8679ad30b90a/homeassistant-0.79.3-py3-none-any.whl (3.1MB)
+Requirement not upgraded as not directly required: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement not upgraded as not directly required: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement not upgraded as not directly required: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement not upgraded as not directly required: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (10.0.0)
+Requirement not upgraded as not directly required: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement not upgraded as not directly required: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement not upgraded as not directly required: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement not upgraded as not directly required: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement not upgraded as not directly required: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement not upgraded as not directly required: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement not upgraded as not directly required: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement not upgraded as not directly required: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement not upgraded as not directly required: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement not upgraded as not directly required: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement not upgraded as not directly required: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement not upgraded as not directly required: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement not upgraded as not directly required: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement not upgraded as not directly required: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement not upgraded as not directly required: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement not upgraded as not directly required: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement not upgraded as not directly required: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement not upgraded as not directly required: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement not upgraded as not directly required: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement not upgraded as not directly required: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement not upgraded as not directly required: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+python-jose-cryptodome 1.3.2 has requirement pycryptodome<3.4.0,>=3.3.1, but you'll have pycryptodome 3.6.6 which is incompatible.
+myusps 1.3.2 has requirement beautifulsoup4==4.6.0, but you'll have beautifulsoup4 4.5.1 which is incompatible.
+myusps 1.3.2 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.19.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement python-dateutil==2.6.0, but you'll have python-dateutil 2.7.2 which is incompatible.
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.79.0
+    Uninstalling homeassistant-0.79.0:
+      Successfully uninstalled homeassistant-0.79.0
+Successfully installed homeassistant-0.79.3
+You are using pip version 10.0.0, however version 18.0 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/b4/37/346db275b9f974cb4042cad69ff15d2a60c8149e6f0fe7ed6f7351af117b/homeassistant-0.80.1-py3-none-any.whl (3.1MB)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement already satisfied, skipping upgrade: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.79.3
+    Uninstalling homeassistant-0.79.3:
+      Successfully uninstalled homeassistant-0.79.3
+Successfully installed homeassistant-0.80.1
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/c0/d5/1c17e38a185fc2ee95ef17c410760c2766cef09899ace54815d164013f12/homeassistant-0.80.3-py3-none-any.whl (3.2MB)
+Requirement already satisfied, skipping upgrade: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement already satisfied, skipping upgrade: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.80.1
+    Uninstalling homeassistant-0.80.1:
+      Successfully uninstalled homeassistant-0.80.1
+Successfully installed homeassistant-0.80.3
+Requirement already up-to-date: homeassistant in /srv/homeassistant/lib/python3.6/site-packages (0.80.3)
+Requirement already satisfied, skipping upgrade: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.0)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.8.24)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/b6/90/f4d81a3818295c8970341749952685ca0a745181b43e7d2caa527501d65c/homeassistant-0.81.1-py3-none-any.whl (3.3MB)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: requests==2.19.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.19.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.10.15)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: urllib3<1.24,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.19.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.81.0
+    Uninstalling homeassistant-0.81.0:
+      Successfully uninstalled homeassistant-0.81.0
+Successfully installed homeassistant-0.81.1
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/69/c3/f34ecbab5e516d3892ee61a310f36c430be31c40987d882238ef11aa8793/homeassistant-0.81.2-py3-none-any.whl (3.3MB)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.10.15)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Collecting requests==2.20.0 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/f1/ca/10332a30cb25b627192b4ea272c351bce3ca1091e541245cccbace6051d8/requests-2.20.0-py2.py3-none-any.whl (60kB)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement beautifulsoup4==4.5.1, but you'll have beautifulsoup4 4.6.0 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.20.0 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.20.0 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement beautifulsoup4==4.5.1, but you'll have beautifulsoup4 4.6.0 which is incompatible.
+Installing collected packages: requests, homeassistant
+  Found existing installation: requests 2.19.1
+    Uninstalling requests-2.19.1:
+      Successfully uninstalled requests-2.19.1
+  Found existing installation: homeassistant 0.81.1
+    Uninstalling homeassistant-0.81.1:
+      Successfully uninstalled homeassistant-0.81.1
+Successfully installed homeassistant-0.81.2 requests-2.20.0
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/e1/68/6723a7cc732bf2b9684b91daa1c023e55034a1897f43bc51291967c7ddc7/homeassistant-0.81.6-py3-none-any.whl (3.3MB)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: requests==2.20.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.20.0)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: astral==1.6.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.1)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.10.15)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.81.2
+    Uninstalling homeassistant-0.81.2:
+      Successfully uninstalled homeassistant-0.81.2
+Successfully installed homeassistant-0.81.6
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/8c/eb/a7d1205eb765eca7f755bc967ae2f79e4d10b20a498a5cef8a82c8e0fc4f/homeassistant-0.82.0-py3-none-any.whl (3.3MB)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.10.15)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: ruamel.yaml==0.15.72 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.15.72)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Collecting astral==1.7.1 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/bb/0c/25701e9afad088d9873889fba0c45b0fbf8097c7e2ecf8d9b40a71985124/astral-1.7.1-py2.py3-none-any.whl
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: requests==2.20.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.20.0)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+Installing collected packages: astral, homeassistant
+  Found existing installation: astral 1.6.1
+    Uninstalling astral-1.6.1:
+      Successfully uninstalled astral-1.6.1
+  Found existing installation: homeassistant 0.81.6
+    Uninstalling homeassistant-0.81.6:
+      Successfully uninstalled homeassistant-0.81.6
+Successfully installed astral-1.7.1 homeassistant-0.82.0
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/a5/3f/904f75705c495bea867e7a4a80fd9bef9b600d633417e0bb46363dbce015/homeassistant-0.82.1-py3-none-any.whl (3.3MB)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: requests==2.20.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.20.0)
+Requirement already satisfied, skipping upgrade: ruamel.yaml==0.15.72 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.15.72)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.10.15)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: astral==1.7.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.7.1)
+Requirement already satisfied, skipping upgrade: idna<2.8,>=2.5 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.0->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.82.0
+    Uninstalling homeassistant-0.82.0:
+      Successfully uninstalled homeassistant-0.82.0
+Successfully installed homeassistant-0.82.1
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/0c/9c/0e24ff7ccfa424293930c79b305237628521f0d8ced8b25fd2673d802997/homeassistant-0.83.3-py3-none-any.whl (3.5MB)
+Requirement already satisfied, skipping upgrade: astral==1.7.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.7.1)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Collecting ruamel.yaml==0.15.78 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/27/80/2afcfe781a1fdffb0034c64a63a824738ea02da3d496f8ab21189e461b99/ruamel.yaml-0.15.78-cp36-cp36m-manylinux1_x86_64.whl (661kB)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.10.15)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Collecting requests==2.20.1 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/ff/17/5cbb026005115301a8fb2f9b0e3e8d32313142fe8b617070e7baad20554f/requests-2.20.1-py2.py3-none-any.whl (57kB)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: idna>=2.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (2.6)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.4.4->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+upsmychoice 1.0.6 has requirement beautifulsoup4==4.5.1, but you'll have beautifulsoup4 4.6.0 which is incompatible.
+upsmychoice 1.0.6 has requirement requests==2.12.4, but you'll have requests 2.20.1 which is incompatible.
+skybellpy 0.1.2 has requirement colorlog==3.0.1, but you'll have colorlog 3.1.4 which is incompatible.
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.20.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement beautifulsoup4==4.5.1, but you'll have beautifulsoup4 4.6.0 which is incompatible.
+Installing collected packages: ruamel.yaml, requests, homeassistant
+  Found existing installation: ruamel.yaml 0.15.72
+    Uninstalling ruamel.yaml-0.15.72:
+      Successfully uninstalled ruamel.yaml-0.15.72
+  Found existing installation: requests 2.20.0
+    Uninstalling requests-2.20.0:
+      Successfully uninstalled requests-2.20.0
+  Found existing installation: homeassistant 0.82.1
+    Uninstalling homeassistant-0.82.1:
+      Successfully uninstalled homeassistant-0.82.1
+Successfully installed homeassistant-0.83.3 requests-2.20.1 ruamel.yaml-0.15.78
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/f7/cd/c40a195dc47f7894bd4ee88c466229760afbc6269680041a9b064a65302a/homeassistant-0.84.6-py3-none-any.whl (3.5MB)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Collecting idna==2.7 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/4b/2a/0276479a4b3caeb8a8c1af2f8e4355746a97fab05a372e4a2c6a6b876165/idna-2.7-py2.py3-none-any.whl (58kB)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: astral==1.7.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.7.1)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.11.29)
+Requirement already satisfied, skipping upgrade: requests==2.20.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.20.1)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Collecting ruamel.yaml==0.15.80 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/dc/02/685197d2bd307e7b5e8c69612d98860be4272ed5c45fe9db3913aac0c976/ruamel.yaml-0.15.80-cp36-cp36m-manylinux1_x86_64.whl (661kB)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: cffi!=1.11.3,>=1.7 in /srv/homeassistant/lib/python3.6/site-packages (from cryptography==2.3.1->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.20.1->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi!=1.11.3,>=1.7->cryptography==2.3.1->homeassistant) (2.18)
+myusps 1.3.2 has requirement requests==2.12.4, but you'll have requests 2.20.1 which is incompatible.
+fedexdeliverymanager 1.0.6 has requirement beautifulsoup4==4.5.1, but you'll have beautifulsoup4 4.6.0 which is incompatible.
+Installing collected packages: idna, ruamel.yaml, homeassistant
+  Found existing installation: idna 2.6
+    Not uninstalling idna at /usr/lib/python3/dist-packages, outside environment /srv/homeassistant
+    Can't uninstall 'idna'. No files were found to uninstall.
+  Found existing installation: ruamel.yaml 0.15.78
+    Uninstalling ruamel.yaml-0.15.78:
+      Successfully uninstalled ruamel.yaml-0.15.78
+  Found existing installation: homeassistant 0.83.3
+    Uninstalling homeassistant-0.83.3:
+      Successfully uninstalled homeassistant-0.83.3
+  Rolling back uninstall of homeassistant
+Could not install packages due to an EnvironmentError: [Errno 28] No space left on device
+
+Collecting homeassistant
+  Using cached https://files.pythonhosted.org/packages/f7/cd/c40a195dc47f7894bd4ee88c466229760afbc6269680041a9b064a65302a/homeassistant-0.84.6-py3-none-any.whl
+Requirement already satisfied, skipping upgrade: idna==2.7 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.7)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: astral==1.7.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.7.1)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: requests==2.20.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.20.1)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: ruamel.yaml==0.15.80 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.15.80)
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.4)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: pytz>=2018.04 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.4)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.11.29)
+Requirement already satisfied, skipping upgrade: aiohttp==3.4.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.4.4)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.20.1->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: chardet<3.1.0,>=3.0.2 in /usr/lib/python3/dist-packages (from requests==2.20.1->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.4->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.4->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.4.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.4->homeassistant) (2.18)
+Installing collected packages: homeassistant
+  Found existing installation: homeassistant 0.83.3
+    Uninstalling homeassistant-0.83.3:
+      Successfully uninstalled homeassistant-0.83.3
+Successfully installed homeassistant-0.84.6
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/90/a5/747e9672b1690b53e99b28a71ab84faeae69b82ded8a4aa01a13e186460e/homeassistant-0.86.4-py3-none-any.whl (3.6MB)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Collecting aiohttp==3.5.4 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/0d/5c/f87987f4dc8b2cfcf37c83a814ea4b2aff4d285cbffc0ab08b2b4fa3f584/aiohttp-3.5.4-cp36-cp36m-manylinux1_x86_64.whl (1.2MB)
+Requirement already satisfied, skipping upgrade: pytz>=2018.07 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.9)
+Requirement already satisfied, skipping upgrade: requests==2.21.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.21.0)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Collecting bcrypt==3.1.5 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/31/4b/4057d0716e7170c29ff12e19791eb6037422620835e4a58a01d4790e56d1/bcrypt-3.1.5-cp34-abi3-manylinux1_x86_64.whl (55kB)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: astral==1.7.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.7.1)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: cryptography==2.3.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.3.1)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.1)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Collecting ruamel.yaml==0.15.85 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/01/f3/4547d90e0ece2c9e42f9c59bda62123b2410901039d19e35fc23db35fc1c/ruamel.yaml-0.15.85-cp36-cp36m-manylinux1_x86_64.whl (663kB)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.11.29)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: python-slugify==1.2.6 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.2.6)
+Requirement already satisfied, skipping upgrade: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.5.4->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: typing-extensions>=3.6.5; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (3.7.2)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.21.0->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: idna<2.9,>=2.5 in /srv/homeassistant/lib/python3.6/site-packages (from requests==2.21.0->homeassistant) (2.7)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.5->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.5->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.3.1->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: Unidecode>=0.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from python-slugify==1.2.6->homeassistant) (1.0.23)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.5->homeassistant) (2.18)
+Installing collected packages: aiohttp, bcrypt, ruamel.yaml, homeassistant
+  Found existing installation: aiohttp 3.5.1
+    Uninstalling aiohttp-3.5.1:
+      Successfully uninstalled aiohttp-3.5.1
+  Found existing installation: bcrypt 3.1.4
+    Uninstalling bcrypt-3.1.4:
+      Successfully uninstalled bcrypt-3.1.4
+  Found existing installation: ruamel.yaml 0.15.81
+    Uninstalling ruamel.yaml-0.15.81:
+      Successfully uninstalled ruamel.yaml-0.15.81
+  Found existing installation: homeassistant 0.85.1
+    Uninstalling homeassistant-0.85.1:
+      Successfully uninstalled homeassistant-0.85.1
+Successfully installed aiohttp-3.5.4 bcrypt-3.1.5 homeassistant-0.86.4 ruamel.yaml-0.15.85
+You are using pip version 18.1, however version 19.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Collecting homeassistant
+  Downloading https://files.pythonhosted.org/packages/b3/13/6119a98dc730c58118a8b8cb3a873e6a1202302bbec425823a3558ec38c4/homeassistant-0.88.1-py3-none-any.whl (3.8MB)
+Requirement already satisfied, skipping upgrade: pip>=8.0.3 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (19.0.1)
+Collecting ruamel.yaml==0.15.88 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/23/9f/b26e292417eb2fe7d36c49476603d500059301cd66c0dba2f61b5a8ad9d3/ruamel.yaml-0.15.88-cp36-cp36m-manylinux1_x86_64.whl (651kB)
+Requirement already satisfied, skipping upgrade: voluptuous==0.11.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (0.11.5)
+Requirement already satisfied, skipping upgrade: python-slugify==1.2.6 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.2.6)
+Requirement already satisfied, skipping upgrade: certifi>=2018.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.11.29)
+Requirement already satisfied, skipping upgrade: pytz>=2018.07 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2018.9)
+Requirement already satisfied, skipping upgrade: aiohttp==3.5.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.5.4)
+Requirement already satisfied, skipping upgrade: async-timeout==3.0.1 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.0.1)
+Requirement already satisfied, skipping upgrade: pyyaml<4,>=3.13 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.13)
+Requirement already satisfied, skipping upgrade: jinja2>=2.10 in /usr/lib/python3/dist-packages (from homeassistant) (2.10)
+Requirement already satisfied, skipping upgrade: voluptuous-serialize==2.0.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.0.0)
+Requirement already satisfied, skipping upgrade: requests==2.21.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (2.21.0)
+Collecting astral==1.9.2 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/83/29/d400088aa99e6609ade4d858f5ac7c342d566b4db05ba1ea4c564034625a/astral-1.9.2-py2.py3-none-any.whl
+Requirement already satisfied, skipping upgrade: bcrypt==3.1.5 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (3.1.5)
+Requirement already satisfied, skipping upgrade: attrs==18.2.0 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (18.2.0)
+Collecting cryptography==2.5 (from homeassistant)
+  Downloading https://files.pythonhosted.org/packages/98/71/e632e222f34632e0527dd41799f7847305e701f38f512d81bdf96009bca4/cryptography-2.5-cp34-abi3-manylinux1_x86_64.whl (2.4MB)
+Requirement already satisfied, skipping upgrade: PyJWT==1.6.4 in /srv/homeassistant/lib/python3.6/site-packages (from homeassistant) (1.6.4)
+Requirement already satisfied, skipping upgrade: Unidecode>=0.04.16 in /srv/homeassistant/lib/python3.6/site-packages (from python-slugify==1.2.6->homeassistant) (1.0.23)
+Requirement already satisfied, skipping upgrade: yarl<2.0,>=1.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (1.1.1)
+Requirement already satisfied, skipping upgrade: idna-ssl>=1.0; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (1.0.1)
+Requirement already satisfied, skipping upgrade: typing-extensions>=3.6.5; python_version < "3.7" in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (3.7.2)
+Requirement already satisfied, skipping upgrade: chardet<4.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp==3.5.4->homeassistant) (3.0.4)
+Requirement already satisfied, skipping upgrade: multidict<5.0,>=4.0 in /srv/homeassistant/lib/python3.6/site-packages (from aiohttp==3.5.4->homeassistant) (4.2.0)
+Requirement already satisfied, skipping upgrade: idna<2.9,>=2.5 in /srv/homeassistant/lib/python3.6/site-packages (from requests==2.21.0->homeassistant) (2.7)
+Requirement already satisfied, skipping upgrade: urllib3<1.25,>=1.21.1 in /usr/lib/python3/dist-packages (from requests==2.21.0->homeassistant) (1.22)
+Requirement already satisfied, skipping upgrade: six>=1.4.1 in /usr/lib/python3/dist-packages (from bcrypt==3.1.5->homeassistant) (1.11.0)
+Requirement already satisfied, skipping upgrade: cffi>=1.1 in /srv/homeassistant/lib/python3.6/site-packages (from bcrypt==3.1.5->homeassistant) (1.11.5)
+Requirement already satisfied, skipping upgrade: asn1crypto>=0.21.0 in /usr/lib/python3/dist-packages (from cryptography==2.5->homeassistant) (0.24.0)
+Requirement already satisfied, skipping upgrade: pycparser in /srv/homeassistant/lib/python3.6/site-packages (from cffi>=1.1->bcrypt==3.1.5->homeassistant) (2.18)
+Installing collected packages: ruamel.yaml, astral, cryptography, homeassistant
+  Found existing installation: ruamel.yaml 0.15.85
+    Uninstalling ruamel.yaml-0.15.85:
+      Successfully uninstalled ruamel.yaml-0.15.85
+  Found existing installation: astral 1.8
+    Uninstalling astral-1.8:
+      Successfully uninstalled astral-1.8
+  Found existing installation: cryptography 2.3.1
+    Uninstalling cryptography-2.3.1:
+      Successfully uninstalled cryptography-2.3.1
+  Found existing installation: homeassistant 0.87.0
+    Uninstalling homeassistant-0.87.0:
+      Successfully uninstalled homeassistant-0.87.0
+Successfully installed astral-1.9.2 cryptography-2.5 homeassistant-0.88.1 ruamel.yaml-0.15.88
+You are using pip version 19.0.1, however version 19.0.2 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.

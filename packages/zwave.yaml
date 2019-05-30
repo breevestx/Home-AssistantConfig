@@ -13,23 +13,36 @@ group:
     #view: true
     name: Zwave Devices
     entities:
-      - zwave.switch_driveway_garage_light
+      - zwave.aeotec_zw090_zstick_gen5_us
       - zwave.mb_closet_light
       - zwave.garage_door
+      - zwave.switch_driveway_garage_light
       - zwave.laundry_room_door
+      - zwave.kitchen_bar
+      - zwave.kitchen_main
+      - zwave.kitchen_sink
+
+  zwave_sensors:
+    #view: true
+    name: Zwave sensors
+    entities:
       - binary_sensor.garage_door
       - binary_sensor.laundry_room_door
       - sensor.garage_door
-      #- cover.garage_door
+      - cover.garage_door
       - sensor.laundry_door
+      - switch.driveway_garage_light
 
 zwave:
   usb_path: !secret zwave_device_path
   #new_entity_ids: true
   config_path: !secret zwave_config_path
   network_key: !secret zwave_network_key
+  polling_interval: 60000
   device_config:
     light.driveway_garage_light:
-      polling_intensity: 2
+      polling_intensity: 1
+      # refresh_value: true
+      # delay: 3
+    light.level:
       refresh_value: true
-      delay: 3

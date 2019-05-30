@@ -1,0 +1,51 @@
+##########  ############################################################
+##  Sprinkler control.
+## Announce over all Chromecast Audios
+######################################################################
+homeassistant:
+  customize:
+    switch.rachio7f4c51_in_standby_mode:
+      friendly_name: 'Rachio Standby mode'
+
+rachio:
+  api_key: !secret rachio_api_key
+
+panel_iframe:
+  rachio:
+    title: Rachio
+    url: "https://app.rach.io"
+    icon: mdi:water-pump
+
+binary_sensor:
+  - platform: rachio
+
+switch:
+  - platform: rachio
+    manual_run_mins: 30
+
+group:
+  irrigation:
+    name: Irrigation
+    icon: mdi:water-pump
+    view: true
+    entities:
+    - group.zones_front
+    - group.zones_back
+    - switch.side_yard
+    - switch.rachio7f4c51_in_standby_mode
+
+  zones_front:
+    name: Front Yard
+    view: false
+    entities:
+    - switch.driveway_north_side
+    - switch.driveway_south_side
+    - switch.front_yard_north
+    - switch.front_yard_south
+
+  zones_back:
+    name: Back Yard
+    view: false
+    entities:
+    - switch.back_edge
+    - switch.backyard

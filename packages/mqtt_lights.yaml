@@ -1,0 +1,189 @@
+##########  ############################################################
+##  BRUH Multisensors nodes
+##
+##
+##
+######################################################################
+# homeassistant:
+#   customize:
+    # switch.kahlan_bed:
+    #   icon: mdi:hotel
+    #   emulated_hue_hidden: true
+    #   emulated_hue_name: "Kahlan Alarm"
+    #   friendly_name: Kahlan Alarm
+    #
+    # input_boolean.alarm_active:
+    #   icon: mdi:clock
+    #   # emulated_hue_hidden: true
+    #   # emulated_hue_name: "Bennett Alarm"
+    #   friendly_name: Alarm Clock Enabled
+
+group:
+  shellies:
+    name: Shelly Lights
+    icon: mdi:access-point
+    entities:
+      - light.schoolroom_light
+      - light.dining_room
+      - light.pantry_light
+      - light.potter_light
+
+light:
+  - platform: mqtt
+    name: "Schoolroom Light"
+    state_topic: "shellies/shelly1-0598F4/relay/0"
+    command_topic: "shellies/shelly1-0598F4/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Dining room"
+    state_topic: "shellies/shelly1-8ABE6A/relay/0"
+    command_topic: "shellies/shelly1-8ABE6A/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Pantry light"
+    state_topic: "shellies/shelly1-056D19/relay/0"
+    command_topic: "shellies/shelly1-056D19/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Potter light"
+    state_topic: "shellies/shelly1-059667/relay/0"
+    command_topic: "shellies/shelly1-059667/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+
+timer:
+  pantry_light:
+    duration: '00:00:30'
+  potter_light:
+    duration: '00:00:30'
+
+automation:
+  - alias: 'schoolroom_light_on'
+    initial_state: True
+    trigger:
+      platform: time
+      at: 05:28:00
+    condition:
+      condition: time
+      weekday:
+        - mon
+        - wed
+        - thu
+        - fri
+    action:
+      - service: homeassistant.turn_on
+        entity_id: light.schoolroom_light
+      - service: logbook.log
+    #   data_template:
+    #     name: "MB Temp Alarm: "
+    #     message: >-
+    #       The Master bathroom is currently at {{  states("sensor.mbheater_ds1") }}°F degrees and I'm turning the heater on.
+    # - service: notify.slack__home
+    #   data_template:
+    #     message: >
+    #      The Master bedroom is currently at {{  states("sensor.mbheater_ds1") }}°F degrees and I'm turning the heater on.
+
+  - alias: 'pantry_on'
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.pantry_door
+      from: 'Closed'
+      to: 'Open'
+    condition:
+      condition: state
+      entity_id: light.pantry_light
+      state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: light.pantry_light
+      - service: timer.start
+        entity_id: timer.pantry_light
+
+  - alias: 'pantry_off'
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.pantry_door
+      from: 'Open'
+      to: 'Closed'
+    condition:
+      condition: state
+      entity_id: light.pantry_light
+      state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.pantry_light
+
+  - alias: 'potter_on'
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.potter_closet
+      from: 'Closed'
+      to: 'Open'
+    condition:
+      condition: state
+      entity_id: light.potter_light
+      state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: light.potter_light
+      - service: timer.start
+        entity_id: timer.potter_light
+
+  - alias: 'potter_off'
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.potter_closet
+      from: 'Open'
+      to: 'Closed'
+    condition:
+      condition: state
+      entity_id: light.potter_light
+      state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.potter_light
+
+  - alias: 'Pantry_timer_off'
+    initial_state: True
+    condition:
+      - condition: state
+        entity_id: light.pantry_light
+        state: 'on'
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.mb_closet_pir.last_changed)) > 30 }}'
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.pantry_light
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.pantry_light
+
+  - alias: 'Potter_timer_off'
+    initial_state: True
+    condition:
+      - condition: state
+        entity_id: light.potter_light
+        state: 'on'
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.mb_closet_pir.last_changed)) > 30 }}'
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.potter_light
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.potter_light

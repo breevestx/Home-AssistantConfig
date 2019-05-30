@@ -31,13 +31,14 @@ group:
       - sensor.office_temperature_2
       # - light.office_led
   sensor_node_2_card:
-    name: Living Room Node
+    name: kitchen Node
     icon: mdi:access-point
     entities:
-      - sensor.lv_temperature
-      - sensor.lv_humidity
-      - sensor.lv_ldr
-      - sensor.lv_pir
+      - sensor.kitchen_temperature
+      - sensor.kitchen_humidity
+      - sensor.kitchen_ldr
+      - sensor.kitchen_pir
+      - sensor.kitchen_real_feel
       # - light.lv_led
   sensor_node_3_card:
     name: MB Room Node
@@ -109,31 +110,31 @@ sensor:
 
   - platform: mqtt
     state_topic: "bruh/sensornode2"
-    name: "LV Humidity"
+    name: "Kitchen Humidity"
     unit_of_measurement: "%"
     value_template: '{{ value_json.humidity | round(1) }}'
 
   - platform: mqtt
     state_topic: "bruh/sensornode2"
-    name: "LV LDR"
+    name: "Kitchen LDR"
     ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
     unit_of_measurement: "LUX"
     value_template: '{{ value_json.ldr }}'
 
   - platform: mqtt
     state_topic: "bruh/sensornode2"
-    name: "LV PIR"
+    name: "Kitchen PIR"
     value_template: '{{ value_json.motion }}'
 
   - platform: mqtt
     state_topic: "bruh/sensornode2"
-    name: "LV Temperature"
+    name: "Kitchen Temperature"
     unit_of_measurement: "°F"
     value_template: '{{ value_json.temperature | round(1) }}'
 
   - platform: mqtt
     state_topic: "bruh/sensornode2"
-    name: "LV Real Feel"
+    name: "Kitchen Real Feel"
     unit_of_measurement: "°F"
     value_template: '{{ value_json.heatIndex | round(1) }}'
 

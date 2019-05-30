@@ -15,10 +15,10 @@ automation:
         for: '00:02:00'
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.page_location
-          option: 'Office'
+      # - service: input_select.select_option
+      #   data:
+      #     entity_id: input_select.page_location
+      #     option: 'Office'
       - service: script.speech_engine
         data_template:
           call_no_announcement: 0
@@ -29,7 +29,7 @@ automation:
             "Welcome back home " ~ person,
             "Guess who is home?" ~ person +" is!",
             person + " is now in the house.",
-            "Welcome Home " ~ person + ".  We have missed you. Or at least Bentley did.",
+            "Welcome Home " ~ person + ".  Bentley has missed you.",
             "Our home is now complete, Rest your head and relax your feet! Welcome Back " ~ person,
             "Life is like a song, you’re back where you belong. Welcome home " ~ person,
             "Hey there " ~ person + " Welcome Home!",

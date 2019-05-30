@@ -21,7 +21,7 @@ automation:
          from: 'off'
          to: 'on'
      action:
-       - service: notify.slack__home
+       - service: notify.home
          data_template:
            message: >
              {%- set responses = [
@@ -38,7 +38,7 @@ automation:
          from: 'on'
          to: 'off'
      action:
-       - service: notify.slack__home
+       - service: notify.home
          data_template:
            message: >
              {%- set responses = [
@@ -49,14 +49,14 @@ automation:
 
    # - alias: 'Trash take out reminder'
    #   trigger:
-   #     - platform: time
+   #     - platform: time_pattern
    #       minutes: '/5'
    #       seconds: 00
    #     - platform: state
    #       entity_id: input_boolean.trash
    #       state: 'on'
    #   action:
-   #     - service: notify.slack__dev
+   #     - service: notify.dev
    #       data_template:
    #         message: >
    #           {%- set responses = [
@@ -161,7 +161,7 @@ automation:
        - platform: time
          at: '16:00:00'
      action:
-       - service: notify.slack__dev
+       - service: notify.dev
          data_template:
            message: >
              {%- set responses = [

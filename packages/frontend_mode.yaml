@@ -75,7 +75,7 @@ automation:
 #      data_template:
 #        name: "Bedroom lamps On: "
 #        message: Turned lamps on via Automation
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: Frontend switched to night
 #################################################################
@@ -95,6 +95,6 @@ automation:
 #        data_template:
 #          name: "Bedroom lamps Off: "
 #          message: Turned lamps off via Automation
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: Frontend switched to day

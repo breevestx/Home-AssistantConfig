@@ -211,7 +211,7 @@ automation:
   - alias: 'Snooze'
     initial_state: True
     trigger:
-      platform: time
+      platform: time_pattern
       minutes: '/1'
       seconds: 00
     condition:
@@ -262,7 +262,7 @@ automation:
   - alias: 'Alarm Clock'
     initial_state: True
     trigger:
-      platform: time
+      platform: time_pattern
       minutes: '/1'
       seconds: 00
     condition:
@@ -297,7 +297,7 @@ automation:
   - alias: 'Check for Repeat'
     initial_state: True
     trigger:
-      platform: time
+      platform: time_pattern
       minutes: '/1'
       seconds: 00
     condition:
@@ -315,7 +315,7 @@ automation:
   - alias: 'Reset Alarm'
     initial_state: True
     trigger:
-      platform: time
+      platform: time_pattern
       minutes: '/1'
       seconds: '/30'
     condition:
@@ -500,7 +500,7 @@ script:
               {% set time = 'Today is ' + states('sensor.date_weekday')  %}
               It is time to get up and get your charts done.
               {% if states.group.kids.state != 'off' -%}
-              {% set comma = joiner(', ') %}
+              {% set comma = joiner(', <break time=".9s" /> ') %}
               {%- for state in states.switch if state.state == 'on' -%}
               {%- endfor %}
               {% for group in states.switch|groupby('state')  -%}

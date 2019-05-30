@@ -1,0 +1,5 @@
+group:
+  christmas_lights:
+    - switch.christmas_tree
+    - switch.landing_lights
+    - switch.stairs_lights

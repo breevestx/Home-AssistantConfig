@@ -1,0 +1,548 @@
+title: Home
+views:
+  - path: default_view
+    title: default_view
+    icon: 'mdi:home'
+    badges: []
+    cards:
+      - title: Doors
+        type: entities
+        entities:
+          - binary_sensor.laundry_room_door
+          - binary_sensor.garage_door
+      - title: Bedroom Controls
+        type: entities
+        entities:
+          - scene.bedroom_morning
+          - script.good_morning
+          - scene.bedroom_goodnight
+          - input_slider.bedroom_lamps_brightness
+          - sensor.kodi_mb
+          - mediaplayer.kodi_mb
+          - switch.mb_closet_light
+          - timer.closet_light
+      - title: Household Status
+        type: entities
+        entities:
+          - light.lene_lamp
+          - light.bruce_lamp
+          - input_boolean.alarm_active
+          - script.light_alert
+          - input_boolean.windows_open
+          - binary_sensor.garage_door
+          - switch.christmas_tree
+          - switch.landing_lights
+          - switch.stairs_lights
+      - title: Entry Points
+        type: entities
+        entities:
+          - binary_sensor.laundry_room_door
+      - title: Devices
+        type: entities
+        entities:
+          - sensor.openelec
+          - sensor.freezer
+          - device_tracker.freenas
+          - sensor.bruce
+          - sensor.lene
+          - sensor.kahlan
+          - device_tracker.recovery
+      - title: Kitchen Light Controls
+        type: entities
+        entities:
+          - switch.switch_2
+          - switch.switch_3
+          - light.level
+          - switch.uclight_sink
+          - switch.uclight_bar
+      - title: Office
+        type: entities
+        entities:
+          - input_select.conference
+          - input_boolean.guest_room
+          - switch.monitors
+          - switch.office_light
+          - fan.office
+          - sensor.office_pir
+          - binary_sensor.office_occupancy
+          - sensor.office_temperature
+          - sensor.main_floor_temperature
+          - sensor.main_floor_mode
+      - type: thermostat
+        entity: climate.main_floor_operation
+      - title: finance
+        type: entities
+        entities:
+          - sensor.tesla
+          - sensor.facebook
+          - sensor.bitcoin
+  - path: alarm_clock
+    title: Alarm Clock
+    icon: 'mdi:clock'
+    badges: []
+    cards:
+      - title: Controls
+        type: entities
+        entities:
+          - input_number.slider_hours
+          - input_number.slider_minutes
+          - input_datetime.alarm_time
+          - input_boolean.alarm_weekday
+          - input_boolean.alarm_active
+          - input_boolean.alarm_has_gone_off
+      - title: Kids
+        type: entities
+        entities:
+          - sensor.alarm_status
+          - switch.kahlan_bed
+          - switch.braelyn_bed
+          - switch.kent_bed
+          - switch.bennett_bed
+  - path: nodes
+    title: Sensor Nodes
+    icon: 'mdi:access-point-network'
+    badges: []
+    cards:
+      - title: Office Node
+        type: entities
+        entities:
+          - sensor.office_temperature
+          - sensor.office_humidity
+          - sensor.office_ldr
+          - sensor.office_pir
+          - binary_sensor.office_occupancy
+          - sensor.office_temperature_2
+      - title: kitchen Node
+        type: entities
+        entities:
+          - sensor.kitchen_temperature
+          - sensor.kitchen_humidity
+          - sensor.kitchen_ldr
+          - sensor.kitchen_pir
+          - sensor.kitchen_real_feel
+      - title: MB Room Node
+        type: entities
+        entities:
+          - binary_sensor.mb_closet_pir
+          - binary_sensor.bedroom_occupancy
+          - sensor.bedroom_temperature
+      - title: Outside Sensors
+        type: entities
+        entities:
+          - binary_sensor.skybell_front_door_button
+          - binary_sensor.skybell_front_door_motion
+          - binary_sensor.driveway_camera_motion
+          - binary_sensor.driveway_camera_line_crossing
+          - binary_sensor.driveway_camera_field_detection
+          - switch.driveway_camera
+      - title: Zwave Devices
+        type: entities
+        entities:
+          - zwave.aeotec_zw090_zstick_gen5_us
+          - zwave.mb_closet_light
+          - zwave.garage_door
+          - zwave.switch_driveway_garage_light
+          - zwave.laundry_room_door
+          - zwave.kitchen_bar
+          - zwave.kitchen_main
+          - zwave.kitchen_sink
+      - title: Freezer TH16
+        type: entities
+        entities:
+          - sensor.freezer
+          - switch.freezer
+          - sensor.freezer_ds1
+      - title: MB Heater TH16
+        type: entities
+        entities:
+          - sensor.master_bath_heater
+          - switch.mb_heater
+          - sensor.mbheater_ds1
+  - path: radio_view
+    title: Radio
+    icon: 'mdi:radio'
+    badges: []
+    cards:
+      - title: Radio Stations
+        type: entities
+        entities:
+          - input_select.classical_radio_station
+          - input_select.jazz_radio_station
+          - input_select.other_radio_station
+      - title: Radio Controls
+        type: entities
+        entities:
+          - input_select.radio_station_location
+          - input_number.volume_radio
+          - script.radio_start
+          - script.radio_stop
+          - script.radio_away
+      - type: media-control
+        entity: media_player.tts_hallway
+      - type: media-control
+        entity: media_player.tts_office
+      - type: media-control
+        entity: media_player.kodi_office
+      - type: media-control
+        entity: media_player.kodi_mb
+      - type: media-control
+        entity: media_player.kodi_lv
+      - type: media-control
+        entity: media_player.living_room_cast
+  - path: location
+    title: Location
+    icon: 'mdi:truck-delivery'
+    badges: []
+    cards:
+      - title: Transit
+        type: entities
+        entities:
+          - input_boolean.alert_delays
+          - sensor.lene_to_home
+          - sensor.bruce_to_home
+          - sensor.from_home_to_church
+          - sensor.to_cc
+          - sensor.to_piano
+          - proximity.lene_home
+          - proximity.lene_piano
+          - proximity.bruce_home
+          - proximity.kahlan_home
+          - proximity.home
+          - device_tracker.bruce_iphone
+          - device_tracker.lene_iphone
+          - device_tracker.kahlan_iphone
+      - title: Maps
+        type: entities
+        entities:
+          - camera.bruce_map
+          - camera.lene_map
+          - camera.kahlan_map
+  - path: misc_view
+    title: Misc
+    icon: 'mdi:power'
+    badges: []
+    cards:
+      - title: System
+        type: entities
+        entities:
+          - sensor.fastdotcom
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.since_last_boot_templated
+          - sensor.cpu_use
+          - sensor.ram_use
+          - sensor.disk_use_percent
+          - sensor.ha_uptime
+          - sensor.ha_version
+          - weblink.release_log
+          - sensor.external_ip
+          - sensor.cert_expiry
+      - title: SabNZB
+        type: entities
+        entities:
+          - sensor.sabnzbd_status
+          - sensor.sabnzbd_speed
+          - sensor.sabnzbd_queue
+          - sensor.sabnzbd_left
+          - sensor.sabnzbd_disk
+          - sensor.sabnzbd_disk_free
+      - title: Utilities
+        type: entities
+        entities:
+          - script.restart_ha
+          - script.update_ha
+          - script.clear_log
+          - script.clear_tts_cache
+          - script.restart_dasher
+      - title: Backup
+        type: entities
+        entities:
+          - automation.auto_backup
+          - script.backup_config
+          - sensor.last_commit
+          - sensor.last_backup
+      - title: Processes
+        type: entities
+        entities:
+          - sensor.process_dasher
+          - sensor.process_mosquitto
+      - title: hassctl
+        type: entities
+        entities:
+          - script.hassctl_restart_ha
+          - script.hassctl_update_ha
+          - script.hassctl_update
+          - sensor.hassctl_version
+      - title: pihole
+        type: entities
+        entities:
+          - sensor.carlopihole
+          - sensor.pi_hole_version
+          - sensor.pihole_dns_unique_clients
+          - sensor.pihole_dns_queries_today
+          - sensor.pihole_ads_blocked_today
+          - sensor.pihole_ads_percentage_today
+          - sensor.pihole_ads_percentage_blocked_today
+          - switch.pihole_temp_disable
+      - title: Wallpanel
+        type: entities
+        entities:
+          - sensor.wallpanel_battery_level
+  - path: automation
+    title: Automation
+    icon: 'mdi:robot'
+    badges: []
+    cards:
+      - title: Automation Override
+        type: entities
+        entities:
+          - input_boolean.gb_auto_off
+          - input_boolean.freezer
+          - input_boolean.disable_lock_unlock_doors
+          - input_boolean.disable_auto_garage
+          - input_boolean.plex_lights_disable
+          - input_boolean.rainy_day_disable
+          - input_boolean.occupancy_lights_off_disable
+          - input_boolean.door_open_lights_on
+          - input_boolean.occupancy_air_purifier_on_off_disable
+          - input_boolean.lights_morning_disable
+          - input_boolean.office_lights_sunset
+          - input_boolean.exterior_on_sunset
+          - input_boolean.exterior_off_night
+          - switch.vacation_mode
+          - input_boolean.trash
+          - input_boolean.weekly_trash_reminder
+          - input_boolean.teatimer
+          - input_boolean.dash_input
+          - input_boolean.unlock_doors
+          - input_boolean.bedtime
+          - input_select.remote
+          - input_boolean.restart_hass
+          - input_boolean.test_notify
+          - input_boolean.bedroom_dash
+          - sensor.last_message
+      - title: Alarm Automations
+        type: entities
+        entities:
+          - automation.kids_in_bed
+          - automation.test_alarm_clock
+          - automation.check_for_repeat
+          - automation.reset_alarm
+          - script.kids_tts_warn
+          - script.kids_tts_wake
+          - script.se_kids_tts_wake_repeat
+          - script.se_kids_tts_wake
+          - script.se_kids_tts_warn
+  - path: dev
+    title: dev
+    icon: 'mdi:developer-board'
+    badges:
+      - sensor.date_weekday
+      - sensor.date_month
+      - sensor.date_day
+      - sensor.last_message
+    cards:
+      - title: Family
+        type: entities
+        entities:
+          - device_tracker.bruce_iphone
+          - device_tracker.lene_iphone
+      - title: Live Scenes
+        type: entities
+        entities:
+          - script.good_morning_tts
+          - script.space_scene
+          - script.tv_away
+          - script.tv_away_off
+      - title: Input boolean
+        type: entities
+        entities:
+          - input_boolean.trash_test
+          - input_boolean.switch_mode
+          - input_boolean.test_hidegroup
+          - input_boolean.test_tts
+      - title: Input select
+        type: entities
+        entities:
+          - input_select.led_color
+      - title: Script
+        type: entities
+        entities:
+          - script.test_speech_engine
+          - script.test_door_alert
+          - script.notify_office
+      - title: Switch
+        type: entities
+        entities:
+          - switch.guest_mode
+  - path: pageing
+    title: Page
+    icon: 'mdi:bullhorn'
+    badges: []
+    cards:
+      - title: Page Controls
+        type: entities
+        entities:
+          - input_boolean.pager_enable
+          - input_select.page_location
+          - input_select.page_everyone
+          - input_number.volume_page
+          - script.page
+      - title: Call kids
+        type: entities
+        entities:
+          - input_boolean.pager_kahlan
+          - input_boolean.pager_braelyn
+          - input_boolean.pager_kent
+          - input_boolean.pager_bennett
+  - path: weather_view
+    title: Weather Data
+    icon: 'mdi:weather-lightning'
+    badges: []
+    cards:
+      - title: Weather Data
+        type: entities
+        entities:
+          - sensor.sunrise
+          - sensor.dark_sky_temperature
+          - sensor.daily_low_temperature
+          - sensor.daily_high_temperature
+          - sensor.dark_sky_precip_probability
+          - sensor.dark_sky_precip_intensity
+          - sensor.dark_sky_nearest_storm_distance
+          - sensor.dark_sky_nearest_storm_bearing
+          - sensor.uv_burn_time
+          - sensor.weather_report
+          - sensor.dark_sky_daily_max_precip_intensity
+          - sensor.dark_sky_precip_accumulation
+      - title: Weather Home
+        type: entities
+        entities:
+          - sensor.dark_sky_hourly_summary
+          - sensor.dark_sky_daily_summary
+          - camera.lawton_doppler_weather
+      - type: weather-forecast
+        entity: weather.main_floor
+  - path: irrigation
+    title: Irrigation
+    icon: 'mdi:water-pump'
+    badges: []
+    cards:
+      - title: Front Yard
+        type: entities
+        entities:
+          - switch.driveway_north_side
+          - switch.driveway_south_side
+          - switch.front_yard_north
+          - switch.front_yard_south
+      - title: Back Yard
+        type: entities
+        entities:
+          - switch.back_edge
+          - switch.backyard
+      - title: Switch
+        type: entities
+        entities:
+          - switch.rachio7f4c51_in_standby_mode
+  - path: cameras
+    title: cameras
+    icon: 'mdi:video'
+    badges: []
+    cards:
+      - title: Skybell HD Front Door
+        type: entities
+        entities:
+          - camera.front_door
+          - sensor.skybell_front_door_chime_level
+          - switch.skybell_front_door_do_not_disturb
+          - switch.skybell_front_door_motion_sensor
+      - title: Camera Motion
+        type: entities
+        entities:
+          - binary_sensor.frontdoor_camera_motion
+          - binary_sensor.driveway_camera_motion
+          - binary_sensor.patio_camera_motion
+          - binary_sensor.playarea_camera_motion
+      - title: Camera
+        type: entities
+        entities:
+          - camera.driveway_camera
+  - path: kodi
+    title: Kodi MB
+    icon: 'mdi:play-pause'
+    badges: []
+    cards:
+      - title: Kodi Control
+        type: entities
+        entities:
+          - script.kodi_play
+          - script.kodi_playpause
+          - script.kodi_stop
+          - script.kodi_nav_back
+          - script.kodi_next
+          - script.kodi_previous
+          - script.kodi_nav_up
+          - script.kodi_nav_down
+          - script.kodi_nav_left
+          - script.kodi_nav_right
+          - script.kodi_nav_select
+      - title: Playlists
+        type: entities
+        entities:
+          - script.auto_all_tv
+          - script.fireplace
+          - script.auto_pawpatrol
+          - script.auto_moana
+          - script.kodi_youtbe
+      - title: Kodi Utilities
+        type: entities
+        entities:
+          - script.kodi_update_video_library
+          - script.kodi_clean_video_library
+          - script.kodi_update_audio_library
+          - script.kodi_clean_audio_library
+          - script.baby_cam
+          - script.steam
+  - path: climate
+    title: Climate controls
+    icon: 'mdi:thermostat'
+    badges: []
+    cards:
+      - title: Ecobee Main
+        type: entities
+        entities:
+          - binary_sensor.bedroom_occupancy
+          - binary_sensor.office_occupancy
+          - binary_sensor.main_floor_occupancy
+          - binary_sensor.kitchen_occupancy
+          - sensor.bedroom_temperature
+          - sensor.office_temperature_2
+          - sensor.kitchen_temerature
+          - sensor.kitchen_humidity
+          - sensor.main_floor_humidity
+          - sensor.main_floor_temperature
+          - sensor.main_floor_mode
+      - type: thermostat
+        entity: climate.main_floor_operation
+      - title: Ecobee Upstairs
+        type: entities
+        entities:
+          - binary_sensor.bb_room_occupancy
+          - binary_sensor.kent_room_occupancy
+          - binary_sensor.upstairs_occupancy
+          - sensor.bb_room_humility
+          - sensor.bb_room_temperature
+          - sensor.kent_room_humidity
+          - sensor.kent_room_temperature
+          - sensor.upstairs_humidity
+          - sensor.upstairs_mode
+          - sensor.upstairs_temperature
+      - type: thermostat
+        entity: climate.upstairs_operation
+      - title: Climate controls
+        type: entities
+        entities:
+          - automation.turn_off_ac_after_3_hours_of_cooling
+          - input_boolean.air_condition
+          - input_boolean.heater
+          - automation.ecobee_status

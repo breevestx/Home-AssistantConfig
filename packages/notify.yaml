@@ -21,28 +21,37 @@ homeassistant:
 
 
 notify:
-  - name: slack__dev
+  - name: dev
     platform: slack
     api_key: !secret slack_home_key
     default_channel: '#ha'
     username: Guardian
     icon: ":guardsman:"
 
-  - name: slack__home
+  - name: home
     platform: slack
     api_key: !secret slack_home_key
     default_channel: '#general'
     username: Guardian
     icon: ":guardsman:"
 
+  - name: work
+    platform: slack
+    api_key: !secret slack_work_key
+    default_channel: '#ha'
+    username: jarvis
+    icon: ":guardsman:"
+
   - name: ios_devices
     platform: group
     services:
-      - service: ios_brucesiphone2_ios
+      - service: ios_bruce_iphone
       - service: ios_leneiphone_ios
       - service: ios_breevs_ipad
-      # - service: ios_srinika
-      # - service: ios_hasika
+
+
+  - platform: alexa_media
+    name: alexa_media
 
 script:
   notify_me:
@@ -77,3 +86,8 @@ script:
   #         event: "Smart_Home"
   #         value1: "{{ message }}"
   #         value2: ""
+  notify_office:
+    sequence:
+      - service: notify.work
+        data_template:
+          message: "Time to grab a quick snack"

@@ -49,7 +49,7 @@ script:
     # - service: switch.turn_off
     #   entity_id: switch.bedroom_fan
     # - service: script.auto_cartoons
-    - service: media_player.media_Stop
+    - service: media_player.media_stop
       entity_id: media_player.kodi_mb
     - service: media_player.volume_set
       data:
@@ -124,19 +124,7 @@ script:
             "Opportunities will knock on your door every morning. But if you keep sleeping they will simply pass you by.",
             "Each morning we are born again, what we do today is what matters most."
             ]|random }}
-            <break time='0.5s'/>
-            {% set weather = states('sensor.weather_report') %}
-            {% set tuesday_travel_time = 'Travel time this morning is ' + states('sensor.To_cc') + ' minutes and you must leave by ' + ((as_timestamp(now().date() ~ " 08:30:00") - (states.sensor.To_cc.state|int * 60))|timestamp_local).split(" ")[1][1:-3] + ' to arrive on time.'%}
-            {% set sunday_travel_time = 'Travel time this morning is ' + states('sensor.From_Home_to_Church') + ' minutes and you must leave by ' + ((as_timestamp(now().date() ~ " 08:30:00") - (states.sensor.From_Home_to_Church|int * 60))|timestamp_local).split(" ")[1][1:-3] + ' to arrive on time.'%}
-            {%- if states.sensor.date_weekday.state == Sunday-%}
-            {{sunday_travel_time}}
-            The garbage is to go out this evening.
-            {%-endif-%}
-            {%- if states.sensor.date_weekday.state == Tuesday-%}
-            {{tuesday_travel_time}}
-            {%-endif-%}
-            {{weather}}
-            
+
           call_responsibilities: 1
           call_no_announcement: 1
 
@@ -178,10 +166,10 @@ script:
       data_template:
         entity_id: group.bedroom_lamps
         brightness: 100
-    - service: notify.slack__dev
-      data_template:
-        message: >
-          Turning the lamps on
+    # - service: notify.slack__dev
+    #   data_template:
+    #     message: >
+    #       Turning the lamps on
 
 
 #TTS copy

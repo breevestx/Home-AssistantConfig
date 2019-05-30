@@ -1,0 +1,26 @@
+zoneminder:
+  - host: !secret zm_host
+    username: !secret zm_user
+    password: !secret zm_pass
+
+camera:
+  - platform: zoneminder
+
+sensor:
+  - platform: zoneminder
+    include_archived: false
+    monitored_conditions: all
+
+switch:
+  - platform: zoneminder
+    command_on: Modect
+    command_off: Monitor
+
+binary_sensor:
+  - platform: zoneminder
+
+logger:
+  logs:
+    homeassistant.components.zoneminder: debug
+    homeassistant.components.zoneminder.camera: debug
+    homeassistant.components.zoneminder.sensor: debug

@@ -30,7 +30,7 @@ group:
   System:
     control: hidden
     entities:
-      - sensor.fastdotcom
+      # - sensor.fastdotcom
       - sensor.speedtest_download
       - sensor.speedtest_upload
       - sensor.since_last_boot_templated
@@ -41,6 +41,7 @@ group:
       - sensor.ha_version
       - weblink.release_log
       - sensor.external_ip
+      - sensor.cert_expiry
 
   Processes:
     control: hidden
@@ -58,27 +59,59 @@ group:
       - sensor.sabnzbd_disk
       - sensor.sabnzbd_disk_free
 
+  Wallpanel:
+    control: hidden
+    entities:
+      - sensor.wallpanel_battery_level
+
+
+
+  # Asus:
+  #   control: hidden
+  #   entities:
+  #     -sensor.rtac68p_bytes_received
+  #     -sensor.rtac68p_kbytesec_sent
+  #     -sensor.rtac68p_kbytesec_received
+  #     -sensor.rtac68p_packets_sent
+  #     -sensor.rtac68p_packets_received
+  #     -sensor.rtac68p_packetssec_sent
+  #     -sensor.rtac68p_bytes_sent
+  #     -sensor.rtac68p_packets
+
 weblink:
   entities:
     - name: release_log
       url: https://github.com/home-assistant/home-assistant/releases
 
+duckdns:
+  domain: !secret domain
+  access_token: !secret ddaccess_token
+
+system_health:
 
 sensor:
-  - platform: fastdotcom
-    minute:
-      - 0
-      - 30
-  - platform: speedtest
-    minute: 30
-    hour:
-      - 0
-      - 6
-      - 12
-      - 18
-    monitored_conditions:
-      - download
-      - upload
+  - platform: cert_expiry
+    host: !secret domain
+
+  - platform: mqtt
+    state_topic: "wallpanel/mywallpanel/sensor/battery"
+    name: "WallPanel Battery Level"
+    unit_of_measurement: "%"
+    value_template: ''
+
+  # - platform: fastdotcom
+  #   scan_interval:
+  #     minutes: 30
+  # - platform: speedtest
+  #   minute: 30
+  #   hour:
+  #     - 0
+  #     - 6
+  #     - 12
+  #     - 18
+  #   monitored_conditions:
+  #     - download
+  #     - upload
   - platform: cpuspeed
     name: CPU
   - platform: systemmonitor
@@ -86,7 +119,7 @@ sensor:
       - type: memory_free
       - type: memory_use_percent
       - type: processor_use
-      - type: since_last_boot
+     # - type: since_last_boot
       - type: disk_use_percent
         arg: /
       - type: process
@@ -202,3 +235,29 @@ sensor:
         {{ ', ' }}
       {%- endif -%}
       {{ '%02d' % hours }}:{{ '%02d' % minutes }}
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: "wallpanel/mywallpanel/sensor/motion"
+    name: "Motion"
+    payload_on: '{"value":true}'
+    payload_off: '{"value":false}'
+    device_class: motion
+
+camera:
+  - platform: mjpeg
+    mjpeg_url: http://192.168.100.134:2971/camera/stream
+    name: WallPanel Camera
+
+# automation:
+# - id: external_ip
+#   alias: 'Check IP'
+#   initial_state: True
+#   trigger:
+#     platform: time
+#     minutes: '/1'
+#     seconds: 00
+#   action:
+#     service: notify.slack__work
+#     data:
+#       message: "WAN IP address has changed to {{states('sensor.external_ip')}}"

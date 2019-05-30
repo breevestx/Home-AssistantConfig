@@ -2,14 +2,18 @@ default_view:
   view: true
   icon: mdi:home
   entities:
+  - group.doors
   - group.scenes
   - group.guest_bath
   - group.Household
   - group.entry_points
   - group.Devices
+  - group.kitchen
   - group.Office
   - group.finance
   - group.climate
+  - group.shellies
+
 
 Alarm Clock:
   name: Alarm Clock
@@ -29,6 +33,8 @@ nodes:
     - group.sensor_node_3_card
     - group.sensor_node_4_card
     - group.zwave_devices
+    - group.freezer
+    - group.mb_heater
 
 
 Radio_view:
@@ -61,6 +67,7 @@ misc_view:
     - group.processes
     - group.hassctl
     - group.pihole
+    - group.wallpanel
 
 automation:
   name: Automation
@@ -99,10 +106,12 @@ Household:
     - light.bruce_lamp
     - input_boolean.alarm_active
     - script.light_alert
-    - switch.mb_heater
-    - sensor.mbheater_ds1
     - input_boolean.windows_open
     - binary_sensor.garage_door
+    - switch.christmas_tree
+    - switch.landing_lights
+    - switch.stairs_lights
+
 
 Devices:
   control: hidden
@@ -133,15 +142,15 @@ Automation Override:
     - input_boolean.office_lights_sunset
     - input_boolean.exterior_on_sunset
     - input_boolean.exterior_off_night
-    - input_boolean.vacation_mode
+    - switch.vacation_mode
     - input_boolean.trash
     - input_boolean.weekly_trash_reminder
     - input_boolean.teatimer
     - input_boolean.dash_input
     - input_boolean.unlock_doors
     - input_boolean.bedtime
-    - input_boolean.vacation_mode
     - input_select.remote
     - input_boolean.restart_hass
     - input_boolean.test_notify
     - input_boolean.bedroom_dash
+    - sensor.last_message

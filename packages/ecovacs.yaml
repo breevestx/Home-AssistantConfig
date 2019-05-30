@@ -1,0 +1,73 @@
+######################################################################
+##  Use MQTT to connect to another HA running ecovacs
+##
+######################################################################
+
+
+# binary_sensor:
+#   - platform: mqtt
+#     state_topic: "homeassistant/binary_sensor/pir_mb_closet/state"
+#     name: "MB Closet PIR"
+#     device_class: motion
+#     payload_on: "on"
+#     payload_off: "off"
+
+vacuum:
+  - platform: mqtt
+    name: "Downstairs"
+    supported_features:
+      - turn_on
+      - turn_off
+      - return_home
+      - battery
+      - status
+      - locate
+      - clean_spot
+      - fan_speed
+      - send_command
+    command_topic: "homeassistant/vacuum/downstairs/state"
+    battery_level_topic: "homeassistant/vacuum/downstairs/battery_level"
+    battery_level_template: "{{ value_json }}"
+    # charging_topic: "homeassistant/vacuum/downstairs/state"
+    # charging_template: "{{ value_json.charging }}"
+    # cleaning_topic: "homeassistant/vacuum/downstairs/status"
+    # cleaning_template: "{{ value_json.cleaning }}"
+    # docked_topic: "homeassistant/vacuum/downstairs/state"
+    # docked_template: "{{ value_json.docked }}"
+    error_topic: "homeassistant/vacuum/downstairs/error"
+    error_template: "{{ value_json }}"
+    # fan_speed_topic: "homeassistant/vacuum/downstairs/state"
+    # fan_speed_template: "{{ value_json.fan_speed }}"
+    # set_fan_speed_topic: "homeassistant/vacuum/downstairs/set_fan_speed"
+    # fan_speed_list:
+    #   - min
+    #   - medium
+    #   - high
+    #   - max
+    send_command_topic: 'homeassistant/vacuum/downstairs/send_command'
+
+
+
+# sensor:
+# - platform: template
+#   sensors:
+#     vacuum_filter:
+#       friendly_name: "Vacuum Filter Remaining Lifespan"
+#       unit_of_measurement: '%'
+#       value_template: "{{ state_attr('vacuum.downstairs', 'component_filter') }}"
+#     vacuum_error:
+#       friendly_name: "Last Error"
+#       value_template: "{{ state_attr('vacuum.downstairs', 'error') }}"
+#     vacuum_battery:
+#       friendly_name: "Vacuum Filter battery"
+#       unit_of_measurement: '%'
+#       value_template: "{{ state_attr('vacuum.downstairs', 'battery_level') }}"
+#
+# binary_sensor:
+#   - platform: template
+#     sensors:
+#       vacuum_filter_replace:
+#         friendly_name: "Vacuum Filter"
+#         device_class: problem
+#         value_template: "{{ state_attr('vacuum.downstairs', 'component_filter') <= 5 }}"
+# logger:

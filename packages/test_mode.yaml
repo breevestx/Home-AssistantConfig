@@ -8,7 +8,7 @@ automation:
       from: 'off'
       to: 'on'
   action:
-    - service: notify.slack__home
+    - service: notify.home
       data_template:
         message: >-
           {%- for state in states if state.entity_id == trigger.entity_id -%}

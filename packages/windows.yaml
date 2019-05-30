@@ -22,7 +22,7 @@ automation:
   alias: 'Windows need to be closed'
   initial_state: True
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/5'
     seconds: 00
   condition:
@@ -33,7 +33,7 @@ automation:
       value_template: '{{ states("sensor.dark_sky_temperature") > states("sensor.main_floor_temperature") }}'
       # The outside temperature is {{  states("sensor.dark_sky_temperature") }} and the inside temp is {{ states("sensor.main_floor_temperature")  }}
   action:
-    - service: notify.slack__home
+    - service: notify.home
       data_template:
         message: >-
           The outside temperature is {{  states("sensor.dark_sky_temperature") }} and the inside temp is {{ states("sensor.main_floor_temperature")  }} so it would be a good time to close the windows

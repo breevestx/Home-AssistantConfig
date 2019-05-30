@@ -5,23 +5,22 @@
 media_player:
 
 ### Volumio TTS
-
-  - platform: mpd
-    host: !secret volumio_url
-    port: !secret volumio_mpd_port
-    name: TTS Hallway
-
-  - platform: volumio
-    host: !secret volumio_url
-    port: !secret volumio_port
-    name: Hallway
-
+  #
+  # - platform: mpd
+  #   host: !secret volumio_url
+  #   port: !secret volumio_mpd_port
+  #   name: TTS Hallway
+  #
+  # - platform: volumio
+  #   host: !secret volumio_url
+  #   port: !secret volumio_port
+  #   name: Hallway
 
 ### Kodi units
 
-  - platform: kodi
-    host: !secret kodi_host_MB
-    name: Kodi_MB
+  # - platform: kodi
+  #   host: !secret kodi_host_MB
+  #   name: Kodi_MB
 
   - platform: kodi
     host: !secret kodi_host_LV
@@ -30,9 +29,10 @@ media_player:
 
   - platform: kodi
     # host: !secret kodi_host_MB
-    host: 192.168.100.28
+    host: 192.168.100.127
     name: Kodi_Office
     port: 8081
+
 
 group:
   players:

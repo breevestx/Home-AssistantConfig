@@ -14,3 +14,9 @@ group.automation:
   order: 98
 group.dev:
   order: 99
+switch.honeywell_unknown_type4952_id3036_switch:
+  friendly_name: office_light
+device_tracker.shelly1_056d19:
+  friendly_name: shelly1-pantry
+person.bruce:
+  icon: /www/tw.PNG

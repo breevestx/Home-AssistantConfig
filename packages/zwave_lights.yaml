@@ -110,7 +110,7 @@
 #       - condition: template
 #         value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
 #     trigger:
-#       platform: time
+#       platform: time_pattern
 #       minutes: '/1'
 #       seconds: 00
 #     action:

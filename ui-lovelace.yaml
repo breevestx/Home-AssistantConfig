@@ -1,0 +1,184 @@
+name: My Awesome Home
+views:
+    # The name of a view will be used as tab title.
+    # Might be used for other things in the future.
+  - id: 0  # Automatically created id
+    title: Home BirdsEye
+    icon: mdi:eye
+    # Each view can have a different theme applied. Theme should be defined in the frontend.
+    theme: dark-mode
+    # The cards to show on this view.
+    cards:
+      - id: 5701ed9bdadc400cad19f8e9c18cffdb  # Automatically created id
+        type: vertical-stack
+        cards:
+        - type: horizontal-stack
+          cards:
+            - type: picture-entity
+          #http://new.monitorsanywhere.com/wp-content/uploads/2016/11/multi-monitor-pc-1024x582.jpg
+              image: http://new.monitorsanywhere.com/wp-content/uploads/2016/11/multi-monitor-pc-1024x582.jpg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=245
+              entity: switch.monitors
+              tap_action: toggle
+              aspect_ratio: 16:9
+            # - type: picture-entity
+            #   image: https://images.pexels.com/photos/285669/pexels-photo-285669.jpeg?auto=compress&cs=tinysrgb&h=295&w=245
+            #   entity: binary_sensor.skybell_front_door_motion
+            #   aspect_ratio: 16:9
+            - type: picture-entity
+              image: https://images.pexels.com/photos/753500/pexels-photo-753500.jpeg?auto=compress&cs=tinysrgb&h=295&w=245
+              entity: group.christmas_lights
+              # state_image:
+              #   on: https://images.pexels.com/photos/753500/pexels-photo-753500.jpeg?auto=compress&cs=tinysrgb&h=295&w=245
+              #   off: https://images.pexels.com/photos/753500/pexels-photo-753500.jpeg?auto=compress&cs=tinysrgb&h=295&w=245&mono=8A8888
+              # entities:
+              #   - switch.christmas_tree
+              #   - switch.landing_lights
+              #   - switch.stairs_lights
+              aspect_ratio: 16:9
+            # tap_action: toggle
+        - type: horizontal-stack
+          cards:
+            - type: picture-entity
+          #https://images.pexels.com/photos/190537/pexels-photo-190537.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260
+              image: https://images.pexels.com/photos/190537/pexels-photo-190537.jpeg?auto=compress&cs=tinysrgb&h=295&w=245
+              entity: cover.garage_door
+              tap_action: toggle
+              aspect_ratio: 16:9
+            - type: picture-entity
+              image: https://images.pexels.com/photos/1321725/pexels-photo-1321725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=245
+              entity: binary_sensor.laundry_room_door
+              aspect_ratio: 16:9
+        - type: horizontal-stack
+          cards:
+            - type: picture-entity
+          # https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260
+              image: https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=245
+              entity: group.bedroom_lamps
+              title: Bedroom Lamps
+              aspect_ratio: 16:9
+              tap_action: toggle
+            - type: picture-entity
+              image: https://images.pexels.com/photos/266604/pexels-photo-266604.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=245
+              entity: switch.salt_lamp
+              tap_action: toggle
+              aspect_ratio: 16:9
+
+
+
+      - id: 24550a15aa92458291e40b705527441a  # Automatically created id
+        type: vertical-stack
+        cards:
+          - type: picture-glance
+            # image: https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=240&w=495
+            # # image: https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=240&w=495
+            title: Kitchen Lights
+            entities:
+              - switch.switch_2
+              - switch.switch_3
+              - light.level
+              - switch.uclight_sink
+              - switch.uclight_bar
+            state_image:
+              on: https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=495
+              off: https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=495&mono=8A8888
+            entity: group.kitchen
+          - type: horizontal-stack
+            cards:
+              - type: conditional
+                conditions:
+                  - entity: group.bedroom_lamps
+                    state: "on"
+                card:
+                  type: light
+                  entity: light.lene_lamp
+              - type: conditional
+                conditions:
+                  - entity: group.bedroom_lamps
+                    state: "on"
+                card:
+                  type: light
+                  entity: light.bruce_lamp
+
+
+    # Specify a tab_icon if you want the view tab to be an icon.
+  - id: 1  # Automatically created id
+    icon: mdi:home-assistant
+    # Name of the view. Will be used as the tooltip for tab icon
+    title: Office
+    cards:
+      - id: f421329411cc4d34a1f3255516c7734a  # Automatically created id
+        type: sensor
+        entity: sensor.office_temperature
+        name: Office Desk Temp
+        height: 50
+        line_color: "#3498db"
+      - type: sensor
+        entity: sensor.office_temperature_2
+        name: Office Ambient Temp
+        height: 50
+        line_color: "#3498db"
+      - type: sensor
+        entity: sensor.main_floor_temperature
+        name: Main Floor Temp
+        height: 50
+        line_color: "#3498db"
+      - type: horizontal-stack
+        cards:
+        - type: entity-button
+          entity: switch.office_light
+          name: Light
+          tap_action: toggle
+          hold_action: more-info
+        - type: entity-button
+          entity: fan.office
+          name: Fan
+          tap_action: toggle
+          hold_action: more-info
+        - type: entity-button
+          entity: switch.monitors
+          tap_action: toggle
+          hold_action: more-info
+      # - type: history-graph
+      #   hours_to_show: 8
+      #   entities:
+      #     - sensor.office_pir
+      #     # - climate.main_floor
+      #     # - climate.upstairs
+
+
+
+      # - id: 08e78baef016438794be8d3dfeeb0d9a  # Automatically created id
+      #   type: gauge
+      #   entity: sensor.cpu
+
+
+      # - id: b32dbb1879c943e5b5cd27de7c9bb1f8  # Automatically created id
+      #   type: entities
+      #   entities:
+      #     - sensor.last_message
+
+  - id: 2  # Automatically created id
+    icon: mdi:camera
+    title: Cameras
+    cards:
+     - type: picture-entity
+       camera_image: camera.driveway_camera_url
+       entity: camera.driveway_camera
+     - type: picture-entity
+       camera_image: camera.front_door_url
+       entity: camera.front_door
+     - type: picture-entity
+       camera_image: camera.wallpanel_camera_url
+       entity: camera.wallpanel_camera
+
+  - id: 3
+    icon: thermostat
+    title: Climate controls
+    cards:
+      - id: 75481efd489b43de9c0f77eadf1168a9  # Automatically created id
+        type: thermostat
+        entity: climate.main_floor
+
+      - id: 0a1e954772f34285b11e4d7daec37e28  # Automatically created id
+        type: thermostat
+        entity: climate.upstairs

@@ -54,17 +54,51 @@ sensor:
       main_floor_mode:
         friendly_name: "Main Floor AC Mode"
         value_template: "{{ states.climate.main_floor.attributes.operation }}"
-
       upstairs_mode:
         friendly_name: "Upstairs AC Mode"
         value_template: "{{ states.climate.upstairs.attributes.operation }}"
-
+      mainfloor_temp_rounded:
+        friendly_name: "Downstairs temperature"
+        value_template: "{{states('sensor.main_floor_temperature')|round}}"
+      upstairs_temp_rounded:
+        friendly_name: "Upstairs temperature"
+        value_template: "{{states('sensor.upstairs_temperature')|round}}"
+      mainfloor_hvac_runtime:
+        friendly_name: "Downstairs HVAC Runtime"
+        unit_of_measurement: "h"
+        value_template: >-
+           {%- if [states.sensor.mainfloor_cool.state|float, states.sensor.mainfloor_heat.state|float, 0]|max != None -%}
+             {{ [states.sensor.mainfloor_cool.state|float, states.sensor.mainfloor_heat.state|float, 0]|max }}
+           {%- else -%}
+             0
+           {%- endif -%}
+        icon_template: >-
+          {%- if states('sensor.mainfloor_cool')|default(0) < states('sensor.mainfloor_heat')|default(0) -%}
+            mdi:fire
+          {%- elif states('sensor.mainfloor_cool')|default(0) > states('sensor.mainfloor_heat')|default(0) -%}
+            mdi:snowflake
+          {%- endif -%}
+      upstairs_hvac_runtime:
+        friendly_name: "Upstairs HVAC Runtime"
+        unit_of_measurement: "h"
+        value_template: >-
+           {%- if [states.sensor.upstairs_cool.state|float, states.sensor.upstairs_heat.state|float, 0]|max != None -%}
+             {{ [states.sensor.upstairs_cool.state|float, states.sensor.upstairs_heat.state|float, 0]|max }}
+           {%- else -%}
+             0
+           {%- endif -%}
+        icon_template: >-
+          {%- if states('sensor.upstairs_cool')|default(0) < states('sensor.upstairs_heat')|default(0) -%}
+            mdi:fire
+          {%- elif states('sensor.upstairs_cool')|default(0) > states('sensor.upstairs_heat')|default(0) -%}
+            mdi:snowflake
+          {%- endif -%}
 
 group:
   Climate:
     name: Climate controls
     view: yes
-    icon: mdi:nest-thermostat
+    icon: mdi:thermostat
     entities:
       - group.ecobee_main
       - group.ecobee_upstairs
@@ -74,20 +108,29 @@ group:
     - binary_sensor.bedroom_occupancy
     - binary_sensor.office_occupancy
     - binary_sensor.main_floor_occupancy
+    - binary_sensor.kitchen_occupancy
     - sensor.bedroom_temperature
     - sensor.office_temperature_2
+    - sensor.kitchen_temerature
+    - sensor.kitchen_humidity
     - sensor.main_floor_humidity
     - sensor.main_floor_temperature
     - climate.main_floor_operation
     - sensor.main_floor_mode
 
   Ecobee Upstairs:
-    - binary_sensor.kids_room_occupancy
-    - sensor.kids_room_temperature
-    - sensor.upstairs_humidity
-    - sensor.upstairs_temperature
     - climate.upstairs_operation
+    - binary_sensor.bb_room_occupancy
+    - binary_sensor.kent_room_occupancy
+    - binary_sensor.upstairs_occupancy
+    - sensor.bb_room_humility
+    - sensor.bb_room_temperature
+    - sensor.kent_room_humidity
+    - sensor.kent_room_temperature
+    - sensor.upstairs_humidity
     - sensor.upstairs_mode
+    - sensor.upstairs_temperature
+
     # - automation.turn_off_ac_after_3_hours_of_cooling
     # - input_boolean.air_condition
     # - input_boolean.heater
@@ -204,7 +247,7 @@ automation:
           name: "Ecobee Activity: "
           message: >-
             {{ trigger.entity_id.attributes.friendly_name }} changed to {{(trigger.to_state.state)}} from {{(trigger.last_state)}}
-      - service: notify.slack__home
+      - service: notify.home
         data_template:
           message: >
             {{ trigger.entity_id.attributes.friendly_name }} changed to {{(trigger.to_state.state)}} from {{(trigger.last_state)}}
@@ -225,7 +268,7 @@ automation:
         data:
           entity_id: input_select.page_location
           option: 'Office'
-      - service: script.speech_engine
-        data_template:
-          EcobeeStatus: "The {{ trigger.entity_id.split('.')[1].split('_')[0]}} {{ trigger.entity_id.split('.')[1].split('_')[1]}} has now been turned on for {{(trigger.to_state.state)}}."
-          call_window_check: 1
+      # - service: script.speech_engine
+      #   data_template:
+      #     EcobeeStatus: "The {{ trigger.entity_id.split('.')[1].split('_')[0]}} {{ trigger.entity_id.split('.')[1].split('_')[1]}} has now activated {{(trigger.to_state.state)}} mode."
+      #     call_window_check: 1

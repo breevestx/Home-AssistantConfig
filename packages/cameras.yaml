@@ -61,6 +61,7 @@ group:
     - group.camera_tamper_detection
 
 
+
   Camera Motion:
     entities:
       - binary_sensor.frontdoor_camera_motion
@@ -100,69 +101,47 @@ switch:
     host: !secret driveway_camera_ip
     username: !secret hkcamera_username
     password: !secret hkcamera_password
-#
-# # ffmpeg:
-# #   ffmpeg_bin: /usr/bin/ffmpeg
-#
-# # binary_sensor:
-# #   - platform: ffmpeg_motion
-# #     input: http://192.168.100.191:8080/video
+
 binary_sensor:
   - platform: hikvision
     name: Driveway Camera
     host: !secret driveway_camera_ip
     username: !secret hkcamera_username
     password: !secret hkcamera_password
-#
-#
-# android_ip_webcam:
-#     host: 192.168.100.191
-#     port: 8080
-#     name: driveway
-#     sensors:
-#       # - audio_connections
-#       - battery_level
-#       - battery_temp
-#       # - battery_voltage
-#       # - light
-#       # - motion
-#       # - pressure
-
-# camera:
-#   - platform: mjpeg
-#     name: Office camera
-#     mjpeg_url: http://192.168.100.28:8100/Mjpeg/0?authToken=b799a8ea-cfa2-4098-9046-fbb55ac506f1
 
 automation:
-  - alias: Driveway camera
+  - alias: Driveway camera motioneye
     trigger:
-      - platform: state
-        entity_id:
-          - binary_sensor.driveway_camera_line_crossing
-          - binary_sensor.driveway_camera_field_detection
-          - binary_sensor.skybell_front_door_motion
-        from: 'off'
-        to: 'on'
+      - platform: webhook
+        webhook_id: driveway_camera_motion
     # condition:
     #    - condition: state
     #      entity_id: device_tracker.brucesiphone2_ios
     #      state: 'not_home'
     action:
-      - service: notify.slack__dev
-        data_template:
-           message: >
-             {%- set responses = [
-             'Motion detected near the driveway.',
-             'Something or Someone is in the driveway',
-             'I have notice activity in the driveway.'] -%}
-             {{ responses | random }}
+      # - service: notify.home
+      #   data_template:
+      #      message: >
+      #        {%- set responses = [
+      #        'Motion detected near the driveway.',
+      #        'Something or Someone is in the driveway',
+      #        'I have notice activity in the driveway.'] -%}
+      #        {{ responses | random }}
+      #     data:
+      #       attachment:
+      #         content-type: jpeg
+      #       entity_id: camera.driveway_camera
       - service: notify.ios_devices
         data_template:
-          message: "Check {{ trigger.entity_id.split('.')[1].split('_')[0] | title }} camera."
+          message: >
+            {%- set responses = [
+            'Motion detected near the driveway.',
+            'Something or Someone is in the driveway',
+            'I have notice activity in the driveway.'] -%}
+            {{ responses | random }}
           data:
+            attachment:
+              content-type: jpeg
             push:
               category: camera
-            entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[0] ~ '' ~ '_camera' }}"
-            attachment:
-              url: "{{ states.camera[trigger.entity_id.split('.')[1].split('_')[0] ~ '' ~ '_camera'].attributes.entity_picture }}"
-              content-type: jpg
+            entity_id: camera.driveway_camera

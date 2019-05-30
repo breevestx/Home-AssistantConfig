@@ -31,3 +31,12 @@ google_calendars.yaml
 ip_bans.yaml
 /homebridge_config/*
 /dasher_config/*
+/custom_components/*
+OZW_Log.txt
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal
+*.sqlite
+*.log
+*.json
+*.db-shm
+*.db-wa1

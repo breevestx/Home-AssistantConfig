@@ -1,0 +1,244 @@
+#
+#
+# ################################################################
+# ## Package / Kitchen lights
+# ################################################################
+#
+#
+#
+homeassistant:
+  customize:
+    light.level:
+      friendly_name: 'Bar Can Lights'
+      emulated_hue: true
+      icon: mdi:ceiling-light
+    switch.switch_2:
+      friendly_name: 'Kitchen Main Lights'
+      emulated_hue: true
+      icon: mdi:ceiling-light
+    switch.Switch_3:
+      friendly_name: 'Kitchen Sink light'
+      emulated_hue: true
+      icon: mdi:ceiling-light
+    switch.uclight_bar:
+      friendly_name: 'Bar side Under Cabinet Lights'
+      emulated_hue: true
+      icon: mdi:lightbulb
+    switch.uclight_sink:
+      friendly_name: 'Sink side Under Cabinet lights'
+      emulated_hue: true
+      icon: mdi:lightbulb
+    scene.kitchen_on:
+      friendly_name: 'Kitchen Accent Lights'
+      emulated_hue: true
+#     input_slider.bedroom_lamps_brightness:
+#       icon: mdi:lightbulb-on
+#
+switch:
+  - platform: mqtt
+    name: "uclight sink"
+    command_topic: "cmnd/uclights-sink/power"
+    state_topic: "stat/uclights-sink/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "uclight bar"
+    command_topic: "cmnd/uclights-bar/power"
+    state_topic: "stat/uclights-bar/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+group:
+  kitchen:
+    control: hidden
+    name: Kitchen Light Controls
+    entities:
+      - switch.switch_2
+      - switch.Switch_3
+      - light.level
+      - switch.uclight_sink
+      - switch.uclight_bar
+
+  kitchen accent:
+    control: hidden
+    name: Accent lights
+    entities:
+      - light.level
+      - switch.uclight_sink
+      - switch.uclight_bar
+#
+scene:
+  - name: kitchen_on
+    entities:
+      group.kitchen:
+        state: on
+
+  - name: kitchen_off
+    entities:
+      group.kitchen:
+        state: off
+
+  - name: kitchen_accent
+    entities:
+      group.kitchen_accent:
+        state: on
+
+#
+automation:
+  - alias: Kitchen Dimmer - Double Tap On
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.light.level
+        scene_id: 1
+        scene_data: 7860
+    action:
+      - service: scene.turn_on
+        entity_id: scene.kitchen_on
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 7
+          size: 1
+
+  - alias: Kitchen Dimmer - Double Tap Off
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.light.level
+        scene_id: 2
+        scene_data: 7860
+    action:
+      - service: scene.turn_on
+        entity_id: scene.kitchen_off
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 0
+          size: 1
+
+  - alias: Kitchen Dimmer - Triple Tap On
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.light.level
+        scene_id: 1
+        scene_data: 7920
+    action:
+      - service: scene.turn_on
+        entity_id: scene.kitchen_accent
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 7
+          size: 1
+
+  - alias: Kitchen Dimmer - Triple Tap Off
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.light.level
+        scene_id: 2
+        scene_data: 7920
+    action:
+      - service: scene.turn_on
+        entity_id: scene.kitchen_off
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 0
+          size: 1
+
+  - alias: Kitchen Dimmer - Quad Tap On
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.light.level
+        scene_id: 1
+        scene_data: 7980
+    action:
+      # - service: script.radio_away
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 7
+          size: 1
+
+  - alias: Kitchen Dimmer - Quad Tap Off
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.light.level
+        scene_id: 2
+        scene_data: 7980
+    action:
+      # - service: script.radio_stop
+      - service: zwave.set_config_parameter
+        data:
+          node_id: 7
+          parameter: 21
+          value: 0
+          size: 1
+
+
+  # - id: activate_lights
+  #   alias: 'Turn lights on'
+  #   initial_state: True
+  #   condition:
+  #     condition: and
+  #     conditions:
+  #       - condition: state
+  #         entity_id: group.kitchen
+  #         state: 'off'
+  #       - condition: time
+  #         after: '00:07:00'
+  #         before: '23:00:00'
+  #   trigger:
+  #     - platform: state
+  #       entity_id: sensor.kitchen_pir
+  #       to: 'motion detected'
+  #   action:
+  #     - service: scene.turn_on
+  #       entity_id: scene.kitchen_accent
+
+  # - id: disable_lights
+  #   alias: 'Turn lights off'
+  #   initial_state: True
+  #   trigger:
+  #     platform: time_pattern
+  #     minutes: '/3'
+  #     seconds: 00
+  #   condition:
+  #     condition: and
+  #     conditions:
+  #       - condition: state
+  #         entity_id: group.kitchen
+  #         state: 'on'
+  #       # - condition: time
+  #       #   # At least one of the following is required.
+  #       #   after: '17:00:00'
+  #       #   before: '05:00:00'
+  #       - condition: template
+  #         value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.kitchen_pir.last_changed)) > 600 }}'
+  #       - condition: state
+  #         entity_id: switch.vacation_mode
+  #         state: 'off'
+  #   action:
+  #     - service: scene.turn_on
+  #       entity_id: scene.kitchen_off

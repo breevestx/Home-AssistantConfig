@@ -26,7 +26,10 @@ group:
     - group.Weather_Home
 
   Weather Data:
+    - sensor.sunrise
     - sensor.dark_sky_temperature
+    - sensor.daily_low_temperature
+    - sensor.daily_high_temperature
     - sensor.dark_sky_precip_probability
     - sensor.dark_sky_precip_intensity
     - sensor.dark_sky_nearest_storm_distance
@@ -47,7 +50,9 @@ camera:
     name: Lawton Doppler Weather
     still_image_url: 'https://icons.wxug.com/data/weather-maps/radar/united-states/lawton-oklahoma-region-current-radar-animation.gif'
 
-
+  - platform: generic
+    still_image_url: !secret meteogram_url
+    name: Meteogram
 
 
 sensor:
@@ -61,9 +66,8 @@ sensor:
     api_key: !secret darksky_key
     monitored_conditions:
       - summary
-      - icon
-      - nearest_storm_distance
-      - nearest_storm_bearing
+      # - nearest_storm_distance
+      # - nearest_storm_bearing
       - precip_type
       - precip_intensity
       - precip_probability
@@ -81,16 +85,16 @@ sensor:
       - minutely_summary
       - hourly_summary
       - daily_summary
-      - temperature_max
-      - temperature_min
-      - apparent_temperature_max
-      - apparent_temperature_min
+      - temperature_low
+      - temperature_high
+      - apparent_temperature_high
+      - apparent_temperature_low
       - precip_intensity_max
   - platform: template
     sensors:
       weather_report:
         value_template: >
-          The weather is {{states('sensor.dark_sky_minutely_summary')[:-1]|lower}} and {{states('sensor.dark_sky_apparent_temperature') | round}} degrees. Today's high is {{states('sensor.dark_sky_daily_high_temperature')| round}} with a low of {{states('sensor.dark_sky_daily_low_temperature') | round}}.
+          The weather is {{states('sensor.dark_sky_minutely_summary')[:-1]|lower}} and {{states('sensor.dark_sky_apparent_temperature') | round}} degrees. Today's high is {{states('sensor.dark_sky_temperature_high')| round}} with a low of {{states('sensor.dark_sky_temperature_low') | round}}.
           {%- if states.sensor.pws_uv.state|int == 0 -%}
           {%- else -%}
           {{' '}}The current UV index is {{states('sensor.pws_uv')}} with a burn time of {{states('sensor.uv_burn_time')}} minutes.
@@ -103,7 +107,7 @@ sensor:
           false
           {% endif %}
 
-#{% if (states.sensor.average_house_temp.state | float) >  (states.sensor.dark_sky_apparent_temperature.state | float) %}
+# {% if (states.sensor.average_house_temp.state | float) >  (states.sensor.dark_sky_apparent_temperature.state | float) %}
 #######  UV
 # http://beautyinthebackcountry.com/2013/04/09/uv-index-and-spf-explained/
       uv_burn_time:

@@ -13,6 +13,15 @@ device_tracker:
     hosts:
       freezer: 192.168.100.207
 
+group:
+  freezer:
+      control: hidden
+      name: Freezer TH16
+      entities:
+        - sensor.freezer
+        - switch.freezer
+        - sensor.freezer_ds1
+
 sensor:
   - platform: template
     sensors:
@@ -35,7 +44,7 @@ sensor:
   - platform: mqtt
     state_topic: "stat/freezer/STATUS10"
     name: freezer_ds1
-    value_template: "{{ value_json.StatusSNS.DS18x20.DS1.Temperature }}"
+    value_template: "{{ value_json.StatusSNS.DS18x20.DS1.Temperature | int * 9//5 + 32 }}"
     unit_of_measurement: 'F'
 
 input_boolean:
@@ -53,7 +62,7 @@ automation:
   #   - condition: template
   #     value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.freezer.last_changed)) > 300 }}'
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/1'
     seconds: 00
   action:
@@ -65,7 +74,7 @@ automation:
     platform: numeric_state
     entity_id: sensor.freezer_ds1
     # At least one of the following required
-    above: 10
+    above: 12
     # below: 25
   condition:
     # - condition: state
@@ -81,7 +90,7 @@ automation:
         name: "Freezer Temp Alarm: "
         message: >-
           The freezer is currently at {{  states("sensor.freezer_ds1") }}°F degrees and triggering the notification.
-    - service: notify.slack__home
+    - service: notify.home
       data_template:
         message: >
          The freezer is currently at {{  states("sensor.freezer_ds1") }}°F degrees and should be checked.

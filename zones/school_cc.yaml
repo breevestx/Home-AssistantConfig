@@ -1,4 +1,4 @@
-name: CC
+name: CC-Watagua
 latitude: !secret zcc_latitude
 longitude: !secret zcc_longitude
 radius: !secret zcc_radius

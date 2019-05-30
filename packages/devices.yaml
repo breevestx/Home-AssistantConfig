@@ -1,17 +1,17 @@
-# homeassistant:
-#   customize:
-#     sensor.Lene_to_home:
-#       icon: mdi:car
-#     sensor.Bruce_to_home:
-#       icon: mdi:car
-#     sensor.From_home_to_Church:
-#       icon: mdi:car
-#     proximity.home:
-#       friendly_name: Anyone's proximity
-#     proximity.lene_home:
-#       friendly_name: Her proximity
-#     proximity.bruce_home:
-#       friendly_name: His proximity
+homeassistant:
+  customize:
+    device_tracker.bruce_iphone:
+      icon: mdi:cellphone-iphone
+      friendly_name: Bruce's Phone
+    device_tracker.lene_iphone:
+      icon: mdi:cellphone-iphone
+      friendly_name: Lene's Phone
+    device_tracker.kahlan_iphone:
+      icon: mdi:cellphone-iphone
+      friendly_name: Kahlan's phone
+    device_tracker.breevsipad:
+      icon: mdi:tablet-ipad
+      friendly_name: Bruces's ipad
 
 
 # input_boolean:
@@ -97,8 +97,7 @@
 #     destination: zone.school_cc
 #     options:
 #       mode: driving
-device_tracker:
-  - platform: owntracks_http
+owntracks:
     max_gps_accuracy: 200
 
 
@@ -108,14 +107,14 @@ automation:
     trigger:
       platform: numeric_state
       entity_id:
-      - device_tracker.brucesiphone2_ios
-      - device_tracker.leneiphone_ios
-      - device_tracker.kahlans_iphone_ios
+      - device_tracker.bruce_iphone
+      - device_tracker.lene_iphone
+      - device_tracker.kahlan_iphone
       - device_tracker.breevsipad
       value_template: '{{ state.attributes.battery }}'
       below: 30
     action:
-      service: notify.slack__dev
+      service: notify.dev
       data_template:
         message: >
           {{ trigger.to_state.attributes.friendly_name }}'s phone battery is low: {{ trigger.to_state.attributes.battery }}%
@@ -141,7 +140,7 @@ automation:
       #   data_template:
       #     name: "Bedroom lamps On: "
       #      message: Turned lamps on via Automation
-      - service: notify.slack__dev
+      - service: notify.dev
         data_template:
           message: >
             {%- set responses = [

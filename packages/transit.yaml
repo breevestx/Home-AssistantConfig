@@ -6,6 +6,10 @@ homeassistant:
       icon: mdi:car
     sensor.From_home_to_Church:
       icon: mdi:car
+    sensor.to_CC:
+      icon: mdi:car
+    sensor.to_piano:
+      icon: mdi:car
     proximity.home:
       friendly_name: Anyone's proximity
     proximity.lene_home:
@@ -33,6 +37,7 @@ group:
   - proximity.bruce_home
   - proximity.kahlan_home
   - proximity.home
+  - person.bruce
   - device_tracker.bruce_iphone
   - device_tracker.lene_iphone
   - device_tracker.kahlan_iphone
@@ -135,10 +140,10 @@ sensor:
       mode: driving
 
   - platform: google_travel_time
-    name: To CC
+    name: To CC Watagua
     api_key: !secret google_api_key
     origin: zone.home
-    destination: zone.cc
+    destination: zone.ccwatagua
     options:
       mode: driving
 
@@ -149,6 +154,39 @@ sensor:
     destination: zone.piano
     options:
       mode: driving
+
+
+  # - platform: waze_travel_time
+  #   name: Lene To Home
+  #   region: 'US'
+  #   origin: device_tracker.lene_iphone
+  #   destination: zone.home
+
+  # - platform: waze_travel_time
+  #   name: Bruce To Home
+  #   region: 'US'
+  #   origin: device_tracker.bruce_iphone
+  #   destination: zone.home
+  #
+  #
+  # - platform: waze_travel_time
+  #   name: From Home to Church
+  #   region: 'US'
+  #   origin: zone.home
+  #   destination: zone.church
+  #
+  # - platform: waze_travel_time
+  #   name: To CC
+  #   region: 'US'
+  #   origin: zone.home
+  #   destination: zone.cc
+  #
+  # - platform: waze_travel_time
+  #   name: To piano
+  #   region: 'US'
+  #   origin: zone.home
+  #   destination: zone.piano
+
 
 automation:
 - alias: Time to church

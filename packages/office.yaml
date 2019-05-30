@@ -16,11 +16,11 @@ input_select:
     initial: False
     icon: mdi:camera
 
-# input_boolean:
-#   office_motion:
-#     name: Motion Detected
-#     initial: off
-#     icon: mdi:light
+input_boolean:
+  guest_room:
+    name: Guest Room Mode
+    initial: off
+    icon: mdi:light
 #
 # binary_sensor:
 #   - platform: mqtt
@@ -33,8 +33,11 @@ input_select:
 
 group:
   Office:
-    - input_select.conference
+    # - input_select.conference
+    - input_boolean.guest_room
     - switch.monitors
+    - switch.office_light
+    - fan.office
     - sensor.office_pir
     - binary_sensor.office_occupancy
     - sensor.office_temperature
@@ -42,84 +45,92 @@ group:
     - climate.main_floor_operation
     - sensor.main_floor_mode
 
+
+sensor:
+  - platform: template
+    sensors:
+      fan_speed:
+        friendly_name: 'Fan Speed'
+        value_template: "{{ state_attr('fan.office', 'speed') }}"
+
 automation:
-- id: conf_no
-  alias: 'Conference Off'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: input_select.conference
-      to: 'False'
- # condition:
- #   - condition: state
- #     entity_id: input_select.conference
- #     state: 'False'
- #   - condition: template
- #     value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
-  action:
-    - service: logbook.log
-      data_template:
-        name: "Conference"
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
-          {%- endfor -%}
-    - service: notify.notify
-      data_template:
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
-          {%- endfor -%}
-
-- id: conf_phone
-  alias: 'Conference On Phone'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: input_select.conference
-      to: 'Phone'
-#  condition:
-#    - condition: template
-#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
-  action:
-    - service: logbook.log
-      data_template:
-        name: "conference"
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
-          {%- endfor -%}
-    - service: notify.notify
-      data_template:
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            Bruce is on a {{states.input_select.conference.state}} Conference call.
-          {%- endfor -%}
-
-- id: conf_video
-  alias: 'Conference On Video'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: input_select.conference
-      to: 'Video'
-#  condition:
-#    - condition: template
-#      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
-  action:
-    - service: logbook.log
-      data_template:
-        name: "conference"
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
-          {%- endfor -%}
-    - service: notify.notify
-      data_template:
-        message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            Bruce is on a {{states.input_select.conference.state}} Conference call.
-          {%- endfor -%}
+# - id: conf_no
+#   alias: 'Conference Off'
+#   initial_state: True
+#   trigger:
+#     - platform: state
+#       entity_id: input_select.conference
+#       to: 'False'
+#  # condition:
+#  #   - condition: state
+#  #     entity_id: input_select.conference
+#  #     state: 'False'
+#  #   - condition: template
+#  #     value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
+#   action:
+#     - service: logbook.log
+#       data_template:
+#         name: "Conference"
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+#           {%- endfor -%}
+#     - service: notify.notify
+#       data_template:
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+#           {%- endfor -%}
+#
+# - id: conf_phone
+#   alias: 'Conference On Phone'
+#   initial_state: True
+#   trigger:
+#     - platform: state
+#       entity_id: input_select.conference
+#       to: 'Phone'
+# #  condition:
+# #    - condition: template
+# #      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
+#   action:
+#     - service: logbook.log
+#       data_template:
+#         name: "conference"
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+#           {%- endfor -%}
+#     - service: notify.notify
+#       data_template:
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             Bruce is on a {{states.input_select.conference.state}} Conference call.
+#           {%- endfor -%}
+#
+# - id: conf_video
+#   alias: 'Conference On Video'
+#   initial_state: True
+#   trigger:
+#     - platform: state
+#       entity_id: input_select.conference
+#       to: 'Video'
+# #  condition:
+# #    - condition: template
+# #      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_select.conference.last_changed)) > 30 }}'
+#   action:
+#     - service: logbook.log
+#       data_template:
+#         name: "conference"
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             {{ state.attributes.friendly_name }} status is set to {{states.input_select.conference.state}}.
+#           {%- endfor -%}
+#     - service: notify.notify
+#       data_template:
+#         message: >-
+#           {%- for state in states if state.entity_id == trigger.entity_id -%}
+#             Bruce is on a {{states.input_select.conference.state}} Conference call.
+#           {%- endfor -%}
 
 - id: activate_monitors
   alias: 'Turn monitors on'
@@ -130,8 +141,11 @@ automation:
       - condition: state
         entity_id: switch.monitors
         state: 'off'
-      - condition: time
-        after: '00:01:00'
+      # - condition: time
+      #   after: '00:01:00'
+      - condition: state
+        entity_id: input_boolean.guest_room
+        state: 'off'
   trigger:
     - platform: state
       entity_id: sensor.office_pir
@@ -144,7 +158,7 @@ automation:
   alias: 'Turn monitors off'
   initial_state: True
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/1'
     seconds: 00
   condition:
@@ -160,7 +174,7 @@ automation:
       - condition: template
         value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.office_pir.last_changed)) > 180 }}'
       - condition: state
-        entity_id: input_boolean.vacation_mode
+        entity_id: switch.vacation_mode
         state: 'off'
   action:
     - service: switch.turn_off
@@ -172,7 +186,7 @@ automation:
   initial_state: true
   hide_entity: true
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/1'
     seconds: 00
   condition:
@@ -201,3 +215,138 @@ automation:
       data:
         call_open_office_window: 1
         call_no_announcement: 0
+
+#sensor.office_temperature
+
+- id: turn_on_office_fan
+  alias: Turn on the fan
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: time_pattern
+    minutes: '/1'
+    seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.monitors
+        state: 'on'
+      - condition: state
+        entity_id: fan.office
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.office_temperature
+        above: 79
+      - condition: time
+        # At least one of the following is required.
+        after: '09:00:00'
+        before: '22:00:00'
+  action:
+    - service: fan.toggle
+      entity_id: fan.office
+
+- id: auto_office_fan_low
+  alias: Adjust the fan based on temp low
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: time_pattern
+    minutes: '/1'
+    seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.monitors
+        state: 'on'
+      - condition: state
+        entity_id: fan.office
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.office_temperature
+        below: 74
+      - condition: time
+        # At least one of the following is required.
+        after: '09:00:00'
+        before: '22:00:00'
+  action:
+    - service: fan.set_speed
+      entity_id: fan.office
+      data: {"speed": "low" }
+
+- id: auto_office_fan_med
+  alias: Adjust the fan based on temp med
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: time_pattern
+    minutes: '/1'
+    seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.monitors
+        state: 'on'
+      - condition: state
+        entity_id: fan.office
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.office_temperature
+        above: 76
+        below: 78
+      - condition: time
+        # At least one of the following is required.
+        after: '09:00:00'
+        before: '22:00:00'
+  action:
+    - service: fan.set_speed
+      entity_id: fan.office
+      data: {"speed": "medium" }
+
+- id: auto_office_fan_high
+  alias: Adjust the fan based on temp high
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: time_pattern
+    minutes: '/1'
+    seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.monitors
+        state: 'on'
+      - condition: state
+        entity_id: fan.office
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.office_temperature
+        above: 79
+      - condition: time
+        # At least one of the following is required.
+        after: '09:00:00'
+        before: '22:00:00'
+  action:
+    - service: fan.set_speed
+      entity_id: fan.office
+      data: {"speed": "high" }
+
+# - id: reminder_snack
+#   alias: 'Reminder Snack'
+#   initial_state: True
+#   trigger:
+#     - platform: time
+#       at: '10:00:00'
+#     - platform: time
+#       at: '15:00:00'
+#   condition:
+#     condition: state
+#     entity_id: switch.monitors
+#     state: 'on'
+#   action:
+#     service: notify.work
+#     data:
+#       message: "Time to grab a quick snack"

@@ -1,0 +1,5 @@
+name: CC-Keller
+latitude: !secret zcck_latitude
+longitude: !secret zcck_longitude
+radius: !secret zcck_radius
+icon: mdi:school
