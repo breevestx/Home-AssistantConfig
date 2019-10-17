@@ -120,22 +120,22 @@ sensor:
     name: 'Last Backup'
     scan_interval: 60
 
-sabnzbd:
-  host: !secret sabnzb_ip
-  port: 8081
-  api_key: !secret sabnzb_key
-  sensors:
-    - current_status
-    - speed
-    - queue_size
-    - queue_remaining
-    - disk_size
-    - disk_free
-    - queue_count
-    - day_size
-    - week_size
-    - month_size
-    - total_size
+# sabnzbd:
+#   host: !secret sabnzb_ip
+#   port: 8081
+#   api_key: !secret sabnzb_key
+#   sensors:
+#     - current_status
+#     - speed
+#     - queue_size
+#     - queue_remaining
+#     - disk_size
+#     - disk_free
+#     - queue_count
+#     - day_size
+#     - week_size
+#     - month_size
+#     - total_size
 
 shell_command:
   backup_config: 'sudo bash /home/homeassistant/.homeassistant/shell/backup_config.sh'

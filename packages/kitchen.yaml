@@ -36,22 +36,41 @@ homeassistant:
 #
 switch:
   - platform: mqtt
-    name: "uclight sink"
+    name: "uclight sink" #192.168.100.197
     command_topic: "cmnd/uclights-sink/power"
-    state_topic: "stat/uclights-sink/POWER"
+    state_topic: "stat/uclights-sink/POWER1"
+    availability_topic: "tele/uclights-sink/LWT"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
   - platform: mqtt
-    name: "uclight bar"
+    name: "uclight bar" #192.168.100.20
     command_topic: "cmnd/uclights-bar/power"
-    state_topic: "stat/uclights-bar/POWER"
+    state_topic: "stat/uclights-bar/POWER1"
+    availability_topic: "tele/uclights-sink/LWT"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
 
+sensor:
+  - platform: mqtt
+    state_topic: "tele/uclights-sink/STATE"
+    name: "uclights-sink RSSI"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/uclights-sink/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    state_topic: "tele/uclights-bar/STATE"
+    name: "uclights-bar RSSI"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/uclights-bar/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
 
 group:
   kitchen:
@@ -63,6 +82,7 @@ group:
       - light.level
       - switch.uclight_sink
       - switch.uclight_bar
+      - light.dining_room
 
   kitchen accent:
     control: hidden

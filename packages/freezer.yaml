@@ -28,24 +28,34 @@ sensor:
       freezer:
         friendly_name: 'Freezer'
         value_template: "{{ 'Online' if is_state('device_tracker.freezer', 'home') else 'Offline' }}"
-      # freezer_temp:
-      #   friendly_name: 'Freezer Temperature'
-      #   value_template: '{{ "%+.1f"|format(states.sensor.freezer_ds1) }}'
-      #   unit_of_measurement: 'F'
-  - platform: mqtt
-    state_topic: "tele/freezer/STATE"
-    name: "freezer_state"
-    value_template: "{{ value }}"
+      freezer_safe:
+        friendly_name: 'Safe Zone'
+        value_template: -18
+        unit_of_measurement: 'C'
+
   # - platform: mqtt
-  #   state_topic: "tele/freezer/SENSOR"
-  #   name: freezer_ds1
-  #   value_template: "{{ value_json.DS18x20.DS1.Temperature }}"
-  #   unit_of_measurement: 'F'
+  #   state_topic: "tele/freezerplug/STATE"
+  #   name: "freezerplug_state"
+  #   value_template: "{{ value }}"
+  # - platform: mqtt
+  #   state_topic: "tele/freezerplug/STATE"
+  #   name: "freezerplug_load"
+  #   value_template: "{{ value_json.LoadAvg }}"
   - platform: mqtt
     state_topic: "stat/freezer/STATUS10"
     name: freezer_ds1
-    value_template: "{{ value_json.StatusSNS.DS18x20.DS1.Temperature | int * 9//5 + 32 }}"
-    unit_of_measurement: 'F'
+    # value_template: "{{ value_json.StatusSNS.DS18B20.Temperature | int * 9//5 + 32 }}"
+    value_template: "{{ value_json.StatusSNS.DS18B20.Temperature | int }}"
+    unit_of_measurement: 'C'
+  - platform: mqtt
+    state_topic: "tele/freezer/STATE"
+    name: "Freezer Signal"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/freezer/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
 
 input_boolean:
   freezer:
@@ -74,7 +84,7 @@ automation:
     platform: numeric_state
     entity_id: sensor.freezer_ds1
     # At least one of the following required
-    above: 12
+    above: 40
     # below: 25
   condition:
     # - condition: state

@@ -12,7 +12,12 @@ homeassistant:
     device_tracker.breevsipad:
       icon: mdi:tablet-ipad
       friendly_name: Bruces's ipad
-
+    person.bruce:
+      entity_picture: /local/tw.png
+    person.lene:
+      entity_picture: /local/ml.png
+    person.kahlan:
+       entity_picture: /local/minion1.jpg
 
 # input_boolean:
 #   alert_delays:
@@ -43,60 +48,6 @@ homeassistant:
 #     limit_refetch_to_url_change: true
 
 
-# proximity:
-#   lene_home:
-#     devices:
-#       - device_tracker.leneiphone_ios
-#     tolerance: 50
-#     unit_of_measurement: !secret proximity_unit_of_measurement
-#   bruce_home:
-#     devices:
-#       - device_tracker.brucesiphone2_ios
-#     tolerance: 50
-#     unit_of_measurement: !secret proximity_unit_of_measurement
-#   home:
-#     devices:
-#       - device_tracker.brucesiphone2_ios
-#       - device_tracker.leneiphone_ios
-#     tolerance: 50
-#     unit_of_measurement: !secret proximity_unit_of_measurement
-
-# sensor:
-#   - platform: statistics
-#     name: Her Distance
-#     entity_id: proximity.lene_home
-
-#   - platform: statistics
-#     name: His Distance
-#     entity_id: proximity.bruce_home
-
-#   - platform: google_travel_time
-#     name: Lene To Home
-#     api_key: !secret google_api_key
-#     origin: device_tracker.leneiphone_ios
-#     destination: zone.home
-
-#   - platform: google_travel_time
-#     name: Bruce To Home
-#     api_key: !secret google_api_key
-#     origin: device_tracker.brucesiphone2_ios
-#     destination: zone.home
-
-#   - platform: google_travel_time
-#     name: From Home to Church
-#     api_key: !secret google_api_key
-#     origin: zone.home
-#     destination: zone.church
-#     options:
-#       mode: driving
-
-#   - platform: google_travel_time
-#     name: To CC
-#     api_key: !secret google_api_key
-#     origin: zone.home
-#     destination: zone.school_cc
-#     options:
-#       mode: driving
 owntracks:
     max_gps_accuracy: 200
 
@@ -127,12 +78,12 @@ automation:
     initial_state: True
     condition:
       - condition: state
-        entity_id: device_tracker.brucesiphone2_ios
+        entity_id: person.bruce
         state: 'not_home'
     trigger:
       - platform: sun
         event: sunset
-        offset: '-00:45:00'
+        # offset: '-00:45:00'
     action:
       - service: homeassistant.turn_on
         entity_id: group.Bedroom_lamps

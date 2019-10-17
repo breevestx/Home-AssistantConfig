@@ -18,6 +18,13 @@
     #   # emulated_hue_name: "Bennett Alarm"
     #   friendly_name: Alarm Clock Enabled
 
+shelly:
+  discovery: true
+  additional_information: yes
+  wifi_sensor: yes
+  uptime_sensor: yes
+  igmp_fix: true
+
 group:
   shellies:
     name: Shelly Lights
@@ -30,33 +37,57 @@ group:
 
 light:
   - platform: mqtt
-    name: "Schoolroom Light"
+    name: "Schoolroom Light" #192.168.100.232
     state_topic: "shellies/shelly1-0598F4/relay/0"
     command_topic: "shellies/shelly1-0598F4/relay/0/command"
     payload_on: "on"
     payload_off: "off"
     retain: true
   - platform: mqtt
-    name: "Dining room"
+    name: "Garage lights" #192.168.100.233
     state_topic: "shellies/shelly1-8ABE6A/relay/0"
     command_topic: "shellies/shelly1-8ABE6A/relay/0/command"
     payload_on: "on"
     payload_off: "off"
     retain: true
   - platform: mqtt
-    name: "Pantry light"
+    name: "Pantry light" #192.168.100.231
     state_topic: "shellies/shelly1-056D19/relay/0"
     command_topic: "shellies/shelly1-056D19/relay/0/command"
     payload_on: "on"
     payload_off: "off"
     retain: true
   - platform: mqtt
-    name: "Potter light"
+    name: "Potter light" #192.168.100.230
     state_topic: "shellies/shelly1-059667/relay/0"
     command_topic: "shellies/shelly1-059667/relay/0/command"
     payload_on: "on"
     payload_off: "off"
     retain: true
+  - platform: mqtt
+    name: "Dining Room" #192.168.100.234 Shelly 2.5
+    state_topic: "shellies/shellyswitch25-E58F40/relay/0"
+    command_topic: "shellies/shellyswitch25-E58F40/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+    #shellies/shellyswitch25-E58F40/relay1/energy
+    #shellies/shellyswitch25-E58F40/temperature
+  - platform: mqtt
+    name: "Living Room" #192.168.100.235 Shelly 2.5
+    state_topic: "shellies/shellyswitch25-00C7AC/relay/0"
+    command_topic: "shellies/shellyswitch25-00C7AC/relay/0/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Living Room Fan" #192.168.100.235 Shelly 2.5
+    state_topic: "shellies/shellyswitch25-00C7AC/relay/1"
+    command_topic: "shellies/shellyswitch25-00C7AC/relay/1/command"
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+
 
 timer:
   pantry_light:

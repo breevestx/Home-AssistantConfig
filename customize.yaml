@@ -19,4 +19,6 @@ switch.honeywell_unknown_type4952_id3036_switch:
 device_tracker.shelly1_056d19:
   friendly_name: shelly1-pantry
 person.bruce:
-  icon: /www/tw.PNG
+  icon: /local/tw.png
+person.lene:
+  icon: /local/ml.png

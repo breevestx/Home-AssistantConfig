@@ -1,0 +1,159 @@
+##########  ############################################################
+##  BRUH Multisensors nodes
+##
+##
+##
+######################################################################
+homeassistant:
+  customize:
+    switch.freezerplug:
+      icon: mdi:power-plug
+      friendly_name: Freezer outlet
+    switch.smartplug2:
+      icon: mdi:power-plug
+      friendly_name: SmartPlug2
+    switch.smartplug3:
+      icon: mdi:power-plug
+      friendly_name: SmartPlug3
+    switch.smartplug4:
+      icon: mdi:power-plug
+      friendly_name: Desk Outlet
+
+
+switch:
+  - platform: mqtt
+    name: "smartplug2"
+    state_topic: "stat/smartplug2/POWER"
+    command_topic: "cmnd/smartplug2/POWER"
+    availability_topic: "tele/smartplug2/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "smartplug3"
+    state_topic: "stat/smartplug3/POWER"
+    command_topic: "cmnd/smartplug3/POWER"
+    availability_topic: "tele/smartplug3/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "smartplug4"
+    state_topic: "stat/smartplug4/POWER"
+    command_topic: "cmnd/smartplug4/POWER"
+    availability_topic: "tele/smartplug4/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    name: "freezerplug"
+    state_topic: "stat/smartplug1/POWER"
+    command_topic: "cmnd/smartplug1/POWER"
+    availability_topic: "tele/smartplug1/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+
+sensor:
+  - platform: mqtt
+    state_topic: "tele/smartplug1/STATE"
+    name: "Freezerplug RSSI"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/smartplug1/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    state_topic: "tele/smartplug2/STATE"
+    name: "SmartPlug2 RSSI"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/smartplug2/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    state_topic: "tele/smartplug3/STATE"
+    name: "SmartPlug3 RSSI"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/smartplug3/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+  - platform: mqtt
+    state_topic: "tele/smartplug4/STATE"
+    name: "SmartPlug4 RSSI"
+    unit_of_measurement: "%"
+    value_template: "{{value_json['Wifi'].RSSI }}"
+    availability_topic: "tele/smartplug4/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+#### Power Monitoring example #######
+
+  - platform: mqtt
+    name: "Freezer energy today"
+    state_topic: "tele/smartplug1/SENSOR"
+    value_template: '{{ value_json.ENERGY.Today }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Freezer energy yesterday"
+    state_topic: "tele/smartplug1/SENSOR"
+    value_template: '{{ value_json.ENERGY.Yesterday }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Freezer Voltage"
+    state_topic: "tele/smartplug1/SENSOR"
+    value_template: '{{ value_json.ENERGY.Voltage }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Freezer Instant Power"
+    state_topic: "tele/smartplug1/SENSOR"
+    value_template: '{{ value_json.ENERGY.Power }}'
+    unit_of_measurement: W
+
+  - platform: mqtt
+    name: "Desk energy today"
+    state_topic: "tele/smartplug4/SENSOR"
+    value_template: '{{ value_json.ENERGY.Today }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Desk energy yesterday"
+    state_topic: "tele/smartplug4/SENSOR"
+    value_template: '{{ value_json.ENERGY.Yesterday }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Desk Voltage"
+    state_topic: "tele/smartplug4/SENSOR"
+    value_template: '{{ value_json.ENERGY.Voltage }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Desk Instant Power"
+    state_topic: "tele/smartplug4/SENSOR"
+    value_template: '{{ value_json.ENERGY.Power }}'
+    unit_of_measurement: W
+
+# timer:
+#   pantry_light:
+#     duration: '00:00:30'
+#   potter_light:
+#     duration: '00:00:30'
+#
+# automation:
+#   - alias: "Power state on HA start-up"
+#     trigger:
+#       platform: homeassistant
+#       event: start
+#     action:
+#       - service: mqtt.publish
+#         data:
+#           topic: "sonoffs/cmnd/state"
+#           payload: ""

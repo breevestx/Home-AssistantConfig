@@ -65,29 +65,29 @@ camera:
 proximity:
   lene_home:
     devices:
-      - device_tracker.lene_iphone
+      - person.lene
     tolerance: 50
     unit_of_measurement: !secret proximity_unit_of_measurement
   bruce_home:
     devices:
-      - device_tracker.bruce_iphone
+      - person.bruce
     tolerance: 50
     unit_of_measurement: !secret proximity_unit_of_measurement
   kahlan_home:
     devices:
-      - device_tracker.kahlan_iphone
+      - person.kahlan
     tolerance: 50
     unit_of_measurement: !secret proximity_unit_of_measurement
   home:
     devices:
-      - device_tracker.bruce_iphone
-      - device_tracker.lene_iphone
+      - person.lene
+      - person.bruce
     tolerance: 50
     unit_of_measurement: !secret proximity_unit_of_measurement
   lene_piano:
       zone: piano
       devices:
-        - device_tracker.lene_iphone
+        - person.lene
       tolerance: 50
       unit_of_measurement: !secret proximity_unit_of_measurement
 
@@ -113,79 +113,79 @@ sensor:
       kahlan:
         value_template: "{% if is_state('device_tracker.kahlan_iphone', 'home') %}home{% else %}not_home{% endif %}"
 
-  - platform: google_travel_time
-    name: Lene To Home
-    api_key: !secret google_api_key
-    origin: device_tracker.lene_iphone
-    destination: zone.home
-
-  - platform: google_travel_time
-    name: Bruce To Home
-    api_key: !secret google_api_key
-    origin: device_tracker.bruce_iphone
-    destination: zone.home
-
-  - platform: google_travel_time
-    name: Kahlan To Home
-    api_key: !secret google_api_key
-    origin: device_tracker.kahlan_iphone
-    destination: zone.home
-
-  - platform: google_travel_time
-    name: From Home to Church
-    api_key: !secret google_api_key
-    origin: zone.home
-    destination: zone.church
-    options:
-      mode: driving
-
-  - platform: google_travel_time
-    name: To CC Watagua
-    api_key: !secret google_api_key
-    origin: zone.home
-    destination: zone.ccwatagua
-    options:
-      mode: driving
-
-  - platform: google_travel_time
-    name: To piano
-    api_key: !secret google_api_key
-    origin: zone.home
-    destination: zone.piano
-    options:
-      mode: driving
-
-
-  # - platform: waze_travel_time
+  # - platform: google_travel_time
   #   name: Lene To Home
-  #   region: 'US'
+  #   api_key: !secret google_api_key
   #   origin: device_tracker.lene_iphone
   #   destination: zone.home
-
-  # - platform: waze_travel_time
+  #
+  # - platform: google_travel_time
   #   name: Bruce To Home
-  #   region: 'US'
+  #   api_key: !secret google_api_key
   #   origin: device_tracker.bruce_iphone
   #   destination: zone.home
   #
+  # - platform: google_travel_time
+  #   name: Kahlan To Home
+  #   api_key: !secret google_api_key
+  #   origin: device_tracker.kahlan_iphone
+  #   destination: zone.home
   #
-  # - platform: waze_travel_time
+  # - platform: google_travel_time
   #   name: From Home to Church
-  #   region: 'US'
+  #   api_key: !secret google_api_key
   #   origin: zone.home
   #   destination: zone.church
+  #   options:
+  #     mode: driving
   #
-  # - platform: waze_travel_time
-  #   name: To CC
-  #   region: 'US'
+  # - platform: google_travel_time
+  #   name: To CC Watagua
+  #   api_key: !secret google_api_key
   #   origin: zone.home
-  #   destination: zone.cc
+  #   destination: zone.ccwatagua
+  #   options:
+  #     mode: driving
   #
-  # - platform: waze_travel_time
+  # - platform: google_travel_time
   #   name: To piano
-  #   region: 'US'
+  #   api_key: !secret google_api_key
   #   origin: zone.home
   #   destination: zone.piano
+  #   options:
+  #     mode: driving
+
+
+  - platform: waze_travel_time
+    name: Lene To Home
+    region: 'US'
+    origin: person.lene
+    destination: zone.home
+
+  - platform: waze_travel_time
+    name: Bruce To Home
+    region: 'US'
+    origin: person.bruce
+    destination: zone.home
+
+
+  - platform: waze_travel_time
+    name: From Home to Church
+    region: 'US'
+    origin: zone.home
+    destination: zone.church
+
+  - platform: waze_travel_time
+    name: To CC
+    region: 'US'
+    origin: zone.home
+    destination: zone.cc-watagua
+
+  - platform: waze_travel_time
+    name: To piano
+    region: 'US'
+    origin: zone.home
+    destination: zone.piano
 
 
 automation:
@@ -214,7 +214,7 @@ automation:
         entity_id: input_boolean.alert_delays
         state: 'on'
       - condition: state
-        entity_id: device_tracker.brucesiphone2_ios
+        entity_id: person.bruce
         state: 'home'
   action:
     - service: notify.brucesiphone2_ios
@@ -255,7 +255,7 @@ automation:
         entity_id: input_boolean.alert_delays
         state: 'on'
       - condition: state
-        entity_id: device_tracker.lene_iphone
+        entity_id: person.lene
         state: 'home'
   action:
     - service: notify.brucesiphone2_ios

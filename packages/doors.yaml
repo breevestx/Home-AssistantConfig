@@ -58,101 +58,6 @@ cover:
           service: script.stop_garage_door
 
 automation:
-  - alias: 'Turn on Driveway light Door open'
-    initial_state: True
-    condition:
-      - condition: or  # 'when dark' condition: either after sunset or before sunrise
-        conditions:
-          - condition: sun
-            after: sunset
-            # offset: '-1:00:00'
-          - condition: sun
-            before: sunrise
-      # - condition: template
-      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
-      - condition: state
-        entity_id: binary_sensor.garage_door
-        state: 'on'
-    trigger:
-      - platform: state
-        entity_id:
-          - binary_sensor.sensor_2
-          - binary_sensor.driveway_camera_line_crossing
-          - binary_sensor.driveway_camera_field_detection
-        to: 'on'
-    action:
-      - service: switch.turn_on
-        data:
-          entity_id: switch.driveway_garage_light
-      - service: notify.dev
-        data_template:
-          message: >
-            Turning on the driveway light
-
-  - alias: 'Turn off Driveway light Door Closed'
-    initial_state: True
-    condition:
-      # - condition: or  # 'when dark' condition: either after sunset or before sunrise
-      #   conditions:
-      #     - condition: sun
-      #       after: sunset
-      #     - condition: sun
-      #       before: sunrise
-      - condition: template
-        value_template: '{{ (as_timestamp(now()) - as_timestamp(states.switch.driveway_garage_light.last_changed)) > 300 }}'
-      - condition: state
-        entity_id: switch.driveway_garage_light
-        state: 'on'
-      - condition: state
-        entity_id: binary_sensor.garage_door
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.vacation_mode
-        state: 'off'
-    trigger:
-      platform: time_pattern
-      minutes: '/1'
-      seconds: 00
-    action:
-      - service: switch.turn_off
-        data:
-          entity_id: switch.driveway_garage_light
-      - service: notify.dev
-        data_template:
-          message: >
-            Turning off the driveway light
-
-  # - alias: 'Garage Door open'
-  #   initial_state: True
-  #   trigger:
-  #     - platform: state
-  #       entity_id:
-  #         - binary_sensor.garage_door
-  #       to: 'on'
-  #   action:
-  #     - service: notify.ios_devices
-  #       data:
-  #         message: “Garage Door is open”
-  #         data:
-  #           push:
-  #             # sound: "US-EN-Morgan-Freeman-Garage-Door-Opened.wav"
-  #
-  # - alias: 'Garage Door Closed'
-  #   initial_state: True
-  #   trigger:
-  #     - platform: state
-  #       entity_id:
-  #         - binary_sensor.garage_door
-  #       to: 'off'
-  #   action:
-  #     - service: notify.ios_devices
-  #       data:
-  #         message: “Garage Door is Closed”
-  #         data:
-  #           push:
-  #             # sound: "US-EN-Morgan-Freeman-Garage-Door-Closed.wav"
-
-
   - alias: laundry_open
     initial_state: True
     trigger:
@@ -166,6 +71,21 @@ automation:
       state: 'home'
     action:
       - service: timer.start
+        entity_id: timer.laundry_door
+
+  - alias: laundry_reset
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.laundry_door
+      to: 'Closed'
+      from: 'Open'
+    condition:
+      condition: state
+      entity_id: group.family
+      state: 'home'
+    action:
+      - service: timer.cancel
         entity_id: timer.laundry_door
 
   - alias: Notify Door Open
@@ -183,16 +103,18 @@ automation:
     action:
       - service: script.speech_engine
         data_template:
-          # DoorEvent: >
-          #   {% set door = state_attr('sensor.laundry_door','friendly_name') %}
-          #
-          #   {%- macro door_sentence(door) -%}
-          #   "The {{ door }}is open. Please close the door!"
-          #
-          #   {%- endmacro -%}
-          #   ""{{door_sentence(door)}}"
           call_no_announcement: 1
-          call_window_check: 1
+          doorevent: >
+            {% set door = states.binary_sensor.laundry_room_door.attributes.friendly_name %}
+            {%- macro doorevent(door) -%}
+            {{ [
+            "Hey you Guys!!! Some one left the " ~ door +" open.",
+            "There is a draft of air coming in because the " ~ door +" is open",
+            "The " ~ door +" needs to be closed.",
+            "If only I could close the " ~ door +" for you guys, but alas I cannot. Please help me."
+            ] | random }}
+            {%- endmacro -%}
+            "{{doorevent(door)}}"
       - service: timer.start
         entity_id: timer.laundry_door
 

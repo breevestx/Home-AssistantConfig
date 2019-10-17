@@ -82,11 +82,11 @@ input_select:
 script:
   speech_processing:
     sequence:
-      # - service: mqtt.publish
-      #   data_template:
-      #     topic: 'tts/lastmsg'
-      #     payload: 'This Message is from {{now().strftime("%-I")}}:{{now().strftime("%M")}} {{now().strftime("%p")}}. {{speech_message}} '
-      #     retain: true
+      - service: mqtt.publish
+        data_template:
+          topic: 'tts/lastmsg'
+          payload: 'This Message is from {{now().strftime("%-I")}}:{{now().strftime("%M")}} {{now().strftime("%p")}}. {{speech_message}} '
+          retain: true
 
       - condition: and
         conditions:
@@ -128,12 +128,23 @@ script:
           data:
             type: announce
           #target: group.alexa_downstairs
+          # target: >
+            # {% if states.group.kitchen.state == 'off' %}
+            # media_player.kitchen
+            # {% else %}
+            # group.alexa_downstairs
+            # {% endif %}
           target: >
-            {% if states.group.kitchen.state == 'off' %}
-            media_player.kitchen
-            {% else %}
-            group.alexa_downstairs
+            {% if media_player | length == 0 %}
+              {% set media_player = [
+                'group.alexa_downstairs'
+              ] %}
             {% endif %}
+            {% if media_player is not string and media_player is sequence %}
+              {% set media_player = media_player|join(', ') %}
+            {% endif %}
+            {{ media_player }}
+
           message: '{{speech_message}}'
 
 
@@ -244,14 +255,22 @@ script:
             {%- endmacro -%}
             {% macro garage_check() %}
                 {% if states.sensor.garage_door.state !='Closed' -%}
-                The
-                {{ states.sensor.garage_door.attributes.friendly_name }}
-                needs to be closed.
+                The {{ states.sensor.garage_door.attributes.friendly_name }} needs to be closed.
                 {%- endif -%}
+            {%- endmacro -%}
+            {% macro ld_check() %}
+                {% if states.sensor.laundry_room_door.state !='Closed' -%}
+                {{ [
+                "Hey you Guys!!! Some one left the {{ states.sensor.laundry_room_door.attributes.friendly_name }} open.",
+                "There is a draft of air coming in because the {{ states.sensor.laundry_room_door.attributes.friendly_name }} is open",
+                "The {{ states.sensor.laundry_room_door.attributes.friendly_name }} needs to be closed.",
+                "If only I could close the {{ states.sensor.laundry_room_door.attributes.friendly_name }} for you guys, but alas I cannot. Please help me."
+                ] | random }}
+                {% endif -%}
             {%- endmacro -%}
             {% macro medicine() %}
                 {% if is_state('input_boolean.medicine', 'off') -%}
-                  It looks like Carlo has not taken his medicine yet.  Please make sure Carlo takes his medicine now.
+                  It looks like Kahlan has not taken her medicine yet.  Please make sure Kahlan takes medicine now.
                 {% endif -%}
             {%- endmacro -%}
             {% macro office_window() %}
@@ -287,6 +306,7 @@ script:
               {{ pagekids }} {# Called from kids_page #}
               {{ goodmorning }} {# Called from good_morning.yaml #}
               {{ EcobeeStatus}} {# Called from the thermostats when they turn on #}
+              {{ doorevent }}
               {{alarmclock_snooze}}
               {% if call_inside_weather == 1 %}
                 {{inside_weather()}}
@@ -294,15 +314,11 @@ script:
               {% if call_outside_weather == 1 and is_state('sun.sun', 'above_horizon') %}
                 {{outside_weather()}}
               {%endif%}
-              {{ DoorEvent }}
               {% if call_dark_outside == 1 %}
               {{ dark_outside() }}
               {%endif%}
               {% if call_garage_check == 1 or is_state('sun.sun', 'below_horizon') %}
                 {{garage_check()}}
-              {%endif%}
-              {% if (call_window_check == 1 or is_state('sun.sun', 'below_horizon')) or is_state('group.entry_points', 'on') %}
-                {{window_check()}}
               {%endif%}
               {{ NewDevice}}
               {% if call_light_check == 1 %}

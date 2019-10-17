@@ -29,24 +29,29 @@ homeassistant:
 frontend:
   themes: !include themes.yaml
 
+mobile_app:
+
 # Enable Floorplan UI
-panel_custom:
-  - name: floorplan
-    sidebar_title: Floorplan
-    sidebar_icon: mdi:home
-    url_path: floorplan
-    config: !include floorplan.yaml
+# panel_custom:
+#   - name: floorplan
+#     sidebar_title: Floorplan
+#     sidebar_icon: mdi:home
+#     url_path: floorplan
+#     config: !include floorplan.yaml
 
-custom_updater:
-  component_urls:
-# Released build
-    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
+hacs:
+  token: !secret github-token
 
-panel_iframe:
-  motioneye:
-    title: motioneye
-    icon: mdi:cctv
-    url: "http://192.168.100.185:8765"
+# custom_updater:
+#   component_urls:
+# # Released build
+#     - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
+
+# panel_iframe:
+#   motioneye:
+#     title: motioneye
+#     icon: mdi:cctv
+#     url: "https://192.168.100.185:8765"
 
 #   # tv_room_ha:
 #   #   title: TV Room HA
@@ -109,8 +114,10 @@ http:
 updater:
   include_used_components: true
 
+breaking_changes:
+
 # # Discover some devices automatically
-discovery:
+# discovery:
 
 # # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -118,6 +125,9 @@ conversation:
 recorder:
   purge_interval: 2
   purge_keep_days: 5
+
+graphite:
+  host: 192.168.100.185
 
 media_extractor:
 
@@ -197,14 +207,6 @@ emulated_hue:
   expose_by_default: false
 
 
-asuswrt:
-    host: !secret asus_host
-    username: !secret asus_username
-    password: !secret asus_password
-    # track_new_devices: no
-    # interval_seconds: 12
-    # consider_home: 180
-
 #notify: !include_dir_named notifiers
 # notify: !include notify.yaml
 
@@ -213,24 +215,18 @@ asuswrt:
 ## Sensors
 #################################################################
 # sensor:
-#   # - platform: fitbit
-#   #   monitored_resources:
-#   #     - "activities/distance"
-#   #     - "activities/steps"
-#   #     - "sleep/startTime"
-#   #     - "sleep/timeInBed"
-#   #     - "devices/battery"
 #   - platform: crimereports
 #     exclude: ['Community Policing']
 #     name: Neighborhood Incidents
 #     radius: 300
 
-mqtt:
-  broker: !secret mqtt_server
-  port: !secret mqtt_port
-  username: !secret mqtt_user
-  password: !secret mqtt_password
-
+# mqtt:
+#   broker: !secret mqtt_server
+#   port: !secret mqtt_port
+#   username: !secret mqtt_user
+#   password: !secret mqtt_password
+#   discovery: true
+#   discovery_prefix: homeassistant
 
 zone: !include_dir_list zones
 #   name: Home

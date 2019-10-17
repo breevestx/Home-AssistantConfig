@@ -1,0 +1,177 @@
+homeassistant:
+  customize:
+    input_boolean.smoker:
+      icon: mdi:delete-empty
+    input_boolean.smoker_reminder:
+      icon: mdi:delete
+
+
+input_boolean:
+  smoker:
+    initial: off
+  smoker_reminder:
+    initial: off
+
+automation:
+   - alias: 'Smoker is turned on'
+     initial_state: True
+     trigger:
+       - platform: event
+         event_type: ios.action_fired
+         event_data:
+           actionName: 'SmokerOn'
+     action:
+       - service: notify.home
+         data_template:
+           message: >
+             {%- set responses = [
+             'Now we are cooking, with smoke.',
+             'What, you can\'t smell this gloriuos smoke?',
+             'YES SIR, prepare to load the smoker with meat!!!'] -%}
+             {{ responses | random }}
+       - service: homeassistant.turn_on
+         entity_id: input_boolean.smoker_reminder
+
+   - alias: 'Smoker turned off'
+     initial_state: True
+     trigger:
+       - platform: event
+         event_type: ios.action_fired
+         event_data:
+           actionName: 'SmokerOff'
+     action:
+       - service: notify.home
+         data_template:
+           message: >
+             {%- set responses = [
+             'Smoked goodness is coming off the grill.',
+             'Ahh, that smells like perfection',
+             'AFFIRMATIVE SIR, get some plates ready!!!'] -%}
+             {{ responses | random }}
+       - service: homeassistant.turn_off
+         entity_id: input_boolean.smoker_reminder
+
+
+   - alias: 'Smoker reminder'
+     trigger:
+       - platform: time_pattern
+         minutes: '/30'
+         seconds: 00
+     condition:
+       - condition: state
+         entity_id: input_boolean.smoker_reminder
+         state: 'on'
+     action:
+       - service: notify.home
+         data_template:
+           message: >
+             {%- set responses = [
+             'Time to check the smoker.',
+             'Time to check the smoker.',
+             'Time to check the smoker.'] -%}
+             DEV> {{ responses | random }}
+
+#################################################################
+## Trash cans to curb reminder
+#################################################################
+
+#    - alias: 'Weekly trash check'
+#      initial_state: True
+#      trigger:
+#        # - platform: sun
+#        #   event: sunset
+#        #   offset: '-00:45:00'
+#        - platform: time
+#          at: '16:00:00'
+#        - platform: time
+#          at: '17:00:00'
+#        - platform: time
+#          at: '18:00:00'
+#        - platform: time
+#          at: '19:00:00'
+#        - platform: time
+#          at: '20:00:00'
+#        - platform: time
+#          at: '21:00:00'
+#      condition:
+#        - condition: time
+#          weekday:
+#            - sun
+#        - condition: state
+#          entity_id: input_boolean.smoker_reminder
+#          state: 'on'
+#      action:
+#       #  - service: notify.slack__dev
+#       #    data_template:
+#       #      message: >
+#       #        {%- set responses = [
+#       #        'Don\'t forget to set out the trash cans.',
+#       #        'Did you forget, the trash truck comes tomorrow?',
+#       #        'Got you covered, vacation lights are on'] -%}
+#       #        {{ responses | random }}
+#        - service: notify.ios_brucesiphone2_ios
+#          data_template:
+#            title: "Trash can reminder"
+#            message: >
+#              {%- set responses = [
+#              'Don\'t forget to set out the trash cans.',
+#              'Did you forget, the trash truck comes tomorrow?',
+#              'Got you covered, vacation lights are on'] -%}
+#              {{ responses | random }}
+#            data:
+#              push:
+#                badge: 0
+#                category: "TRASH"
+#    - alias: 'Trash cans set out'
+#      initial_state: True
+#      trigger:
+#        - platform: event
+#          event_type: ios.notification_action_fired
+#          event_data:
+#            actionName: Already_Done
+#      action:
+#        - service: homeassistant.turn_off
+#          entity_id: input_boolean.smoker_reminder
+#        - service: notify.ios_brucesiphone2_ios
+#          data:
+#            message: "Great job!"
+#    - alias: Remind later
+#      initial_state: true
+#      hide_entity: true
+#      trigger:
+#        platform: event
+#        event_type: ios.notification_action_fired
+#        event_data:
+#          actionName: SILENCE_REMINDER
+#      action:
+#        - service: notify.ios_brucesiphone2_ios
+#          data:
+#            message: "Will remind you again in an hour!"
+#        - service: input_boolean.turn_on
+#          entity_id: input_boolean.smoker_reminder
+#
+#
+# # #################################################################
+# # ## Morning check if not cleared
+# # #################################################################
+#    - alias: 'Reset Weekly check'
+#      initial_state: True
+#      condition:
+#        - condition: state
+#          entity_id: input_boolean.weekly_trash_reminder
+#          state: 'on'
+#        - condition: time
+#          weekday:
+#            - mon
+#      trigger:
+#        - platform: time
+#          at: '16:00:00'
+#      action:
+#        - service: notify.dev
+#          data_template:
+#            message: >
+#              {%- set responses = [
+#              'Don\'t forget to setup the trash cans tonight.',
+#              'Trash day is tomorrow, don\'t forget.',
+#              'Did you set out the trash cans?'] -%}
+#              {{ responses | random }}

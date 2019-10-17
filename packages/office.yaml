@@ -6,21 +6,46 @@
 ######################################################################
 
 
-input_select:
-  conference:
-    name: Conference
-    options:
-     - False
-     - Phone
-     - Video
-    initial: False
-    icon: mdi:camera
+# input_select:
+#   conference:
+#     name: Conference
+#     options:
+#      - False
+#      - Phone
+#      - Video
+#     initial: False
+#     icon: mdi:camera
 
 input_boolean:
   guest_room:
     name: Guest Room Mode
     initial: off
     icon: mdi:light
+
+input_number:
+  volume_page:
+    name: Page Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
+    initial: 0.8
+  fan_low:
+    name: Fan low temp
+    min: 72
+    max: 76
+    step: 0.5
+    initial: 74
+    icon: mdi:fan
+    mode: slider
+  fan_high:
+    name: Fan high temp
+    min: 77
+    max: 81
+    step: 0.5
+    initial: 79
+    icon: mdi:fan
+    mode: slider
 #
 # binary_sensor:
 #   - platform: mqtt
@@ -33,7 +58,6 @@ input_boolean:
 
 group:
   Office:
-    # - input_select.conference
     - input_boolean.guest_room
     - switch.monitors
     - switch.office_light
@@ -52,6 +76,9 @@ sensor:
       fan_speed:
         friendly_name: 'Fan Speed'
         value_template: "{{ state_attr('fan.office', 'speed') }}"
+      monitors:
+        friendly_name: 'Monitors'
+        value_template: "{{ '120.8' if is_state('switch.monitors', 'on') else '0' }}"
 
 automation:
 # - id: conf_no
@@ -235,9 +262,8 @@ automation:
       - condition: state
         entity_id: fan.office
         state: 'off'
-      - condition: numeric_state
-        entity_id: sensor.office_temperature
-        above: 79
+      - condition: template
+        value_template: '{{ states.sensor.office_temperature.state > states.input_number.fan_high.state  }}'
       - condition: time
         # At least one of the following is required.
         after: '09:00:00'
@@ -263,9 +289,8 @@ automation:
       - condition: state
         entity_id: fan.office
         state: 'on'
-      - condition: numeric_state
-        entity_id: sensor.office_temperature
-        below: 74
+      - condition: template
+        value_template: '{{ states.sensor.office_temperature.state < states.input_number.fan_low.state  }}'
       - condition: time
         # At least one of the following is required.
         after: '09:00:00'
@@ -292,10 +317,8 @@ automation:
       - condition: state
         entity_id: fan.office
         state: 'on'
-      - condition: numeric_state
-        entity_id: sensor.office_temperature
-        above: 76
-        below: 78
+      - condition: template
+        value_template: '{{ states.sensor.office_temperature.state < states.input_number.fan_high.state and states.sensor.office_temperature.state > states.input_number.fan_low.state  }}'
       - condition: time
         # At least one of the following is required.
         after: '09:00:00'
@@ -322,9 +345,8 @@ automation:
       - condition: state
         entity_id: fan.office
         state: 'on'
-      - condition: numeric_state
-        entity_id: sensor.office_temperature
-        above: 79
+      - condition: template
+        value_template: '{{ states.sensor.office_temperature.state > states.input_number.fan_high.state  }}'
       - condition: time
         # At least one of the following is required.
         after: '09:00:00'

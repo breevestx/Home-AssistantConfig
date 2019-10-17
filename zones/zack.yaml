@@ -1,0 +1,5 @@
+name: zack
+latitude: !secret zack_latitude
+longitude: !secret zack_longitude
+radius: !secret zcc_radius
+icon: mdi:home

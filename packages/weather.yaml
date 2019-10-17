@@ -54,14 +54,18 @@ camera:
     still_image_url: !secret meteogram_url
     name: Meteogram
 
+weather:
+  - platform: darksky
+    api_key: !secret darksky_key
+    mode: daily
 
 sensor:
   - platform: moon
-  - platform: wunderground
-    api_key: !secret wunderground_api
-    monitored_conditions:
-      - alerts
-      - UV
+  # - platform: wunderground
+  #   api_key: !secret wunderground_api
+  #   monitored_conditions:
+  #     - alerts
+  #     - UV
   - platform: darksky
     api_key: !secret darksky_key
     monitored_conditions:

@@ -27,10 +27,12 @@
 
 # Log Severities: notset, debug, info, warn, warning, error, fatal, critical
 logger:
-  default: debug
+  default: warn
   logs:
     # debug
     ios: debug
+    homeassistant.components.webhook: debug
+
 
     # info
     bellows: info

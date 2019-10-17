@@ -103,6 +103,10 @@ automation:
     trigger:
       - platform: state
         entity_id: input_boolean.bedroom_dash
+      - platform: event
+        event_type: ios.action_fired
+        event_data:
+          actionName: 'Bedroom lamps'
     action:
       - service: scene.turn_on
         entity_id: scene.bedroom_goodnight
@@ -116,6 +120,10 @@ automation:
     trigger:
       - platform: state
         entity_id: input_boolean.bedroom_dash
+      - platform: event
+        event_type: ios.action_fired
+        event_data:
+          actionName: 'Bedroom lamps'
     action:
      - service: scene.turn_on
        entity_id: scene.bedroom_morning

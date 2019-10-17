@@ -1,0 +1,15 @@
+# homeassistant:
+#   customize:
+#     switch.driveway_garage_light:
+#       friendly_name: 'Garage Outside light'
+#     switch.mb_closet_light:
+#       friendly_name: 'Master Bedroom Closet Light'
+#       #emulated_hue: true
+#     zwave.switch_driveway_garage_light:
+#       friendly_name: 'Garage Outside Light'
+
+# tuya:
+#   username: !secret tuya_username
+#   password: !secret tuya_password
+#   country_code: !secret tuya_country_code
+#   platform: !secret tuya_platform

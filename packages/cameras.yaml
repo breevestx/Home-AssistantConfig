@@ -95,6 +95,11 @@ camera:
     name: Driveway Camera
     still_image_url: !secret driveway_camera_url
 
+  - platform: mjpeg
+    name: Stick Camera
+    mjpeg_url: !secret stick_camera_url
+    # still_image_url: !secret stick_camera_still
+
 switch:
   - platform: hikvisioncam
     name: Driveway Camera
@@ -109,28 +114,33 @@ binary_sensor:
     username: !secret hkcamera_username
     password: !secret hkcamera_password
 
+
+input_boolean:
+  kids_outside:
+    initial: off
+
 automation:
   - alias: Driveway camera motioneye
     trigger:
       - platform: webhook
         webhook_id: driveway_camera_motion
-    # condition:
-    #    - condition: state
-    #      entity_id: device_tracker.brucesiphone2_ios
-    #      state: 'not_home'
+    condition:
+       - condition: state
+         entity_id: input_boolean.kids_outside
+         state: 'off'
     action:
-      # - service: notify.home
-      #   data_template:
-      #      message: >
-      #        {%- set responses = [
-      #        'Motion detected near the driveway.',
-      #        'Something or Someone is in the driveway',
-      #        'I have notice activity in the driveway.'] -%}
-      #        {{ responses | random }}
-      #     data:
-      #       attachment:
-      #         content-type: jpeg
-      #       entity_id: camera.driveway_camera
+      - service: notify.work
+        data_template:
+           message: >
+             {%- set responses = [
+             'Motion detected near the driveway.',
+             'Something or Someone is in the driveway',
+             'I have notice activity in the driveway.'] -%}
+             {{ responses | random }}
+        # data:
+        #   attachment:
+        #     content-type: jpeg
+        #   entity_id: camera.driveway_camera
       - service: notify.ios_devices
         data_template:
           message: >
@@ -145,3 +155,70 @@ automation:
             push:
               category: camera
             entity_id: camera.driveway_camera
+  - alias: Stick camera motioneye
+    trigger:
+      - platform: webhook
+        webhook_id: stick_camera_motion
+    # condition:
+    #    - condition: state
+    #      entity_id: device_tracker.brucesiphone2_ios
+    #      state: 'not_home'
+    action:
+      - service: notify.work
+        data_template:
+           message: >
+              {%- set responses = [
+              'Motion detected near out front.',
+              'Something or Someone is out front',
+              'I have notice activity out front.'] -%}
+              {{ responses | random }}
+
+           # data:
+           # message: !secret notify_camera_message
+             # attachments:
+             #   title: "Motion Detected - StickCam"
+             #   image_url: "{% https://6reeves.duckdns.org{{state_attr("camera.stick_camera","entity_picture") }} %}"
+              # {
+              #   "message": "",
+              #   "data": {
+              #     "attachments": [
+              #       {
+              #         "title": "Motion Detected - StickCam",
+              #         "image_url": "https://6reeves.duckdns.org/api/camera_proxy/camera.stick_camera?token=ec4165398de8ff844542f58c2f35868fecab62ab2e234315db0a34d53859630e"
+              #       }
+              #     ]
+              #   }
+              # }
+      - service: notify.ios_devices
+        data_template:
+          message: >
+            {%- set responses = [
+            'Motion detected near out front.',
+            'Something or Someone is out front',
+            'I have notice activity out front.'] -%}
+            {{ responses | random }}
+          data:
+            attachment:
+              content-type: jpeg
+            push:
+              category: camera
+            entity_id: camera.stick_camera
+
+
+#From: https://github.com/Norien/Home-Assistant-Config/blob/master/packages/camera.yaml
+script:
+  notify_camera:
+    sequence:
+      - service: shell_command.clear_images
+#      - service: shell_command.driveway
+      - service: shell_command.driveway2
+      - delay: '00:00:30'
+#       - service: notify.discord
+#         data:
+#           target: !secret discord
+#           message: !secret notify_camera_message
+#
+shell_command:
+  clear_images: rm /config/www/camera_shots/*
+#  driveway: !secret driveway_camera_photo_url
+  driveway2: /usr/bin/curl -o /config/www/camera_shots/drive1.gif "127.0.0.1:3333/gif?camera=drive1&duration=60&interval=0.25"

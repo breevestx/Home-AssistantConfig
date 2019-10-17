@@ -1,0 +1,122 @@
+homeassistant:
+  # customize:
+  #   device_tracker.openelec:
+  #     icon: mdi:movie-roll
+  #   sensor.openelec:
+  #     icon: mdi:movie-roll
+
+
+# sensor:
+#   - platform: template
+#     sensors:
+#       openelec:
+#         friendly_name: 'LV MediaCenter'
+#         value_template: "{{ 'Online' if is_state('device_tracker.openelec', 'home') else 'Offline' }}"
+#
+# input_boolean:
+#   kodi:
+#     name: LV mediacenter
+#     initial: on
+
+timer:
+  driveway_light:
+    duration: '00:10:00'
+
+
+automation:
+  - alias: 'Turn on Driveway light Door open'
+    initial_state: True
+    condition:
+      - condition: or  # 'when dark' condition: either after sunset or before sunrise
+        conditions:
+          - condition: sun
+            after: sunset
+            # offset: '-1:00:00'
+          - condition: sun
+            before: sunrise
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.input_boolean.gb_auto_off.last_changed)) > 180 }}'
+      - condition: state
+        entity_id: binary_sensor.garage_door
+        state: 'off'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.sensor_2
+          - binary_sensor.driveway_camera_line_crossing
+          - binary_sensor.driveway_camera_field_detection
+        to: 'on'
+    action:
+      - service: switch.turn_on
+        data:
+          entities:
+            - switch.driveway_garage_light
+            - light.garage_lights
+
+      - service: notify.dev
+        data_template:
+          message: >
+            Turning on the driveway light
+
+  - alias: 'Turn off Driveway light Door Closed'
+    initial_state: True
+    condition:
+      # - condition: or  # 'when dark' condition: either after sunset or before sunrise
+      #   conditions:
+      #     - condition: sun
+      #       after: sunset
+      #     - condition: sun
+      #       before: sunrise
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.switch.driveway_garage_light.last_changed)) > 300 }}'
+      - condition: state
+        entity_id: switch.driveway_garage_light
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.garage_door
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.vacation_mode
+        state: 'off'
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.driveway_light
+    action:
+      - service: switch.turn_off
+        data:
+          entities:
+            - switch.driveway_garage_light
+      - service: notify.dev
+        data_template:
+          message: >
+            Turning off the driveway light
+
+  - alias: 'Garage Door open'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.garage_door
+        to: 'on'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: light.front_door
+        transition: "60"
+        color_name: red
+
+  - alias: 'Garage Door Closed'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.garage_door
+        to: 'off'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: light.front_door
+        transition: "60"
+        color_name: green

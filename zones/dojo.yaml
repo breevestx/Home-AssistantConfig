@@ -1,0 +1,5 @@
+name: Karate Dojo
+latitude: !secret zdojo_latitude
+longitude: !secret zdojo_longitude
+radius: !secret zdojo_radius
+icon: mdi:school

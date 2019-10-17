@@ -1,0 +1,12 @@
+asuswrt:
+    host: !secret asus_host
+    username: !secret asus_username
+    password: !secret asus_password
+    # track_new_devices: no
+    # interval_seconds: 12
+    # consider_home: 180
+    sensors:
+      - upload
+      - download
+      - upload_speed
+      - download_speed
