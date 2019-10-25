@@ -31,22 +31,22 @@ binary_sensor:
     sensors:
       tasmota_update_available:
         value_template: >-
-          {{ (states.sensor.sonoff_firmware_version_available.state > states.sensor.coffee_maker_firmware.state) or (states.sensor.sonoff_firmware_version_available.state > states.sensor.garage_door_firmware.state)
+          {{ (states.sensor.sonoff_firmware_version_available.state > states.sensor.sonoff_firmware.state) or (states.sensor.sonoff_firmware_version_available.state > states.sensor.switch_firmware.state)
               }}
 
 
 automation:
-  - alias: "Power state on HA start-up"
-    trigger:
-      platform: homeassistant
-      event: start
-    action:
-      - service: mqtt.publish
-        data:
-          topic: "cmnd/sonoffs/state"
-          payload: ""
+  # - alias: "Power state on HA start-up"
+  #   trigger:
+  #     platform: homeassistant
+  #     event: start
+  #   action:
+  #     - service: mqtt.publish
+  #       data:
+  #         topic: "cmnd/sonoffs/state"
+  #         payload: ""
 
-  - alias: Sonoff Firmware Installed
+  - alias: MQTT Check on HA start-up
     trigger:
     - event: start
       platform: homeassistant
@@ -55,4 +55,8 @@ automation:
       data:
         payload: '2'
         topic: cmnd/sonoffs/status
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffs/state"
+        payload: ""
     initial_state: 'true'

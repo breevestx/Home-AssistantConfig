@@ -7,22 +7,22 @@
 homeassistant:
   customize:
     switch.freezerplug:
-      icon: mdi:power-plug
+      icon: mdi:fridge-outline
       friendly_name: Freezer outlet
     switch.smartplug2:
-      icon: mdi:power-plug
-      friendly_name: SmartPlug2
+      icon: mdi:washing-machine
+      friendly_name: Washer Plug
     switch.smartplug3:
-      icon: mdi:power-plug
-      friendly_name: SmartPlug3
+      icon: mdi:xbox
+      friendly_name: Kent's plug
     switch.smartplug4:
-      icon: mdi:power-plug
+      icon: mdi:monitor-multiple
       friendly_name: Desk Outlet
 
 
 switch:
   - platform: mqtt
-    name: "smartplug2"
+    name: "smartplug2" #washer
     state_topic: "stat/smartplug2/POWER"
     command_topic: "cmnd/smartplug2/POWER"
     availability_topic: "tele/smartplug2/LWT"
@@ -32,7 +32,7 @@ switch:
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
-    name: "smartplug3"
+    name: "smartplug3" #Xbox
     state_topic: "stat/smartplug3/POWER"
     command_topic: "cmnd/smartplug3/POWER"
     availability_topic: "tele/smartplug3/LWT"
@@ -74,7 +74,7 @@ sensor:
     payload_not_available: "Offline"
   - platform: mqtt
     state_topic: "tele/smartplug2/STATE"
-    name: "SmartPlug2 RSSI"
+    name: "Washerplug RSSI"
     unit_of_measurement: "%"
     value_template: "{{value_json['Wifi'].RSSI }}"
     availability_topic: "tele/smartplug2/LWT"
@@ -82,7 +82,7 @@ sensor:
     payload_not_available: "Offline"
   - platform: mqtt
     state_topic: "tele/smartplug3/STATE"
-    name: "SmartPlug3 RSSI"
+    name: "Kentplug RSSI"
     unit_of_measurement: "%"
     value_template: "{{value_json['Wifi'].RSSI }}"
     availability_topic: "tele/smartplug3/LWT"
@@ -90,7 +90,7 @@ sensor:
     payload_not_available: "Offline"
   - platform: mqtt
     state_topic: "tele/smartplug4/STATE"
-    name: "SmartPlug4 RSSI"
+    name: "Officeplug RSSI"
     unit_of_measurement: "%"
     value_template: "{{value_json['Wifi'].RSSI }}"
     availability_topic: "tele/smartplug4/LWT"

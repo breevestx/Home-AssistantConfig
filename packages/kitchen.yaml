@@ -39,7 +39,7 @@ switch:
     name: "uclight sink" #192.168.100.197
     command_topic: "cmnd/uclights-sink/power"
     state_topic: "stat/uclights-sink/POWER1"
-    availability_topic: "tele/uclights-sink/LWT"
+    #availability_topic: "tele/uclights-sink/LWT"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
@@ -48,7 +48,7 @@ switch:
     name: "uclight bar" #192.168.100.20
     command_topic: "cmnd/uclights-bar/power"
     state_topic: "stat/uclights-bar/POWER1"
-    availability_topic: "tele/uclights-sink/LWT"
+    #availability_topic: "tele/uclights-sink/LWT"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
@@ -60,7 +60,7 @@ sensor:
     name: "uclights-sink RSSI"
     unit_of_measurement: "%"
     value_template: "{{value_json['Wifi'].RSSI }}"
-    availability_topic: "tele/uclights-sink/LWT"
+    #availability_topic: "tele/uclights-sink/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
   - platform: mqtt
@@ -68,7 +68,7 @@ sensor:
     name: "uclights-bar RSSI"
     unit_of_measurement: "%"
     value_template: "{{value_json['Wifi'].RSSI }}"
-    availability_topic: "tele/uclights-bar/LWT"
+    #availability_topic: "tele/uclights-bar/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 

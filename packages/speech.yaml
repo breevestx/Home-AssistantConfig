@@ -306,7 +306,8 @@ script:
               {{ pagekids }} {# Called from kids_page #}
               {{ goodmorning }} {# Called from good_morning.yaml #}
               {{ EcobeeStatus}} {# Called from the thermostats when they turn on #}
-              {{ doorevent }}
+              {{ doorevent }} {# Called when a door is left open #}
+              {{ laundrynotification }} {# Called from washer and dryer #}
               {{alarmclock_snooze}}
               {% if call_inside_weather == 1 %}
                 {{inside_weather()}}

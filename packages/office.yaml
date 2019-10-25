@@ -46,15 +46,6 @@ input_number:
     initial: 79
     icon: mdi:fan
     mode: slider
-#
-# binary_sensor:
-#   - platform: mqtt
-#     state_topic: "homeassistant/binary_sensor/pir_office/state"
-#     name: Office Motion
-#     device_class: motion
-#     payload_on: "on"
-#     payload_off: "off"
-
 
 group:
   Office:
@@ -242,8 +233,6 @@ automation:
       data:
         call_open_office_window: 1
         call_no_announcement: 0
-
-#sensor.office_temperature
 
 - id: turn_on_office_fan
   alias: Turn on the fan

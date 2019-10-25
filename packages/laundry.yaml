@@ -1,0 +1,160 @@
+
+
+
+
+input_boolean:
+  washer_dash:
+    name: Washer Timer
+    initial: on
+    icon: mdi:washing-machine
+  dryer_dash:
+    name: Washer Timer
+    initial: on
+    icon: mdi:tumble-dryer
+
+
+timer:
+  washer_timer:
+    duration: '01:00:00'
+    name: Washer Timer
+    icon: mdi:washing-machine
+  dryer_timer:
+    duration: '00:50:00'
+    name: Dryer Timer
+    icon: mdi:tummble-dryer
+
+sensor:
+#### Power Monitoring example #######
+
+  - platform: mqtt
+    name: "Washer energy today"
+    state_topic: "tele/smartplug2/SENSOR"
+    value_template: '{{ value_json.ENERGY.Today }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Washer energy yesterday"
+    state_topic: "tele/smartplug2/SENSOR"
+    value_template: '{{ value_json.ENERGY.Yesterday }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Washer Voltage"
+    state_topic: "tele/smartplug2/SENSOR"
+    value_template: '{{ value_json.ENERGY.Voltage }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Washer Current"
+    state_topic: "tele/smartplug2/SENSOR"
+    value_template: '{{ value_json.ENERGY.Current }}'
+    unit_of_measurement: A
+  - platform: mqtt
+    name: "Washer Power"
+    state_topic: "tele/smartplug2/SENSOR"
+    value_template: '{{ value_json.ENERGY.Power }}'
+    unit_of_measurement: W
+
+
+
+automation:
+  - alias: 'Washer Timer Start'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.washer_dash
+      - platform: event
+        event_type: ios.action_fired
+        event_data:
+          actionName: 'Washer'
+    action:
+      - service: timer.start
+        entity_id: timer.washer_timer
+
+  - alias: 'Washer timer off'
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.washer_timer
+    action:
+     - service: notify.home
+       data_template:
+         message: >
+           {%- set responses = [
+           'The washer is done.',
+           'Time to switch the laundry.',
+           'Washer is finished'] -%}
+           {{ responses | random }}
+
+  - alias: 'Washer off'
+    initial_state: True
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.washer_current
+      below: 0.10
+      for: "00:01:00"
+    action:
+      - service: notify.home
+        data_template:
+          message: >
+            {%- set responses = [
+            'The washer is done.',
+            'Time to switch the laundry.',
+            'Washer is finished'] -%}
+            {{ responses | random }}
+      - service: script.speech_engine
+        data_template:
+          call_no_announcement: 1
+          laundrynotification: >
+             {% set device = washer %}
+             {%- macro laundrynotification(device) -%}
+             {{ [
+             "Hey you Guys!!! The " ~ device +" just stopped, time to check the laundry",
+             "I noticed that the " ~ device +" stopped, time to switch.",
+             "If only I could empty the " ~ device +" for you guys, but alas I cannot. Someone check it out."
+             ] | random }}
+             {%- endmacro -%}
+             "{{laundrynotification(device)}}"
+
+
+  - alias: 'Dryer Timer Start'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.dryer_dash
+      - platform: event
+        event_type: ios.action_fired
+        event_data:
+          actionName: 'Dryer'
+    action:
+      - service: timer.start
+        entity_id: timer.dryer_timer
+
+  - alias: 'Washer timer off'
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.washer_timer
+    action:
+     - service: notify.home
+       data_template:
+         message: >
+           {%- set responses = [
+           'Dryer is done.',
+           'The dryer is finished running.',
+           'Time to check the dryer.'] -%}
+           {{ responses | random }}
+     - service: script.speech_engine
+       data_template:
+        call_no_announcement: 1
+        laundrynotification: >
+          {% set device = dryer %}
+          {%- macro laundrynotification(device) -%}
+          {{ [
+          "Hey you Guys!!! The " ~ device +" just stopped, time to check the laundry",
+          "I noticed that the " ~ device +" stopped, time to switch.",
+          "If only I could empty the " ~ device +" for you guys, but alas I cannot. Someone check it out."
+          ] | random }}
+          {%- endmacro -%}
+          "{{laundrynotification(device)}}"

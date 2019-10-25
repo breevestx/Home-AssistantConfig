@@ -3,6 +3,7 @@
 *.csr
 *.crt
 *.key
+*.txt
 www
 home-assistant.log
 home-assistant_v2.db

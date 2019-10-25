@@ -21,9 +21,33 @@ homeassistant:
 timer:
   driveway_light:
     duration: '00:10:00'
+  garage_lights:
+    duration: '00:10:00'
+
 
 
 automation:
+  - alias: 'Garage - night'
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: binary_sensor.garage_door
+      to: 'on'
+    condition:
+      - condition: or  # 'when dark' condition: either after sunset or before sunrise
+        conditions:
+          - condition: sun
+            after: sunset
+            # offset: '-1:00:00'
+          - condition: sun
+            before: sunrise
+    action:
+      - service: timer.start
+        entity_id: timer.garage_lights
+      - service: homeassistant.turn_on
+        entity_id: light.garage_lights
+
+
   - alias: 'Turn on Driveway light Door open'
     initial_state: True
     condition:
@@ -52,7 +76,6 @@ automation:
           entities:
             - switch.driveway_garage_light
             - light.garage_lights
-
       - service: notify.dev
         data_template:
           message: >
@@ -93,6 +116,8 @@ automation:
           message: >
             Turning off the driveway light
 
+######### Garage Door status updates ###################
+
   - alias: 'Garage Door open'
     initial_state: True
     trigger:
@@ -120,3 +145,74 @@ automation:
         entity_id: light.front_door
         transition: "60"
         color_name: green
+
+######### Garage Lights ###################
+
+  - alias: 'Garage - Motion'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.garage_pir
+        from: 'standby'
+        to: 'motion detected'
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: light.garage_lights
+          state: 'off'
+        - condition: numeric_state
+          entity_id: sensor.garage_ldr
+          below: 100
+    action:
+      # - service: timer.start
+      #   entity_id: timer.garage_lights
+      - service: homeassistant.turn_on
+        entity_id: light.garage_lights
+
+  - alias: 'Garage - Motion - start timer'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.garage_pir
+        from: 'motion detected'
+        to: 'standby'
+    condition:
+      - condition: state
+        entity_id: light.garage_lights
+        state: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.garage_lights
+
+  - alias: 'Garage - Motion - restart timer'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.garage_pir
+        from: 'standby'
+        to: 'motion detected'
+    condition:
+      - condition: state
+        entity_id: light.garage_lights
+        state: 'on'
+    action:
+      - service: timer.cancel
+        entity_id: timer.garage_lights
+
+  - alias: 'Garage - timer - off'
+    initial_state: True
+    condition:
+      - condition: state
+        entity_id: light.garage_lights
+        state: 'on'
+      # - condition: template
+      #   value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.garage_pir.last_changed)) > 30 }}'
+    trigger:
+      platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.garage_lights
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.garage_lights
